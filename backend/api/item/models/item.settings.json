@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "items",
+  "info": {
+    "name": "Item",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "DescriptionShort": {
+      "type": "string",
+      "required": true
+    },
+    "DescriptionLong": {
+      "type": "richtext"
+    },
+    "Media": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files",
+        "images",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": true
+    },
+    "Categories": {
+      "unique": true,
+      "collection": "category",
+      "via": "item"
+    },
+    "Tags": {
+      "collection": "tag",
+      "via": "item"
+    },
+    "CreatedAt": {
+      "type": "datetime",
+      "required": true
+    }
+  }
+}
