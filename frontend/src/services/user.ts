@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueCompositionAPI, { Ref, ref } from '@vue/composition-api'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { Plugins, StoragePlugin } from '@capacitor/core'
 
 import { InterfaceLoginResponse, InterfaceUser } from 'src/interfaces'
@@ -68,8 +68,6 @@ const useUser = () => {
         })
         populateUser(response.data)
     }
-
-    return
   }
 
   return {
