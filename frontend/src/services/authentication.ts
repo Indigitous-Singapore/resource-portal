@@ -77,7 +77,7 @@ const useAuthentication = () => {
    * Redirects to the dashboard
    */
   const redirectToDashboard = (): void => {
-    void Router.push('/dashboard')
+    void Router.push('/')
   }
 
   /**

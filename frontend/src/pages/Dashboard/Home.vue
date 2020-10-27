@@ -5,10 +5,7 @@
       />
     <div class="row">
       <div class="column col-xs-12">
-        <iframe
-          class="full-width iframe"
-          :src="`https://docs.google.com/forms/d/e/1FAIpQLSfzA9bXIbvcjyz_Q6b08NVdz5O3R0QZ4RzFjNpKdEx4w9muCQ/viewform?usp=pp_url&entry.1415111703=${user.firstName}%20${user.lastName}&entry.408680681=${user.email}`"
-          />
+        
       </div>
     </div>
   </q-page>

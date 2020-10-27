@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueCompositionAPI, { Ref, ref } from '@vue/composition-api'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
+import dayjs from 'dayjs'
 import { Plugins, StoragePlugin } from '@capacitor/core'
 
 import { InterfaceLoginResponse, InterfaceUser } from 'src/interfaces'
 import { storeAuthenticationToken, getAuthenticationToken } from './authentication'
+import md5 from 'md5'
 
 Vue.use(VueCompositionAPI)
 
@@ -20,6 +22,7 @@ const defaultUser: InterfaceUser = {
   username: null,
   created_at: null,
   updated_at: null,
+  createdAtFormatted: null
 }
 
 const user: Ref<InterfaceUser|null> = ref({...defaultUser})
@@ -29,7 +32,11 @@ const useUser = () => {
   const populateUser = (loggedInUser: InterfaceUser) => {
     let newUser: InterfaceUser|null = null
     newUser = {...loggedInUser}
-    newUser.displayPictureUrl = 'https://api.adorable.io/avatars/500/' + String(newUser.email) + '.png'
+    
+    newUser.displayPictureUrl = `https://www.gravatar.com/avatar/${md5(String(newUser.email))}`
+    if (newUser.created_at) {
+      newUser.createdAtFormatted = dayjs(newUser.created_at).format('DD MMM YYYY')
+    }
 
     user.value = {...newUser}
   }
@@ -68,12 +75,37 @@ const useUser = () => {
         })
         populateUser(response.data)
     }
+
+    return
+  }
+
+  /**
+   * Update Profile
+   */
+  const updateProfile = async (profile: Record<string, string>): Promise<void> => {
+    const token: string|null = await getAuthenticationToken()
+
+    if (token && user.value && user.value.id) {
+      const response = await axios
+        .put(`${String(process.env.apiUrl)}/users/${user.value.id}`, {
+          ...profile,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        })
+        populateUser(response.data)
+    }
+
+    return
   }
 
   return {
     login,
     logout,
     getProfile,
+    updateProfile,
     user
   }
 }

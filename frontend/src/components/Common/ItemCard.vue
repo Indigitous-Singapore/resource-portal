@@ -1,9 +1,9 @@
 <template>
   <q-card
-    class="project-card"
+    class="item-card"
     >
     <router-link
-      :to="'/projects/' + projectId"
+      :to="'/items/' + itemId"
       >
       <q-img
         :src="img"
@@ -38,7 +38,7 @@
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-  name: 'ProjectCard',
+  name: 'ItemCard',
   props: {
     id: String,
     img: String,
@@ -50,17 +50,17 @@ export default defineComponent({
   components: {
   },
   setup (props, ctx) {
-    const projectId = String(props.id)
+    const itemId = String(props.id)
 
     return {
-      projectId
+      itemId
     }
   }
 })
 </script>
 
 <style scoped lang="scss">
-.project-card {
+.item-card {
   height: 420px;
 }
 </style>

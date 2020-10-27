@@ -1,5 +1,5 @@
 <template>
-<q-footer class="bg-grey-9 text-white visible-xs">
+<q-footer class="bg-accent text-white visible-xs">
   <!--
   <div class="row items-center bg-grey-4 text-grey-9 justify-center" style="height:348px;">
     <div class="col-10">
@@ -53,7 +53,7 @@
   -->
   <q-toolbar>
     <div class="col-1"></div>
-    <span class="q-mx-md text-caption text-grey-5">&copy; Copyright Indigitous Singapore {{ currentYear }}</span>
+    <span class="q-mx-md text-caption">&copy; Copyright {{ currentYear }} | {{ config.app.organisation }}</span>
     <!--
     <q-separator dark vertical inset spaced="md" class="q-my-md" />
     <q-btn color="transparent" text-color="grey-5" dense flat no-caps padding="sm" label="Terms and Conditions" class="q-mx-md text-caption" />
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import config from '../../config/config'
 import { defineComponent, ref } from '@vue/composition-api'
 import { mdiInstagram , mdiFacebook, mdiTwitter } from '@quasar/extras/mdi-v5'
 export default defineComponent({
@@ -73,6 +74,7 @@ export default defineComponent({
     const mailingList = ref('')
     const currentYear = new Date().getFullYear()
     return {
+      config,
       currentYear,
       mdiInstagram,
       mdiFacebook,
