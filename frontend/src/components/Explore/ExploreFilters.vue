@@ -1,15 +1,15 @@
 <template>
 <div class="filters">
-  <div class="project-fields">
-    <h5 class="text-grey-6 q-mb-sm xs-hide">PROJECT FIELDS</h5>
+  <div class="item-categories">
+    <h5 class="text-grey-6 q-mb-sm xs-hide">CATEGORIES</h5>
     <q-list
-      id="project-fields"
+      id="item-categories"
       >
       <q-item
-        v-for="(label, key) of fields"
+        v-for="(label, key) of categories"
         :key="key"
-        :class="'q-py-none project-field ' + ((String(key) === state.field) ? 'q-item--active' : '')"
-        @click="() => { updateCurrentField(key.toString()) }"
+        :class="'q-py-none item-category ' + ((String(key) === selectedCategory) ? 'q-item--active' : '')"
+        @click="() => { updateCurrentCategory(key.toString()) }"
         clickable
         >
         {{ label }}
@@ -21,15 +21,15 @@
     <q-separator spaced="2em" inset="true" style="margin-left: -6px"/>
   </div>
 
-  <div class="project-causes">
-    <h5 class="text-grey-6 q-mb-sm xs-hide">CAUSES</h5>
+  <div class="item-tags">
+    <h5 class="text-grey-6 q-mb-sm xs-hide">TAGS</h5>
     <q-list
-      id="project-causes">
+      id="item-tags">
       <q-checkbox
-        v-for="(label, cause) of causes"
-        class="project-cause"
-        v-model="state.causes[cause]"
-        :key="cause"
+        v-for="(label, tag) of selectedTags"
+        class="item-tag"
+        v-model="selectedTags[tag]"
+        :key="tag"
         :label="label"
         />
     </q-list>
@@ -39,30 +39,22 @@
 
 <script lang="ts">
 import { defineComponent, reactive, Ref, ref, watch } from '@vue/composition-api'
-import { useProjects } from '../../services/projects'
-import { InterfaceProject } from 'src/interfaces'
+import { useItems } from '../../services/items'
+import { InterfaceItem } from 'src/interfaces'
 
 export default defineComponent({
   name: 'ExploreFilters',
   props: {
-    updateCurrentField: {
+    updateCurrentCategory: {
       type: Function,
       default: (key: string) => {
         return key
       }
     },
-    state: {
-      type: Object,
-      default: {}
-    },
-    causes: {
-      type: Object,
-      default: {}
-    },
-    fields: {
-      type: Object,
-      default: {}
-    },
+    tags: Object,
+    categories: Object,
+    selectedTags: Object,
+    selectedCategory: String,
   }
 })
 </script>
@@ -73,20 +65,20 @@ export default defineComponent({
     flex-direction: row !important;
     width: 100%;
   }
-  .projects-fields {
+  .items-categories {
     flex: 4;
     display: flex;
   }
-  .project-field {
+  .item-category {
     font-size: 0.8em;
     line-height: 1.25em;
     min-height: 1.25em;
   }
-  .projects-causes {
+  .items-tags {
     flex: 6;
     display: flex;
   }
-  .project-cause {
+  .item-tag {
     font-size: 0.8em;
     line-height: 1.25em;
     min-height: 1.25em;
@@ -97,7 +89,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column
 }
-.project-field {
+.item-category {
   line-height: 2.5em;
   min-height: 2.5em;
   color: $grey-8;
@@ -112,7 +104,7 @@ export default defineComponent({
     font-weight: 700;
   }
 }
-.project-cause {
+.item-tag {
   margin-left: -8px;
 }
 </style>

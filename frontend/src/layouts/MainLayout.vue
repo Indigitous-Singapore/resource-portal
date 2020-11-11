@@ -15,10 +15,16 @@
           <router-link
             to="/"
             >
-            <img src="../assets/logo.png" style="width:150px" class="q-mr-lg q-ml-md" />
+            <img
+              :src="config.app.logoUrl"
+              :alt="config.app.logoAlt"
+              style="width:150px"
+              class="q-mr-lg q-ml-md"
+              />
           </router-link>
           <div class="gt-sm row">
             <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="ABOUT" to="/about" />
+            <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="EXPLORE" to="/explore" />
             <!--
             <q-input 
               v-model="search"
@@ -36,7 +42,6 @@
             -->
           </div>
         </q-toolbar>
-        <q-separator vertical inset />
         <NavbarRight />
       </div>
     </q-header>
@@ -54,6 +59,7 @@
 </template>
 
 <script lang="ts">
+import config from '../config/config'
 import ComponentDrawer from 'components/Structure/MainDrawer/Drawer.vue'
 import NavbarRight from 'components/Structure/NavbarRight.vue'
 import Footer from 'components/Structure/Footer.vue'
@@ -76,6 +82,7 @@ export default defineComponent({
     }
 
     return {
+      config,
       toggleDrawer,
       leftDrawerOpen,
       search,

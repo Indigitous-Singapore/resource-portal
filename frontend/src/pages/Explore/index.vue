@@ -1,16 +1,16 @@
 <template>
   <q-page>
-    <ExploreBanner />
     <div class="container">
       <div class="row q-py-xl">
         <div class="col-12 col-sm-3">
           <h4 class="xs-hide"><b>Filters</b></h4>
           <div class="xs-hide">
             <ExploreFilters
-              :updateCurrentField="updateCurrentField"
-              :state="state"
-              :fields="fields"
-              :causes="causes"
+              :updateCurrentCategory="updateCurrentCategory"
+              :selectedCategory="selectedCategory"
+              :selectedTags="selectedTags"
+              :categories="categories"
+              :tags="tags"
               />
           </div>
           <q-dialog
@@ -27,10 +27,11 @@
 
               <q-card-section>
                 <ExploreFilters
-                  :updateCurrentField="updateCurrentField"
-                  :state="state"
-                  :fields="fields"
-                  :causes="causes"
+                  :updateCurrentCategory="updateCurrentCategory"
+                  :selectedCategory="selectedCategory"
+                  :selectedTags="selectedTags"
+                  :categories="categories"
+                  :tags="tags"
                   />
               </q-card-section>
             </q-card>
@@ -51,10 +52,10 @@
           >
           <!--
           <ExploreSearch
-            v-if="projectsState.projects.length > 0"
+            v-if="itemsState.items.length > 0"
             />
           <q-separator
-            v-if="projectsState.projects.length > 0"
+            v-if="itemsState.items.length > 0"
             spaced="xl"
             />
           -->
@@ -83,8 +84,10 @@
 <script lang="ts">
 import _ from 'lodash'
 import { defineComponent, onBeforeMount, reactive, ref, Ref, watch } from '@vue/composition-api'
-import { useProjects } from '../../services/projects'
-import { InterfaceProject } from 'src/interfaces'
+import { useItems } from '../../services/items'
+import { useTags } from '../../services/tags'
+import { useCategories } from '../../services/categories'
+import { InterfaceItem } from 'src/interfaces'
 import ExploreBanner from '../../components/Explore/ExploreBanner.vue'
 import ExploreContent from '../../components/Explore/ExploreContent.vue'
 import ExploreFilters from '../../components/Explore/ExploreFilters.vue'
@@ -102,50 +105,85 @@ export default defineComponent({
   setup (props, ctx) {
     const loading = ref(true)
     const dialogIsOpen = ref(false)
-    const defaultStateCauses: Record<string, boolean> = {
-      'theUnreached': true
-    }
-    const causes: Ref<Record<string, string>> = ref({
-      'theUnreached': 'The Unreached'
-    })
-    const fields: Ref<Record<string, string>> = ref({
-      'all': 'All Fields',
-      'fundraising': 'Fundraising',
-      'technology': 'Technology',
-      'evangelism': 'Evangelism',
-      'outreach': 'Outreach',
-      'worship': 'Worship'
-    })
+    const defaultStateTags: Record<string, boolean> = {}
+    const tags: Ref<Record<string, string>> = ref({})
+    const categories: Ref<Record<string, string>> = ref({})
     const { 
-      state: projectsState,
-      getProjects
-    } = useProjects()
-    const state = reactive({
-      field: 'all',
-      causes: {...defaultStateCauses}
-    })
+      state: itemsState,
+      getItems
+    } = useItems()
+    const { 
+      state: tagsState,
+      getTags
+    } = useTags()
+    const { 
+      state: categoriesState,
+      getCategories
+    } = useCategories()
+
+    const selectedCategory: Ref<string> = ref('all')
+    const selectedTags: Ref<Record<string, boolean>> = ref({})
 
     /**
      * Lifecyle
      */
     onBeforeMount(async () => {
-      await getFilteredProjects()
+      await getFilteredCategories()
+      await getFilteredTags()
+      await getFilteredItems()
+
+      /**
+       * Observers
+       */
+      watch(selectedTags, getFilteredItems)
+      watch(selectedCategory, getFilteredItems)
     })
 
+
     /**
-     * Gets the projects based on the filters
+     * Gets Categories
      */
-    const getFilteredProjects = async () => {
-      const causes: string[] = []
-      // console.log('causes', state.causes)
-      Object.keys(state.causes).forEach(cause => {
-        if(state.causes[cause] === true){
-          causes.push(cause)
+    const getFilteredCategories = async () => {
+      await getCategories()
+      const newCategories: Record<string, string> = {
+        'all': 'All Categories'
+      }
+      for (let category of categoriesState.value) {
+        newCategories[category.id] = category.Title || ''
+      }
+      categories.value = newCategories
+      console.log('categories', categories.value)
+    }
+
+    /**
+     * Gets tags
+     */
+    const getFilteredTags = async () => {
+      await getTags()
+      const newTags: Record<string, string> = {}
+      const newSelectedTags: Record<string, boolean> = {}
+      for (let tag of tagsState.value) {
+        newTags[tag.id] = tag.Title || ''
+        newSelectedTags[tag.id] = true
+      }
+      tags.value = newTags
+      selectedTags.value = newSelectedTags
+    }
+
+    /**
+     * Gets the items based on the filters
+     */
+    const getFilteredItems = async () => {
+      const tags: string[] = []
+      console.log('tags', selectedTags.value)
+      Object.keys(selectedTags.value).forEach(tag => {
+        if(selectedTags.value[tag] === true){
+          tags.push(tag)
         }
       })
-      await getProjects(
-        [state.field],
-        causes,
+      await getItems(
+        [selectedCategory.value],
+        (tags.length > 0 ? tags : ['all']),
       )
       loading.value = false
     }
@@ -155,8 +193,8 @@ export default defineComponent({
      * 
      * @param {string} key
      */
-    const updateCurrentField = (key: string): void => {
-      state.field = key.toString()
+    const updateCurrentCategory = (key: string): void => {
+      selectedCategory.value = key.toString()
     }
 
     /**
@@ -166,20 +204,16 @@ export default defineComponent({
       dialogIsOpen.value = !dialogIsOpen.value
     }
 
-    /**
-     * Observers
-     */
-    watch(state, getFilteredProjects)
-
     return {
-      causes,
+      categories,
       dialogIsOpen,
-      fields,
       loading,
-      state,
-      projectsState,
+      itemsState,
+      tags,
       toggleFilter,
-      updateCurrentField,
+      selectedTags,
+      selectedCategory,
+      updateCurrentCategory,
     }
   }
 })

@@ -70,46 +70,69 @@ export interface InterfaceStateSignup {
 }
 
 /**
- * Projects
+ * Category
  */
-export interface InterfaceStateProjects {
-  projects: InterfaceProject[]
+export interface InterfaceCategory {
+  id: number;
+  Title: string|null;
+  Description: string|null;
+  Category: InterfaceCategory|null;
+  item: number;
+  created_at: string;
+  updated_at: string;
 }
 
-export interface InterfaceProjectPosition {
+/**
+ * Tag
+ */
+export interface InterfaceTag {
   id: number;
-  title: string;
-  commitment: string;
-  skills?: string;
-  description: string;
-  active: boolean;
+  Title: string|null;
+  Description: string|null;
+  item: number;
+  created_at: string;
+  updated_at: string;
 }
 
-export interface InterfaceProject {
+/**
+ * Items
+ */
+export interface InterfaceStateItems {
+  items: InterfaceItem[]
+}
+
+export interface InterfaceItem {
   id: number;
-  title: string;
-  caption: string;  //  Short description
-  displayPictureUrl: InterfaceImage;
+  Title: string|null;
+  DescriptionShort: string|null;
+  DescriptionLong: string|null;
+  Media: InterfaceItemMedia[];
 
-  //  Project
-  aboutOurStory?: string | null;  //  HTML/markdown
-  aboutWhatWeDo?: string | null;
-  aboutCommitment?: string | null;
-
-  //  Faqs
-  faqs?: string | null;
-
-  //  Metadata
-  user: InterfaceUser;
-
-  //  Open Positions
-  openPositions: InterfaceProjectPosition[];
-
-  //  Filters
-  fields?: string | null;
-  causes?: string | null;
+  Categories: InterfaceCategory[];
+  Tags: InterfaceTag[];
 
   //  Meta
+  published_at: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface InterfaceItemMedia {
+  id: number;
+  name: string|null;
+  alternativeText: string|null;
+  caption: string|null;
+  width: string|null;
+  height: string|null;
+  format: string|null;
+  hash: string|null;
+  ext: string|null;
+  mime: string|null;
+  size: number|null;
+  url: string|null;
+  previewUrl: string|null;
+  provider: string|null;
+  provider_metadata: string|null;
   created_at: string;
   updated_at: string;
 }
@@ -131,4 +154,5 @@ export interface InterfaceUser {
   role?: number|null;
   created_at: string|null;
   updated_at: string|null;
+  createdAtFormatted: string|null;
 }

@@ -63,6 +63,10 @@
     },
     "displayPictureUrl": {
       "type": "string"
+    },
+    "collections": {
+      "via": "user",
+      "collection": "collection"
     }
   }
 }

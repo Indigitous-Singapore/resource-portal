@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "categories",
   "info": {
-    "name": "Category"
+    "name": "category",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -10,24 +11,24 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string",
       "required": true
     },
-    "Description": {
+    "description": {
       "type": "text"
     },
     "category": {
-      "via": "categories",
-      "model": "category"
+      "model": "category",
+      "via": "categories"
     },
     "categories": {
-      "via": "category",
-      "collection": "category"
+      "collection": "category",
+      "via": "category"
     },
-    "item": {
-      "via": "Categories",
-      "model": "item"
+    "items": {
+      "collection": "item",
+      "via": "categories"
     }
   }
 }

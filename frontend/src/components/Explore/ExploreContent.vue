@@ -1,9 +1,9 @@
 <template>
   <div>
     <q-table
-      v-if="state.projects.length > 0"
+      v-if="state.items.length > 0"
       grid
-      :data="state.projects"
+      :data="state.items"
       :columns="tableOptions.columns"
       row-key="id"
       :filter="tableOptions.filter"
@@ -13,15 +13,7 @@
     >
       <template v-slot:item="props">
         <div class="q-pa-sm col-xs-12 col-sm-6 col-md-4">
-          <project-card
-            :id="String(props.row.id)"
-            :img="config.apiUrl + props.row.displayPictureUrl.url"
-            :category="props.row.causes"
-            :title="props.row.title"
-            :description="props.row.caption"
-            :tags="props.row.fields"
-            class="q-ma-sm block"
-          />
+          {{props}}
         </div>
       </template>
     </q-table>
@@ -29,34 +21,24 @@
       v-else
       class="flex column items-center justify-center"
       >
-      <h4>No projects based on your filter criteria</h4>
-      <div class="flex">
-        <q-btn
-          to="/start"
-          label="how about starting one?"
-          color="accent"
-          size="lg"
-          no-caps
-          unelevated
-          />
-      </div>
+      <h4>No items based on your filter criteria</h4>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref, reactive, computed, onBeforeMount } from '@vue/composition-api'
 import config from '../../config/config'
-import { useProjects } from '../../services/projects'
-import ProjectCard from '../Common/ProjectCard.vue'
+import { useItems } from '../../services/items'
+import ItemCard from '../Common/ItemCard.vue'
 import  { Screen } from 'quasar'
 
 export default defineComponent({
   name: 'ExploreGrid',
   components: {
-    ProjectCard
+    ItemCard
   },
   setup () {
-    const { state } = useProjects()
+    const { state } = useItems()
 
     const getItemsPerPage = () => {
       if (Screen.lt.sm) { return 6 }

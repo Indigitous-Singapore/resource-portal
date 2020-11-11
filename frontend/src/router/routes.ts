@@ -11,17 +11,24 @@ import { RouteConfig } from 'vue-router';
 
 const routes: RouteConfig[] = [
   {
-    path: '/projects',
-    component: () => import('../layouts/DashboardLayout.vue'),
-    children: [
-      { path: ':projectId', name: 'project', component: () => import('../pages/Projects/Single.vue') }
-    ]
-  },
-  {
     path: '/',
     component: () => import('layouts/DashboardLayout.vue'),
     children: [
       { path: '', name:'dashboard', meta: {private: true}, component: () => import('pages/Dashboard/Home.vue') }
+    ]
+  },
+  {
+    path: '/profile',
+    component: () => import('../layouts/DashboardLayout.vue'),
+    children: [
+      { path: '', name: 'profile', component: () => import('../pages/Dashboard/Profile.vue') }
+    ]
+  },
+  {
+    path: '/items',
+    component: () => import('../layouts/DashboardLayout.vue'),
+    children: [
+      { path: ':itemId', name: 'item', component: () => import('../pages/Dashboard/Item.vue') }
     ]
   },
   {

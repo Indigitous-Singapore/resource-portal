@@ -2,7 +2,7 @@
   "kind": "collectionType",
   "collectionName": "items",
   "info": {
-    "name": "Item",
+    "name": "item",
     "description": ""
   },
   "options": {
@@ -11,17 +11,17 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string"
     },
-    "DescriptionShort": {
+    "description_short": {
       "type": "string",
       "required": true
     },
-    "DescriptionLong": {
+    "description_long": {
       "type": "richtext"
     },
-    "Media": {
+    "media": {
       "collection": "file",
       "via": "related",
       "allowedTypes": [
@@ -32,23 +32,24 @@
       "plugin": "upload",
       "required": false
     },
-    "Categories": {
-      "unique": true,
+    "categories": {
+      "via": "items",
       "collection": "category",
-      "via": "item"
+      "dominant": true
     },
-    "Tags": {
+    "tags": {
+      "via": "items",
       "collection": "tag",
-      "via": "item"
+      "dominant": true
     },
-    "CreatedAt": {
-      "type": "datetime",
-      "required": true
-    },
-    "Link": {
+    "link": {
       "type": "component",
       "repeatable": true,
       "component": "item-links.link"
+    },
+    "collections": {
+      "via": "items",
+      "collection": "collection"
     }
   }
 }

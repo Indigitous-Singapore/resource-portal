@@ -1,12 +1,13 @@
 {
   "collectionName": "components_item_links_links",
   "info": {
-    "name": "Link",
-    "icon": "cubes"
+    "name": "link",
+    "icon": "cubes",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string",
       "required": true
     },

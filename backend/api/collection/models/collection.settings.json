@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "collections",
+  "info": {
+    "name": "collection"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "collections"
+    },
+    "items": {
+      "unique": true,
+      "collection": "item",
+      "via": "collections",
+      "dominant": true
+    },
+    "title": {
+      "type": "string",
+      "unique": true,
+      "required": true,
+      "default": "My Collection"
+    }
+  }
+}
