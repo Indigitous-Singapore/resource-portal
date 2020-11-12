@@ -16,7 +16,7 @@ import { InterfaceCategory } from 'src/interfaces'
 const fetchCategories = async (): Promise<InterfaceCategory[]|undefined> => {
   try {
     if ('apiUrl' in config) {
-      const response: AxiosResponse = await axios.get(`${config.apiUrl}/Categories`)
+      const response: AxiosResponse = await axios.get(`${config.apiUrl}/categories`)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const categories: InterfaceCategory[] = response.data
       return categories
@@ -29,7 +29,7 @@ const fetchCategories = async (): Promise<InterfaceCategory[]|undefined> => {
 const fetchCategory = async (id: string): Promise<InterfaceCategory|undefined> => {
   try {
     if ('apiUrl' in config) {
-      const response: AxiosResponse = await axios.get(`${config.apiUrl}/Categories/${id}`)
+      const response: AxiosResponse = await axios.get(`${config.apiUrl}/categories/${id}`)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const category: InterfaceCategory = response.data
 

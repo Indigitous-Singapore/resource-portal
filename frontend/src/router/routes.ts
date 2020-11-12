@@ -14,7 +14,8 @@ const routes: RouteConfig[] = [
     path: '/',
     component: () => import('layouts/DashboardLayout.vue'),
     children: [
-      { path: '', name:'dashboard', meta: {private: true}, component: () => import('pages/Dashboard/Home.vue') }
+      { path: '', redirect: { name: 'dashboard' }},
+      { path: 'explore', name:'dashboard', meta: {private: true}, component: () => import('pages/Dashboard/Home.vue') }
     ]
   },
   {
@@ -29,13 +30,6 @@ const routes: RouteConfig[] = [
     component: () => import('../layouts/DashboardLayout.vue'),
     children: [
       { path: ':itemId', name: 'item', component: () => import('../pages/Dashboard/Item.vue') }
-    ]
-  },
-  {
-    path: '/explore',
-    component: () => import('layouts/DashboardLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Explore/index.vue') }
     ]
   },
 

@@ -16,7 +16,7 @@ import { InterfaceTag } from 'src/interfaces'
 const fetchTags = async (): Promise<InterfaceTag[]|undefined> => {
   try {
     if ('apiUrl' in config) {
-      const response: AxiosResponse = await axios.get(`${config.apiUrl}/Tags`)
+      const response: AxiosResponse = await axios.get(`${config.apiUrl}/tags`)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const tags: InterfaceTag[] = response.data
       return tags
@@ -29,7 +29,7 @@ const fetchTags = async (): Promise<InterfaceTag[]|undefined> => {
 const fetchTag = async (id: string): Promise<InterfaceTag|undefined> => {
   try {
     if ('apiUrl' in config) {
-      const response: AxiosResponse = await axios.get(`${config.apiUrl}/Tags/${id}`)
+      const response: AxiosResponse = await axios.get(`${config.apiUrl}/tags/${id}`)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const tag: InterfaceTag = response.data
 
