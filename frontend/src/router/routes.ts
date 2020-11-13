@@ -14,8 +14,8 @@ const routes: RouteConfig[] = [
     path: '/',
     component: () => import('layouts/DashboardLayout.vue'),
     children: [
-      { path: '', redirect: { name: 'dashboard' }},
-      { path: 'explore', name:'dashboard', meta: {private: true}, component: () => import('pages/Dashboard/Home.vue') }
+      { path: '', redirect: { name: 'explore' }},
+      { path: 'explore', name:'explore', meta: {private: true}, component: () => import('pages/Dashboard/Home.vue') }
     ]
   },
   {
