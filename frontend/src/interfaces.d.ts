@@ -74,10 +74,9 @@ export interface InterfaceStateSignup {
  */
 export interface InterfaceCategory {
   id: number;
-  Title: string|null;
-  Description: string|null;
-  Category: InterfaceCategory|null;
-  item: number;
+  title: string|null;
+  description: string|null;
+  items: InterfaceItem[];
   created_at: string;
   updated_at: string;
 }
@@ -87,9 +86,9 @@ export interface InterfaceCategory {
  */
 export interface InterfaceTag {
   id: number;
-  Title: string|null;
-  Description: string|null;
-  item: number;
+  title: string|null;
+  description: string|null;
+  items: InterfaceItem[];
   created_at: string;
   updated_at: string;
 }
@@ -103,13 +102,14 @@ export interface InterfaceStateItems {
 
 export interface InterfaceItem {
   id: number;
-  Title: string|null;
-  DescriptionShort: string|null;
-  DescriptionLong: string|null;
-  Media: InterfaceItemMedia[];
+  title: string|null;
+  description_short: string|null;
+  description_long: string|null;
+  media: InterfaceItemMedia[];
+  link: string[];
 
-  Categories: InterfaceCategory[];
-  Tags: InterfaceTag[];
+  categories: InterfaceCategory[];
+  tags: InterfaceTag[];
 
   //  Meta
   published_at: string;

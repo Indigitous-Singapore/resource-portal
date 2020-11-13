@@ -1,18 +1,18 @@
 <template>
-<div class="filters">
+<div class="filters q-pr-lg">
   <div class="item-categories">
     <h5 class="text-grey-6 q-mb-sm xs-hide">CATEGORIES</h5>
     <q-list
       id="item-categories"
       >
       <q-item
-        v-for="(label, key) of categories"
+        v-for="(category, key) in categories"
         :key="key"
-        :class="'q-py-none item-category ' + ((String(key) === selectedCategory) ? 'q-item--active' : '')"
-        @click="() => { updateCurrentCategory(key.toString()) }"
+        :class="'q-py-none item-category ' + ((String(Object.keys(category)[0]) === selectedCategory) ? 'q-item--active' : '')"
+        @click="() => { updateCurrentCategory(Object.keys(category)[0]) }"
         clickable
         >
-        {{ label }}
+        {{ category[Object.keys(category)[0]] }}
       </q-item>
     </q-list>
   </div>
@@ -26,11 +26,11 @@
     <q-list
       id="item-tags">
       <q-checkbox
-        v-for="(label, tag) of selectedTags"
+        v-for="(tag, index) of selectedTags"
         class="item-tag"
-        v-model="selectedTags[tag]"
-        :key="tag"
-        :label="label"
+        v-model="selectedTags[index]"
+        :key="index"
+        :label="tags[index]"
         />
     </q-list>
   </div>
@@ -38,9 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, Ref, ref, watch } from '@vue/composition-api'
-import { useItems } from '../../services/items'
-import { InterfaceItem } from 'src/interfaces'
+import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
   name: 'ExploreFilters',
@@ -52,7 +50,7 @@ export default defineComponent({
       }
     },
     tags: Object,
-    categories: Object,
+    categories: Array,
     selectedTags: Object,
     selectedCategory: String,
   }

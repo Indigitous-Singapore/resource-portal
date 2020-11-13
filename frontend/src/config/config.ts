@@ -6,5 +6,5 @@ export default {
     'logoUrl': '../assets/logo.png',
     'logoAlt': 'MSM Resource Portal',
   },
-  'apiUrl': process.env.apiUrl || 'https://api.launchpad.indigitous.sg'
+  'apiUrl': process.env.apiUrl || 'https://content.msmusic.edu.sg'
 }

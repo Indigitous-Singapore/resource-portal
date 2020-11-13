@@ -1,5 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import axios, { AxiosResponse } from 'axios'
 import { reactive } from '@vue/composition-api'
+import _ from 'lodash'
+import qs from 'qs'
 
 import config from '../config/config'
 
@@ -24,15 +30,24 @@ const fetchItems = async (
   try {
     if ('apiUrl' in config) {
       //  creates the query
-      let query = ''
+      const queryOptions: Record<string, any> = {
+        _where : [
+        ]
+      }
       if (categories.indexOf('all') === -1) {
-        query += 'Categories=' + categories.join(',') + '&'
+        queryOptions._where.push({
+          Categories: categories,
+        })
       }
       if (tags.indexOf('all') === -1) {
-        query += 'Tags=' + tags.join(',') + '&'
+        /*
+        queryOptions._where.push({
+          Tags: tags,
+        })
+        */
       }
 
-      const response: AxiosResponse = await axios.get(`${config.apiUrl}/items?${query}`)
+      const response: AxiosResponse = await axios.get(`${config.apiUrl}/items?${qs.stringify(queryOptions)}`)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const items: InterfaceItem[] = response.data
       const packagedItems: InterfaceItem[] = items.map((item: InterfaceItem) => {

@@ -1,59 +1,76 @@
 <template>
   <q-card
+    v-if="item"
     class="item-card"
     >
-    <router-link
-      :to="'/items/' + itemId"
+    <q-card-section
+      class="content"
       >
-      <q-img
-        :src="img"
-        img-class="q-pa-sm"
-        :ratio="16/9"
-        basic
-        cover
-        />
-    </router-link>
-    <q-card-section class="text-left">
-      <div class="text-overline">
-        {{category}}
-      </div> 
-      <div class="text-h5 text-weight-bold q-mb-md ellipsis-2-lines">
-        {{title}}
-      </div>
-      <div class="text-p ellipsis-3-lines">
-        {{description}}
+      <h5>{{ item.title }}</h5>
+      <p>{{ item.description_short }}</p>
+
+      <div class="q-mt-lg">
+        <q-btn
+          v-for="(number, ext) of mediaExtensions"
+          :key="ext"
+          :label="ext"
+          round
+          size="sm"
+          class="q-pa-xs q-mr-sm"
+          >
+          <q-badge
+            size="xs"
+            floating
+            transparent
+            >
+            {{ number }}
+          </q-badge>
+        </q-btn>
       </div>
     </q-card-section>
-    <!--
-    <q-card-actions class="q-px-md">
-      <div>
-       Tags: {{tags}}
-      </div>
+
+    <q-card-actions align="right">
+      <q-btn flat round color="red" icon="favorite_border" />
+      <q-btn flat round color="teal" icon="bookmark_border" />
+      <q-btn
+        flat
+        round
+        color="primary"
+        icon="share"
+        @click="share(
+          `${item.title}`,
+          `${item.title}: ${item.description_short}`,
+          ''
+        )"
+        />
     </q-card-actions>
-    -->
   </q-card>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
+import { InterfaceItem, InterfaceItemMedia } from '../../interfaces'
+import { share } from '../../utilities/share'
 
 export default defineComponent({
   name: 'ItemCard',
   props: {
-    id: String,
-    img: String,
-    category: String,
-    title: String,
-    description: String,
-    tags: String
+    item: Object as PropType<InterfaceItem>
   },
-  components: {
-  },
-  setup (props, ctx) {
-    const itemId = String(props.id)
+  setup(props) {
+    const {item} = props
+    const mediaExtensions: Record<string, number> = {}
+
+    if (item && item.media && Array.isArray(item.media)) {
+      item.media.forEach((media: InterfaceItemMedia) => {
+        const ext = String(media.ext).replace('.', '')
+        mediaExtensions[ext] = isNaN(mediaExtensions[ext]) ? 1 : mediaExtensions[ext] + 1
+      })
+    }
 
     return {
-      itemId
+      mediaExtensions,
+      share
     }
   }
 })
@@ -61,6 +78,8 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .item-card {
-  height: 420px;
+  .content {
+    height: 200px;
+  }
 }
 </style>
