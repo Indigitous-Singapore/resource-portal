@@ -29,6 +29,7 @@ const routes: RouteConfig[] = [
     path: '/items',
     component: () => import('../layouts/DashboardLayout.vue'),
     children: [
+      { path: '', redirect: { name: 'explore' }},
       { path: ':itemId', name: 'item', component: () => import('../pages/Dashboard/Item.vue') }
     ]
   },
