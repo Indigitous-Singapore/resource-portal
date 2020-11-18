@@ -1,12 +1,22 @@
 <template>
-  <q-page>
-    <div
+  <q-page
       v-if="item !== undefined"
+      >
+    <div
       class="container"
       >
-      
+      <ItemHeader :item="item" />
+      <ItemContent :item="item" />
     </div>
-    <div v-else>
+  </q-page>
+  <q-page
+    v-else
+    class="flex items-center"
+    >
+    <div
+      class="flex full-width justify-center align-center"
+      >
+      <loading />
     </div>
   </q-page>
 </template>
@@ -19,22 +29,24 @@ import { defineComponent } from '@vue/composition-api'
 
 import ItemHeader from '../../components/Item/Header.vue'
 import ItemContent from '../../components/Item/Content.vue'
+import Loading from '../../components/Common/Loading.vue'
 
 export default defineComponent({
   name: 'PageItemsSingle',
   components: {
     ItemHeader,
-    ItemContent
+    ItemContent,
+    Loading,
   },
   setup (props, ctx) {
     const id = ctx.root.$route.params.itemId
     const loading = ref(true)
     const item: Ref<InterfaceItem | undefined> = ref()
 
-    const { state, getItem, getItems } = useItems()
+    const { state, getItem } = useItems()
 
     const updateItem = () => {
-      item.value = state.items.find(item => String(item.id) === ctx.root.$route.params.itemId)
+      item.value = state.items.find(item => String(item.id) === id)
     }
 
     onBeforeMount(async () => {

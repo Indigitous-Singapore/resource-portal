@@ -12,6 +12,7 @@ import config from '../config/config'
 //  Dummy data
 // import itemsData from '../data/items.data'
 import { InterfaceItem, InterfaceStateItems } from 'src/interfaces'
+import { getAuthenticationToken } from './authentication'
 
 const packageItem = (item: InterfaceItem) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -64,7 +65,13 @@ const fetchItems = async (
 const fetchItem = async (id: string): Promise<InterfaceItem|undefined> => {
   try {
     if ('apiUrl' in config) {
-      const response: AxiosResponse = await axios.get(`${config.apiUrl}/items/${id}`)
+      const token: string|null = await getAuthenticationToken()
+      const response: AxiosResponse = await axios.get(`${config.apiUrl}/items/${id}`, {
+        headers: {
+          Authorization:
+            `Bearer ${token}`,
+        },
+      })
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const item: InterfaceItem = response.data
 
