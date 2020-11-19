@@ -45,7 +45,7 @@ export default defineComponent({
       }
     }
   },
-  setup(props, ctx) {
+  setup(props) {
     const updatedAt: string = dayjs(props.item.updated_at).format('DD MMMM YYYY, dddd')
 
     return {

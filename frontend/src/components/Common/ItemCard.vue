@@ -46,7 +46,7 @@
 import { defineComponent, PropType } from '@vue/composition-api'
 
 import { InterfaceItem, InterfaceItemMedia } from '../../interfaces'
-import ItemActions from '../Item/Actions'
+import ItemActions from '../Item/Actions.vue'
 
 export default defineComponent({
   name: 'ItemCard',

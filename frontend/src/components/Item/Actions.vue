@@ -10,17 +10,15 @@
     color="primary"
     icon="share"
     v-if="item"
-    @click="share(
-      `${item.title}`,
-      `${item.title}: ${item.description_short}`,
-      ''
-    )"
+    @click="() => shareItem(item)"
     />
 </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
+import config from 'src/config/config';
+import { InterfaceItem } from 'src/interfaces';
 import { share } from '../../utilities/share'
 
 export default defineComponent({
@@ -36,8 +34,16 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
+    const shareItem = (item: InterfaceItem) => {
+      void share(
+      `${item.title || ''}`,
+      `${item.title || ''}: ${item.description_short || ''}`,
+      `https://${config.app.host || 'portal.msmusic.edu.sg'}/items/${item.id}`
+      )
+    }
+
     return {
-      share,
+      shareItem,
     }
   }
 });

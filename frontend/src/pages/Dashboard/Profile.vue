@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, Ref, watch, onBeforeMount } from '@vue/composition-api'
+import { defineComponent, reactive, watch, onBeforeMount } from '@vue/composition-api'
 import ComponentDashboardProfileHeader from 'components/Dashboard/Profile/Header.vue'
 import ComponentDashboardProfilePersonal from 'components/Dashboard/Profile/Personal.vue'
 import UnderConstruction from 'components/Dashboard/UnderConstruction.vue'

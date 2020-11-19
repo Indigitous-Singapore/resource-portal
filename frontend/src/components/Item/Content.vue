@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, Ref, ref } from '@vue/composition-api'
+import { defineComponent, Ref, ref } from '@vue/composition-api'
 import { markdownToHtml } from '../../utilities/html'
 
 import ItemActions from './Actions.vue'

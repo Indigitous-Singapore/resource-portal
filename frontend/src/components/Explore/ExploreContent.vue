@@ -28,7 +28,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, computed, onBeforeMount } from '@vue/composition-api'
+import { defineComponent, reactive, computed } from '@vue/composition-api'
 import config from '../../config/config'
 import { useItems } from '../../services/items'
 import ItemCard from '../Common/ItemCard.vue'
