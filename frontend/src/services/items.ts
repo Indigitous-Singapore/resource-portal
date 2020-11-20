@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import axios, { AxiosResponse } from 'axios'
 import { reactive } from '@vue/composition-api'
-import _ from 'lodash'
 import qs from 'qs'
 
 import config from '../config/config'
@@ -37,15 +36,13 @@ const fetchItems = async (
       }
       if (categories.indexOf('all') === -1) {
         queryOptions._where.push({
-          Categories: categories,
+          categories,
         })
       }
-      if (tags.indexOf('all') === -1) {
-        /*
+      if (tags.length > 0) {
         queryOptions._where.push({
-          Tags: tags,
+          tags,
         })
-        */
       }
 
       const response: AxiosResponse = await axios.get(`${config.apiUrl}/items?${qs.stringify(queryOptions)}`)
@@ -93,8 +90,8 @@ const state = reactive({
 const useItems = () => {
 
   const getItems = async (
-      categories: string[] = ['all'],
-      tags: string[] = ['all'],
+      categories: string[] = [],
+      tags: string[] = [],
     ) => {
     const items: InterfaceItem[] | undefined = await fetchItems(categories, tags)
 

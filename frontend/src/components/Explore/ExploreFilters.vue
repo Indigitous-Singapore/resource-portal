@@ -14,6 +14,13 @@
         >
         {{ category[Object.keys(category)[0]] }}
       </q-item>
+      <q-item
+        :class="`bg-red-1 q-py-none item-category ${ selectedCategory === null ? 'hidden' : '' }`"
+        @click="clearCurrentCategory"
+        clickable
+        >
+        Clear&nbsp;&cross;
+      </q-item>
     </q-list>
   </div>
 
@@ -47,6 +54,12 @@ export default defineComponent({
       type: Function,
       default: (key: string) => {
         return key
+      }
+    },
+    clearCurrentCategory: {
+      type: Function,
+      default: () => {
+        return
       }
     },
     tags: Object,

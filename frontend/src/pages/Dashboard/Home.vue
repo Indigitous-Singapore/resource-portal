@@ -6,6 +6,7 @@
           <h4 class="xs-hide"><b>Filters</b></h4>
           <div class="xs-hide">
             <ExploreFilters
+              :clearCurrentCategory="clearCurrentCategory"
               :updateCurrentCategory="updateCurrentCategory"
               :selectedCategory="selectedCategory"
               :selectedTags="selectedTags"
@@ -27,6 +28,7 @@
 
               <q-card-section>
                 <ExploreFilters
+                  :clearCurrentCategory="clearCurrentCategory"
                   :updateCurrentCategory="updateCurrentCategory"
                   :selectedCategory="selectedCategory"
                   :selectedTags="selectedTags"
@@ -115,7 +117,7 @@ export default defineComponent({
       getCategories
     } = useCategories()
 
-    const selectedCategory: Ref<string> = ref('all')
+    const selectedCategory: Ref<string|null> = ref(null)
     const selectedTags: Ref<Record<string, boolean>> = ref({})
 
     /**
@@ -133,9 +135,7 @@ export default defineComponent({
      */
     const getFilteredCategories = async () => {
       await getCategories()
-      const newCategories: Record<string, string>[] = [{
-        'all': 'All Categories'
-      }]
+      const newCategories: Record<string, string>[] = []
       for (let category of categoriesState.value) {
         const newCategory: Record<string, string> = {}
         newCategory[category.id] = String(category.title)
@@ -154,7 +154,7 @@ export default defineComponent({
       
       tagsState.value.forEach(tag => {
         newTags[tag.id] = String(tag.title)
-        newSelectedTags[tag.id] = true
+        newSelectedTags[tag.id] = false
       })
       tags.value = {...newTags}
       selectedTags.value = newSelectedTags
@@ -171,19 +171,28 @@ export default defineComponent({
         }
       })
       await getItems(
-        [selectedCategory.value],
-        (tags.length > 0 ? tags : ['all']),
+        (selectedCategory.value === null) ? [] : [selectedCategory.value],
+        (tags.length > 0 ? tags : []),
       )
       loading.value = false
     }
 
     /**
-     * Updates the current FIELD to the selected one
+     * Updates the current category to the selected one
      * 
      * @param {string} key
      */
     const updateCurrentCategory = (key: string): void => {
       selectedCategory.value = key.toString()
+    }
+
+    /**
+     * clears the current category
+     * 
+     * @param {string} key
+     */
+    const clearCurrentCategory = (): void => {
+      selectedCategory.value = null
     }
 
     /**
@@ -204,6 +213,7 @@ export default defineComponent({
 
     return {
       categories,
+      clearCurrentCategory,
       dialogIsOpen,
       loading,
       itemsState,
