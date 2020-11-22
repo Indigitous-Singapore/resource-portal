@@ -25,7 +25,8 @@ const packageItem = (item: InterfaceItem) => {
  */
 const fetchItems = async (
     categories = ['all'],
-    tags = ['all']
+    tags: number[] = [],
+    search = ''
   ): Promise<InterfaceItem[]|undefined> => {
   try {
     if ('apiUrl' in config) {
@@ -40,8 +41,15 @@ const fetchItems = async (
         })
       }
       if (tags.length > 0) {
+        tags.forEach((tag: number) => {
+          queryOptions._where.push({
+            tags_in: tag,
+          })
+        })
+      }
+      if (search.length > 0) {
         queryOptions._where.push({
-          tags,
+          title_contains: search
         })
       }
 
@@ -88,12 +96,12 @@ const state = reactive({
 })
 
 const useItems = () => {
-
   const getItems = async (
       categories: string[] = [],
-      tags: string[] = [],
+      tags: number[] = [],
+      search: string,
     ) => {
-    const items: InterfaceItem[] | undefined = await fetchItems(categories, tags)
+    const items: InterfaceItem[] | undefined = await fetchItems(categories, tags, search)
 
     if (items === undefined) {
       console.error('Items is undefined')

@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import { download } from '../../utilities/download'
 

@@ -23,7 +23,7 @@ import { useUser } from '../../../services/user'
 
 export default defineComponent({
   name: 'ComponentDashboardProfileHeader',
-  setup (props, ctx) {
+  setup () {
     const { user } = useUser()
 
     return {

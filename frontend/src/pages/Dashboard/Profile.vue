@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, watch, onBeforeMount } from '@vue/composition-api'
+import { defineComponent, reactive } from '@vue/composition-api'
 import ComponentDashboardProfileHeader from 'components/Dashboard/Profile/Header.vue'
 import ComponentDashboardProfilePersonal from 'components/Dashboard/Profile/Personal.vue'
 import UnderConstruction from 'components/Dashboard/UnderConstruction.vue'
@@ -61,7 +61,7 @@ export default defineComponent({
     ComponentDashboardProfilePersonal,
     UnderConstruction
   },
-  setup (props, ctx) {
+  setup () {
     const { user } = useUser()
     const data = reactive({
       tab: 'profile',

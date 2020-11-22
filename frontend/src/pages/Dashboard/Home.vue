@@ -11,7 +11,8 @@
               :selectedCategory="selectedCategory"
               :selectedTags="selectedTags"
               :categories="categories"
-              :tags="tags"
+              :tags="tagsState"
+              @update-selected-tags="updateSelectedTags"
               />
           </div>
           <q-dialog
@@ -33,7 +34,8 @@
                   :selectedCategory="selectedCategory"
                   :selectedTags="selectedTags"
                   :categories="categories"
-                  :tags="tags"
+                  :tags="tagsState"
+                  @update-selected-tags="updateSelectedTags"
                   />
               </q-card-section>
             </q-card>
@@ -54,6 +56,7 @@
           >
           <ExploreSearch
             v-if="itemsState.items.length > 0"
+            @update-search="updateCurrentSearch"
             />
           <q-separator
             v-if="itemsState.items.length > 0"
@@ -79,7 +82,6 @@
 </template>
 
 <script lang="ts">
-import _ from 'lodash'
 import { defineComponent, onBeforeMount, ref, Ref, watch } from '@vue/composition-api'
 import { useItems } from '../../services/items'
 import { useTags } from '../../services/tags'
@@ -101,8 +103,6 @@ export default defineComponent({
   setup () {
     const loading = ref(true)
     const dialogIsOpen = ref(false)
-    // const defaultStateTags: Record<string, boolean> = {}
-    const tags: Ref<Record<number, string>> = ref({})
     const categories: Ref<Record<string, string>[]> = ref([])
     const { 
       state: itemsState,
@@ -118,7 +118,8 @@ export default defineComponent({
     } = useCategories()
 
     const selectedCategory: Ref<string|null> = ref(null)
-    const selectedTags: Ref<Record<string, boolean>> = ref({})
+    const selectedTags: Ref<number[]> = ref([])
+    const search: Ref<string> = ref('')
 
     /**
      * Lifecyle
@@ -149,32 +150,28 @@ export default defineComponent({
      */
     const getFilteredTags = async () => {
       await getTags()
-      const newTags: Record<string, string> = {}
-      const newSelectedTags: Record<string, boolean> = {}
-      
-      tagsState.value.forEach(tag => {
-        newTags[tag.id] = String(tag.title)
-        newSelectedTags[tag.id] = false
-      })
-      tags.value = {...newTags}
-      selectedTags.value = newSelectedTags
     }
 
     /**
      * Gets the items based on the filters
      */
     const getFilteredItems = async () => {
-      const tags: string[] = []
-      Object.keys(selectedTags.value).forEach(tag => {
-        if(selectedTags.value[tag] === true){
-          tags.push(tag)
-        }
-      })
       await getItems(
         (selectedCategory.value === null) ? [] : [selectedCategory.value],
-        (tags.length > 0 ? tags : []),
+        (selectedTags.value.length > 0) ? selectedTags.value : [],
+        search.value
       )
       loading.value = false
+    }
+
+    /**
+     * Updates the search
+     * 
+     * @param {string} s
+     */
+    const updateCurrentSearch = (s: string): string => {
+      search.value = s
+      return s
     }
 
     /**
@@ -196,20 +193,25 @@ export default defineComponent({
     }
 
     /**
+     * Updates the selected tags
+     * 
+     * @param {string} s
+     */
+    const updateSelectedTags = (tags: number[]): void => {
+      selectedTags.value = tags
+    }
+
+    /**
      * Toggles the filter
      */
     const toggleFilter = () => {
       dialogIsOpen.value = !dialogIsOpen.value
     }
 
-
     /**
      * Observers
      */
-    watch(selectedTags, () => getFilteredItems())
-    watch(selectedCategory, async () => {
-      await getFilteredItems()
-    })
+    watch([selectedCategory, selectedTags, search], async () => await getFilteredItems())
 
     return {
       categories,
@@ -217,11 +219,14 @@ export default defineComponent({
       dialogIsOpen,
       loading,
       itemsState,
-      tags,
+      tagsState,
       toggleFilter,
+      search,
       selectedTags,
       selectedCategory,
       updateCurrentCategory,
+      updateCurrentSearch,
+      updateSelectedTags,
     }
   }
 })
