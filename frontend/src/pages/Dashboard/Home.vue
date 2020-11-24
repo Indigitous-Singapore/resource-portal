@@ -6,11 +6,13 @@
           <h4 class="xs-hide"><b>Filters</b></h4>
           <div class="xs-hide">
             <ExploreFilters
+              :clearCurrentCategory="clearCurrentCategory"
               :updateCurrentCategory="updateCurrentCategory"
               :selectedCategory="selectedCategory"
               :selectedTags="selectedTags"
               :categories="categories"
-              :tags="tags"
+              :tags="tagsState"
+              @update-selected-tags="updateSelectedTags"
               />
           </div>
           <q-dialog
@@ -27,11 +29,13 @@
 
               <q-card-section>
                 <ExploreFilters
+                  :clearCurrentCategory="clearCurrentCategory"
                   :updateCurrentCategory="updateCurrentCategory"
                   :selectedCategory="selectedCategory"
                   :selectedTags="selectedTags"
                   :categories="categories"
-                  :tags="tags"
+                  :tags="tagsState"
+                  @update-selected-tags="updateSelectedTags"
                   />
               </q-card-section>
             </q-card>
@@ -52,6 +56,7 @@
           >
           <ExploreSearch
             v-if="itemsState.items.length > 0"
+            @update-search="updateCurrentSearch"
             />
           <q-separator
             v-if="itemsState.items.length > 0"
@@ -77,7 +82,6 @@
 </template>
 
 <script lang="ts">
-import _ from 'lodash'
 import { defineComponent, onBeforeMount, ref, Ref, watch } from '@vue/composition-api'
 import { useItems } from '../../services/items'
 import { useTags } from '../../services/tags'
@@ -99,8 +103,6 @@ export default defineComponent({
   setup () {
     const loading = ref(true)
     const dialogIsOpen = ref(false)
-    // const defaultStateTags: Record<string, boolean> = {}
-    const tags: Ref<Record<number, string>> = ref({})
     const categories: Ref<Record<string, string>[]> = ref([])
     const { 
       state: itemsState,
@@ -115,8 +117,9 @@ export default defineComponent({
       getCategories
     } = useCategories()
 
-    const selectedCategory: Ref<string> = ref('all')
-    const selectedTags: Ref<Record<string, boolean>> = ref({})
+    const selectedCategory: Ref<string|null> = ref(null)
+    const selectedTags: Ref<number[]> = ref([])
+    const search: Ref<string> = ref('')
 
     /**
      * Lifecyle
@@ -133,9 +136,7 @@ export default defineComponent({
      */
     const getFilteredCategories = async () => {
       await getCategories()
-      const newCategories: Record<string, string>[] = [{
-        'all': 'All Categories'
-      }]
+      const newCategories: Record<string, string>[] = []
       for (let category of categoriesState.value) {
         const newCategory: Record<string, string> = {}
         newCategory[category.id] = String(category.title)
@@ -149,41 +150,55 @@ export default defineComponent({
      */
     const getFilteredTags = async () => {
       await getTags()
-      const newTags: Record<string, string> = {}
-      const newSelectedTags: Record<string, boolean> = {}
-      
-      tagsState.value.forEach(tag => {
-        newTags[tag.id] = String(tag.title)
-        newSelectedTags[tag.id] = true
-      })
-      tags.value = {...newTags}
-      selectedTags.value = newSelectedTags
     }
 
     /**
      * Gets the items based on the filters
      */
     const getFilteredItems = async () => {
-      const tags: string[] = []
-      Object.keys(selectedTags.value).forEach(tag => {
-        if(selectedTags.value[tag] === true){
-          tags.push(tag)
-        }
-      })
       await getItems(
-        [selectedCategory.value],
-        (tags.length > 0 ? tags : ['all']),
+        (selectedCategory.value === null) ? [] : [selectedCategory.value],
+        (selectedTags.value.length > 0) ? selectedTags.value : [],
+        search.value
       )
       loading.value = false
     }
 
     /**
-     * Updates the current FIELD to the selected one
+     * Updates the search
+     * 
+     * @param {string} s
+     */
+    const updateCurrentSearch = (s: string): string => {
+      search.value = s
+      return s
+    }
+
+    /**
+     * Updates the current category to the selected one
      * 
      * @param {string} key
      */
     const updateCurrentCategory = (key: string): void => {
       selectedCategory.value = key.toString()
+    }
+
+    /**
+     * clears the current category
+     * 
+     * @param {string} key
+     */
+    const clearCurrentCategory = (): void => {
+      selectedCategory.value = null
+    }
+
+    /**
+     * Updates the selected tags
+     * 
+     * @param {string} s
+     */
+    const updateSelectedTags = (tags: number[]): void => {
+      selectedTags.value = tags
     }
 
     /**
@@ -193,25 +208,25 @@ export default defineComponent({
       dialogIsOpen.value = !dialogIsOpen.value
     }
 
-
     /**
      * Observers
      */
-    watch(selectedTags, () => getFilteredItems())
-    watch(selectedCategory, async () => {
-      await getFilteredItems()
-    })
+    watch([selectedCategory, selectedTags, search], async () => await getFilteredItems())
 
     return {
       categories,
+      clearCurrentCategory,
       dialogIsOpen,
       loading,
       itemsState,
-      tags,
+      tagsState,
       toggleFilter,
+      search,
       selectedTags,
       selectedCategory,
       updateCurrentCategory,
+      updateCurrentSearch,
+      updateSelectedTags,
     }
   }
 })

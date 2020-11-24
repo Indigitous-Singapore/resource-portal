@@ -29,10 +29,11 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive, computed } from '@vue/composition-api'
+import  { Screen } from 'quasar'
+
 import config from '../../config/config'
 import { useItems } from '../../services/items'
 import ItemCard from '../Common/ItemCard.vue'
-import  { Screen } from 'quasar'
 
 export default defineComponent({
   name: 'ExploreGrid',

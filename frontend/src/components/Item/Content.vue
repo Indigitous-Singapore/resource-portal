@@ -13,12 +13,16 @@
         />
     </div>
     <div class="column col-4">
-      <ItemResources
-        :item="item"
-        />
-      <ItemLinks
-        :item="item"
-        />
+      <q-card>
+        <q-card-section>
+          <ItemResources
+            :item="item"
+            />
+          <ItemLinks
+            :item="item"
+            />
+        </q-card-section>
+      </q-card>
     </div>
   </div>
   <div class="q-mt-sm desktop-hide">

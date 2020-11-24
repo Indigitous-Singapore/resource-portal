@@ -14,6 +14,13 @@
         >
         {{ category[Object.keys(category)[0]] }}
       </q-item>
+      <q-item
+        :class="`bg-red-1 q-py-none item-category ${ selectedCategory === null ? 'hidden' : '' }`"
+        @click="clearCurrentCategory"
+        clickable
+        >
+        Clear&nbsp;&cross;
+      </q-item>
     </q-list>
   </div>
 
@@ -21,16 +28,21 @@
     <q-separator spaced="2em" inset="true" style="margin-left: -6px"/>
   </div>
 
-  <div class="item-tags">
+  <div
+    v-if="tags"
+    class="item-tags"
+    >
     <h5 class="text-grey-6 q-mb-sm xs-hide">TAGS</h5>
     <q-list
       id="item-tags">
       <q-checkbox
-        v-for="(tag, index) of selectedTags"
+        v-for="(tag, index) in tags"
         class="item-tag"
-        v-model="selectedTags[index]"
+        v-model="selectedTags"
+        :id="tag.id"
+        :val="tag.id"
         :key="index"
-        :label="tags[index]"
+        :label="tag.title"
         />
     </q-list>
   </div>
@@ -38,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, onMounted, ref, Ref, watch } from '@vue/composition-api'
 
 export default defineComponent({
   name: 'ExploreFilters',
@@ -49,10 +61,28 @@ export default defineComponent({
         return key
       }
     },
-    tags: Object,
+    clearCurrentCategory: {
+      type: Function,
+      default: () => {
+        return
+      }
+    },
+    tags: Array,
     categories: Array,
-    selectedTags: Object,
     selectedCategory: String,
+  },
+  setup(props, ctx) {
+    const selectedTags: Ref<Array<boolean>> = ref([])
+
+    onMounted(() => {
+      watch(selectedTags, () => {
+        ctx.emit('update-selected-tags', selectedTags.value)
+      })
+    })
+
+    return {
+      selectedTags,
+    }
   }
 })
 </script>

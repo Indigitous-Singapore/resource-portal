@@ -33,7 +33,7 @@ export default defineComponent({
       }
     }
   },
-  setup(props, ctx) {
+  setup() {
     const shareItem = (item: InterfaceItem) => {
       void share(
       `${item.title || ''}`,
