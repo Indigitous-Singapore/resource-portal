@@ -31,7 +31,7 @@
 
         <q-tab-panels v-model="data.tab" animated class="ndgt-inner-tabs">
           <q-tab-panel name="collections" class="q-pa-none">
-            <UnderConstruction />
+            <ComponentDashboardProfileCollections />
           </q-tab-panel>
 
           <q-tab-panel name="profile" class="q-my-lg q-px-none">
@@ -51,6 +51,7 @@
 import { defineComponent, reactive } from '@vue/composition-api'
 import ComponentDashboardProfileHeader from 'components/Dashboard/Profile/Header.vue'
 import ComponentDashboardProfilePersonal from 'components/Dashboard/Profile/Personal.vue'
+import ComponentDashboardProfileCollections from 'components/Dashboard/Profile/Collections.vue'
 import UnderConstruction from 'components/Dashboard/UnderConstruction.vue'
 import { useUser } from '../../services/user'
 
@@ -59,6 +60,7 @@ export default defineComponent({
   components: {
     ComponentDashboardProfileHeader,
     ComponentDashboardProfilePersonal,
+    ComponentDashboardProfileCollections,
     UnderConstruction
   },
   setup () {

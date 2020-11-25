@@ -138,6 +138,19 @@ export interface InterfaceItemMedia {
 }
 
 /**
+ * Collections
+ */
+export interface InterfaceCollection {
+  id: number;
+  user: InterfaceUser;
+  title: string;
+  published_at: string;
+  created_at: string;
+  updated_at: string;
+  items: InterfaceItem[]; 
+}
+
+/**
  * User
  */
 export interface InterfaceUser {
