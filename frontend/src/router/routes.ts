@@ -12,10 +12,18 @@ import { RouteConfig } from 'vue-router';
 const routes: RouteConfig[] = [
   {
     path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', redirect: '/explore' },
+      { path: 'about', name: 'about', component: () => import('pages/Pages/index.vue') },
+      { path: 'privacy', name: 'privacy', component: () => import('pages/Pages/index.vue') },
+    ]
+  },
+  {
+    path: '/explore',
     component: () => import('layouts/DashboardLayout.vue'),
     children: [
-      { path: '', redirect: { name: 'explore' }},
-      { path: 'explore', name:'explore', meta: {private: true}, component: () => import('pages/Dashboard/Home.vue') }
+      { path: '', name:'explore', meta: {private: true}, component: () => import('pages/Dashboard/Home.vue') }
     ]
   },
   {
@@ -31,14 +39,6 @@ const routes: RouteConfig[] = [
     children: [
       { path: '', redirect: { name: 'explore' }},
       { path: ':itemId', name: 'item', component: () => import('../pages/Dashboard/Item.vue') }
-    ]
-  },
-
-  {
-    path: '/about',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', name: 'about', component: () => import('pages/About/index.vue') }
     ]
   },
   {
