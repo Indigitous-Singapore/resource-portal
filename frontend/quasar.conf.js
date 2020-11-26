@@ -52,7 +52,7 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
       env: {
-        apiUrl: process.env.apiUrl || 'https://msm.indigitous.sg'
+        apiUrl: process.env.apiUrl || 'https://content.msmusic.edu.sg'
       },
 
       // transpile: false,

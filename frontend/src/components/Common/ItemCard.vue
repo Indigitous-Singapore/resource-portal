@@ -10,10 +10,10 @@
       <q-card-section
         class="content"
         >
-          <h5>{{ item.title }}</h5>
-          <p>{{ item.description_short }}</p>
+        <h5 class="title">{{ item.title }}</h5>
+        <p class="description">{{ item.description_short }}</p>
 
-        <div class="q-mt-lg">
+        <div class="media q-mt-lg">
           <q-btn
             v-for="(number, ext) of mediaExtensions"
             :key="ext"
@@ -85,8 +85,14 @@ export default defineComponent({
       0 3px 2px -2px rgba(0, 0, 0, 0.42);
     cursor: pointer;
   }
-  .content {
-    height: 200px;
+  .title {
+    height: 90px;
+  }
+  .description {
+    height: 80px;
+  }
+  .media {
+    height: 30px;
   }
 }
 .no-decoration {

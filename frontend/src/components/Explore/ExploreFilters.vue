@@ -134,5 +134,6 @@ export default defineComponent({
 }
 .item-tag {
   margin-left: -8px;
+  display: flex;
 }
 </style>

@@ -49,7 +49,8 @@
     },
     "collections": {
       "via": "items",
-      "collection": "collection"
+      "collection": "collection",
+      "private": true
     }
   }
 }
