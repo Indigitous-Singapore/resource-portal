@@ -1,3 +1,5 @@
+import { string } from "joi"
+
 /**
  * Generic interfaces
  */
@@ -168,4 +170,10 @@ export interface InterfaceUser {
   created_at: string|null;
   updated_at: string|null;
   createdAtFormatted: string|null;
+}
+
+export interface InterfacePage {
+  slug: string;
+  title: string;
+  content: string;
 }
