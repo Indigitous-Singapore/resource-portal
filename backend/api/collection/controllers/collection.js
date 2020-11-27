@@ -24,7 +24,7 @@ module.exports = {
     const { id } = ctx.params;
 
     const entity = await strapi.services.collection.findOne({
-      id,
+      id: ctx.params.id,
       'user.id': ctx.state.user.id
     });
     return sanitizeEntity(entity, { model: strapi.models.collection });
@@ -76,7 +76,7 @@ module.exports = {
   async delete(ctx) {
     //  Gets the collection
     const collection = await strapi.services.collection.findOne({
-      id,
+      id: ctx.params.id,
       'user.id': ctx.state.user.id
     })
 
