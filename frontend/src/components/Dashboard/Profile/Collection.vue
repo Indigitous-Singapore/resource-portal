@@ -15,7 +15,10 @@
         />
     </div>
   </div>
-  <div class="row">
+  <div
+    v-if="collection.items.length > 0"
+    class="row"
+    >
     <div
       v-for="(item, index) in collection.items"
       :key="index"
@@ -24,6 +27,17 @@
       <ItemCard
         :item="item"
         />
+    </div>
+  </div>
+  <div
+    v-else
+    class="row"
+    >
+    <div
+      class="column q-pa-sm col-xs-12 justify-center align-items"
+      style="min-height: 200px"
+      >
+      <p class="text-h6 text-bold text-center">You have no items in this collection.</p>
     </div>
   </div>
 </div>
