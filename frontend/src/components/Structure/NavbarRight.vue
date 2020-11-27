@@ -19,6 +19,9 @@
       <q-item to="/profile" clickable v-close-popup>
         <q-item-label class="flex items-center">Profile</q-item-label>
       </q-item>
+      <q-item to="/collections" clickable v-close-popup>
+        <q-item-label class="flex items-center">Collections</q-item-label>
+      </q-item>
       
       <q-separator/>
       

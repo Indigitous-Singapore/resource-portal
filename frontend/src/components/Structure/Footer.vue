@@ -54,12 +54,26 @@
   <q-toolbar>
     <div class="col-1"></div>
     <span class="q-mx-md text-caption">&copy; Copyright {{ currentYear }} | {{ config.app.organisation }}</span>
-    <!--
     <q-separator dark vertical inset spaced="md" class="q-my-md" />
-    <q-btn color="transparent" text-color="grey-5" dense flat no-caps padding="sm" label="Terms and Conditions" class="q-mx-md text-caption" />
+    <q-btn
+      dense
+      flat
+      no-caps
+      padding="sm"
+      label="About"
+      class="q-mx-md text-caption"
+      to="/about"
+      />
     <q-separator dark vertical inset spaced="md" class="q-my-md text-caption" />
-    <q-btn color="transparent" text-color="grey-5" dense flat no-caps padding="sm" label="Privacy" class="q-mx-md text-caption" />
-    -->
+    <q-btn
+      dense
+      flat
+      no-caps
+      padding="sm"
+      label="Privacy"
+      class="q-mx-md text-caption"
+      to="/privacy"
+      />
   </q-toolbar>
 </q-footer>
 </template>
