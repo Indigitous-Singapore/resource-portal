@@ -41,10 +41,8 @@ const fetchItems = async (
         })
       }
       if (tags.length > 0) {
-        tags.forEach((tag: number) => {
-          queryOptions._where.push({
-            tags_in: tag,
-          })
+        queryOptions._where.push({
+          tags_in: tags,
         })
       }
       if (search.length > 0) {
