@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from 'axios'
 import { reactive } from '@vue/composition-api'
-import _, { unset } from 'lodash'
+import _ from 'lodash'
 
 import config from '../config/config'
 import { InterfaceCollection } from 'src/interfaces'
