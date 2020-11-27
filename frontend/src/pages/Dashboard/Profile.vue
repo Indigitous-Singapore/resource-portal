@@ -63,10 +63,11 @@ export default defineComponent({
     ComponentDashboardProfileCollections,
     UnderConstruction
   },
-  setup () {
+  setup (_props, ctx) {
+    const section = ctx.root.$route.params.section
     const { user } = useUser()
     const data = reactive({
-      tab: 'profile',
+      tab: section || 'profile',
       splitterModel: 15
     })
 
