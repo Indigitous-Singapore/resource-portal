@@ -20,9 +20,8 @@
 </template>
 
 <script lang="ts">
-import { ref, Ref, onBeforeMount } from '@vue/composition-api'
+import { defineComponent, ref, Ref, onBeforeMount } from '@vue/composition-api'
 import { InterfacePage } from 'src/interfaces'
-import { defineComponent } from '@vue/composition-api'
 
 import { fetchPage } from '../../services/pages'
 import Loading from '../../components/Common/Loading.vue'
@@ -33,14 +32,19 @@ export default defineComponent({
   components: {
     Loading,
   },
-  setup (props, ctx) {
-    const slug = ctx.root.$route.path
+  props: {
+    slug: {
+      type: String,
+      default: ''
+    }
+  },
+  setup (props) {
     const loading = ref(true)
     const title: Ref<string | undefined> = ref()
     const content: Ref<string | undefined> = ref()
 
     onBeforeMount(async () => {
-      const page: InterfacePage | undefined = await fetchPage(String(slug).split('/')[1])
+      const page: InterfacePage | undefined = await fetchPage(props.slug)
 
       if (page !== undefined) {
         title.value = page.title

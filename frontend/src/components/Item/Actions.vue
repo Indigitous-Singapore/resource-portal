@@ -4,10 +4,30 @@
   >
   <q-btn flat round color="red" icon="favorite_border" />
   <q-btn-dropdown class="collections" flat round color="teal" icon="bookmark_border">
-      <q-list>
+      <q-list dense separator>
         <q-item clickable v-close-popup @click="createNewCollection">
           <q-item-section>
-            <q-item-label>Create New Collection</q-item-label>
+            <q-item-label>&plus;&nbsp;Create&nbsp;Collection</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-separator />
+        <q-item
+          active-class="bg-green-2 text-grey-9"
+          v-for="(collection, index) in collectionsState.collections"
+          :active="itemCollections.includes(collection.id)"
+          :key="collection.updated_at"
+          :clickable="true"
+          @click="() => toggleCollection(collectionsState.collections[index].id, !itemCollections.includes(collection.id))"
+          >
+          <q-item-section
+            >
+            <q-item-label class="flex justify-between">
+              {{ collectionsState.collections[index].title }}
+              <q-icon
+                :class="itemCollections.includes(collection.id) ? '' : 'hidden'"
+                name="clear"
+              />
+            </q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -24,9 +44,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, onBeforeMount, ref, Ref, watch } from '@vue/composition-api'
 import config from 'src/config/config'
-import { InterfaceItem } from 'src/interfaces'
+import { InterfaceCollection, InterfaceItem } from 'src/interfaces'
 
 import { useCollections } from '../../services/collections'
 import { share } from '../../utilities/share'
@@ -43,8 +63,14 @@ export default defineComponent({
       }
     }
   },
-  setup() {
-    const { createCollection } = useCollections()
+  setup(props) {
+    const {
+      addItem,
+      createCollection, 
+      removeItem,
+      state: collectionsState,
+    } = useCollections()
+    const itemCollections: Ref<number[]> = ref([])
     const shareItem = (item: InterfaceItem) => {
       void share(
       `${item.title || ''}`,
@@ -53,17 +79,72 @@ export default defineComponent({
       )
     }
 
+    onBeforeMount(()=>{
+      getItemCollections()
+    })
+
     /**
      * Create new collection
      */
     const createNewCollection = async () => {
       const title = String(prompt("Please enter your collection's title"))
-      await createCollection(title)
+      const collection: InterfaceCollection|undefined = await createCollection(title)
+
+      if(collection !== undefined) {
+        await addToCollection(collection.id)
+      }
     }
 
+    /**
+     * Toggle Collection
+     */
+    const toggleCollection = async (collectionId: number, add: boolean) => {
+      if(add) {
+        await addToCollection(collectionId)
+      } else {
+        await removeFromCollection(collectionId)
+      }
+    }
+
+    /**
+     * Add to collection
+     */
+    const addToCollection = async (collectionId: number) => {
+      await addItem(props.item.id, collectionId)
+      getItemCollections()
+    }
+
+    /**
+     * Remove from collection
+     */
+    const removeFromCollection = async (collectionId: number) => {
+      await removeItem(Number(props.item.id), collectionId)
+      getItemCollections()
+    }
+
+    /**
+     * Filters for the collections that have items
+     */
+    const getItemCollections = () => {
+      console.log(collectionsState.collections)
+      console.log('item', props.item)
+      const collections: InterfaceCollection[] = collectionsState.collections.filter(collection => {
+        return collection.items.find(item => item.id === props.item.id) !== undefined
+      })
+      itemCollections.value = collections.map(collection => collection.id)
+    }
+
+    watch(
+      () => collectionsState.collections,
+      getItemCollections
+    )
+
     return {
+      collectionsState,
       createNewCollection,
+      itemCollections,
       shareItem,
+      toggleCollection,
     }
   }
 });
