@@ -51,7 +51,7 @@ module.exports = {
   async update(ctx) {
     //  Gets the collection
     const collection = await strapi.services.collection.findOne({
-      id,
+      id: ctx.params.id,
       'user.id': ctx.state.user.id
     })
 
@@ -89,5 +89,4 @@ module.exports = {
     const entity = await strapi.services.collection.delete({ id });
     return sanitizeEntity(entity, { model: strapi.models.collection });
   },
-
 };
