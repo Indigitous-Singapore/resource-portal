@@ -3,8 +3,16 @@
   v-if="collection"
   >
   <div class="row">
-    <div class="col-xs-12">
+    <div class="q-pa-sm col-xs-9">
       <div class="text-h5 text-bold q-mb-md">{{ collection.title }}</div>
+    </div>
+    <div class="q-pa-sm col-xs-3 text-right">
+      <q-btn
+        icon-right="delete"
+        label="Delete"
+        color="accent"
+        @click="destroyCollection"
+        />
     </div>
   </div>
   <div class="row">
@@ -23,6 +31,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
+import { useCollections } from 'src/services/collections'
 import ItemCard from '../../Common/ItemCard.vue'
 
 
@@ -34,6 +43,21 @@ export default defineComponent({
   props: {
     collection: {
       type: Object
+    }
+  },
+  setup(props) {
+    const { deleteCollection } = useCollections()
+
+    const destroyCollection = async () => {
+      if(props.collection) {
+        if(confirm(`Please confirm that you want to delete: ${String(props.collection.title)}`)) {
+          await deleteCollection(props.collection.id)
+        }
+      }
+    }
+
+    return {
+      destroyCollection
     }
   }
 })

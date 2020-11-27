@@ -15,8 +15,8 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', redirect: '/explore' },
-      { path: 'about', name: 'about', component: () => import('pages/Pages/index.vue') },
-      { path: 'privacy', name: 'privacy', component: () => import('pages/Pages/index.vue') },
+      { path: 'about', name: 'about', component: () => import('pages/Pages/About.vue') },
+      { path: 'privacy', name: 'privacy', component: () => import('pages/Pages/Privacy.vue') },
     ]
   },
   {

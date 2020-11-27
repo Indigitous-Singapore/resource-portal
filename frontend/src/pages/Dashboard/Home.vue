@@ -86,6 +86,7 @@ import { defineComponent, onBeforeMount, ref, Ref, watch } from '@vue/compositio
 import { useItems } from '../../services/items'
 import { useTags } from '../../services/tags'
 import { useCategories } from '../../services/categories'
+import { useCollections } from '../../services/collections'
 import ExploreBanner from '../../components/Explore/ExploreBanner.vue'
 import ExploreContent from '../../components/Explore/ExploreContent.vue'
 import ExploreFilters from '../../components/Explore/ExploreFilters.vue'
@@ -116,6 +117,9 @@ export default defineComponent({
       state: categoriesState,
       getCategories
     } = useCategories()
+    const {
+      getCollections
+    } = useCollections()
 
     const selectedCategory: Ref<string|null> = ref(null)
     const selectedTags: Ref<number[]> = ref([])
@@ -128,6 +132,7 @@ export default defineComponent({
       await getFilteredCategories()
       await getFilteredTags()
       await getFilteredItems()
+      await getCollections()
     })
 
 
