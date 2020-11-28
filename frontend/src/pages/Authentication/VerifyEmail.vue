@@ -1,14 +1,12 @@
 <template>
   <q-page class="container column justify-center items-center">
-    <q-card class="login">
+    <q-card class="verify-email">
       <q-card-section>
-        <h3 class="text-center q-mb-none"><b>Welcome Back!</b></h3>
-        <p class="text-center q-mb-none">Log in to continue</p>
+        <h3 class="text-center q-mb-none"><b>Verify Your Email</b></h3>
       </q-card-section>
 
       <q-card-section class="q-pt-md q-mb-md">
-        <AuthenticationLoginForm />
-        <div class="q-pt-md text-body2"><router-link to="/forgot-password">Forgot your password?</router-link></div>
+        <AuthenticationVerifyEmail />
       </q-card-section>
 
       <q-separator />
@@ -22,18 +20,20 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import AuthenticationLoginForm from '../../components/Authentication/LoginForm.vue'
+import AuthenticationVerifyEmail from '../../components/Authentication/VerifyEmail.vue'
 
 export default defineComponent({
-  name: 'PageLogin',
+  name: 'PageVerifyEmail',
   components: {
-    AuthenticationLoginForm,
+    AuthenticationVerifyEmail,
   }
 });
 </script>
 
 <style scoped lang="scss">
-.login{
+.verify-email{
+  max-width: 400px;
+
   @media (min-width: 767px) {
     margin-top: 2em;
     margin-bottom: 2em;

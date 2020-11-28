@@ -1,5 +1,3 @@
-import { string } from "joi"
-
 /**
  * Generic interfaces
  */
@@ -48,6 +46,22 @@ export interface InterfaceStateAuthenticationLogin {
 export interface InterfaceLoginResponse {
   jwt: string|null;
   user: InterfaceUser;
+}
+
+export interface InterfaceAuthenticationErrors {
+  email: string|null;
+  password: string|null;
+  passwordConfirmation: string|null;
+  code: string|null;
+  others: string|null;
+}
+export interface InterfaceSignupErrors {
+  firstName: string|null;
+  lastName: string|null;
+  email: string|null;
+  password: string|null;
+  passwordconfirm: string|null;
+  others: string|null;
 }
 
 export interface InterfaceLoginError {

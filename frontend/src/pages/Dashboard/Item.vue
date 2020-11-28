@@ -23,13 +23,15 @@
 
 <script lang="ts">
 import { ref, Ref, watch, onBeforeMount } from '@vue/composition-api'
-import { useItems } from '../../services/items'
 import { InterfaceItem } from 'src/interfaces'
 import { defineComponent } from '@vue/composition-api'
 
 import ItemHeader from '../../components/Item/Header.vue'
 import ItemContent from '../../components/Item/Content.vue'
 import Loading from '../../components/Common/Loading.vue'
+
+import { useItems } from '../../services/items'
+import { useCollections } from '../../services/collections'
 
 export default defineComponent({
   name: 'PageItemsSingle',
@@ -44,12 +46,14 @@ export default defineComponent({
     const item: Ref<InterfaceItem | undefined> = ref()
 
     const { state, getItem } = useItems()
+    const { getCollections } = useCollections()
 
     const updateItem = () => {
       item.value = state.items.find(item => String(item.id) === id)
     }
 
     onBeforeMount(async () => {
+      await getCollections()
       await getItem(ctx.root.$route.params.itemId)
       updateItem()
     })
