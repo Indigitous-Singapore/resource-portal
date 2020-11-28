@@ -2,7 +2,6 @@
 <div
   class="actions"
   >
-  <q-btn flat round color="red" icon="favorite_border" />
   <q-btn-dropdown class="collections" flat round color="teal" icon="bookmark_border">
       <q-list dense separator>
         <q-item clickable v-close-popup @click="createNewCollection">
