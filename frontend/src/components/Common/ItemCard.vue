@@ -67,6 +67,10 @@ export default defineComponent({
       })
     }
 
+    if (item && item.link && Array.isArray(item.link) && item.link.length > 0) {
+      mediaExtensions['links'] = isNaN(mediaExtensions['links']) ? 1 : mediaExtensions['links'] + 1
+    }
+
     return {
       mediaExtensions,
     }
