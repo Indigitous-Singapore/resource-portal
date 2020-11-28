@@ -15,12 +15,28 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', redirect: '/explore' },
+      { path: 'dashboard', redirect: '/explore' },
       { path: 'about', name: 'about', component: () => import('pages/Pages/About.vue') },
       { path: 'privacy', name: 'privacy', component: () => import('pages/Pages/Privacy.vue') },
       { path: 'register', name:'register', component: () => import('pages/Authentication/Signup.vue') },
       { path: 'forgot-password', name: 'forgot-password', component: () => import('pages/Authentication/ForgotPassword.vue') },
+      { path: 'reset-password', name: 'reset-password', component: () => import('pages/Authentication/ResetPassword.vue') },
       { path: 'login', name: 'login', component: () => import('pages/Authentication/Login.vue') },
       { path: 'logout', name: 'logout', component: () => import('pages/Authentication/Logout.vue') },
+      { path: 'verify-email', name:'verify-email', component: () => import('pages/Authentication/VerifyEmail.vue') },
+      { path: 'email-confirmation', name:'email-confirmation', component: () => import('pages/Authentication/EmailConfirmation.vue') },
+    ]
+  },
+  {
+    path: '/auth',
+    children: [
+      { path: 'register', redirect: '/register' },
+      { path: 'login', redirect: '/login' },
+      { path: 'logout', redirect: '/logout' },
+      { path: 'forgot-password', redirect: '/forgot-password' },
+      { path: 'reset-password', redirect: '/reset-password' },
+      { path: 'email-confirmation', redirect: '/email-confirmation' },
+      { path: 'verify-email', redirect: '/verify-email' },
     ]
   },
   {
