@@ -67,6 +67,11 @@
     "collections": {
       "via": "user",
       "collection": "collection"
+    },
+    "confirmationToken": {
+      "type": "string",
+      "configurable": false,
+      "private": true
     }
   }
 }
