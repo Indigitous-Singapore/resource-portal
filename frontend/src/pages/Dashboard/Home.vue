@@ -54,6 +54,7 @@
           v-else
           class="col-12 col-sm-9"
           >
+          <!--
           <ExploreSearch
             v-if="itemsState.items.length > 0"
             @update-search="updateCurrentSearch"
@@ -62,6 +63,7 @@
             v-if="itemsState.items.length > 0"
             spaced="xl"
             />
+          -->
           <h3>
             <b>Search Results</b>
             <q-btn
