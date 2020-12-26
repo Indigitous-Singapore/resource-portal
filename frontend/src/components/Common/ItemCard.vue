@@ -1,64 +1,45 @@
 <template>
-  <q-card
-    v-if="item"
-    class="item-card"
-    >
-    <router-link
-      class="no-decoration"
-      :to="`/items/${item.id}`"
-      >
-      <q-card-section
-        class="content"
-        >
-        <h5 class="title">{{ item.title }}</h5>
-        <p class="description">{{ item.description_short }}</p>
-
-        <div class="media q-mt-lg">
-          <q-btn
-            v-for="(number, ext) of mediaExtensions"
-            :key="ext"
-            :label="ext"
-            round
-            size="sm"
-            class="q-pa-xs q-mr-sm"
-            >
-            <q-badge
-              size="xs"
-              floating
-              transparent
-              >
-              {{ number }}
-            </q-badge>
-          </q-btn>
-        </div>
-      </q-card-section>
-    </router-link>
-
-    <q-card-actions align="right">
-      <ItemActions
-        :item="item"
-        />
-    </q-card-actions>
-  </q-card>
+  <ItemCardNarrow
+    v-if="isMobile"
+    :item="item"
+    :category="category"
+    :formattedUpdatedAt="formattedUpdatedAt"
+    :mediaExtensions="mediaExtensions"
+    />
+  <ItemCardExpanded
+    v-else
+    :item="item"
+    :category="category"
+    :formattedUpdatedAt="formattedUpdatedAt"
+    :mediaExtensions="mediaExtensions"
+    />
 </template>
 
 <script lang="ts">
+import { Platform } from 'quasar'
+import dayjs from 'dayjs'
 import { defineComponent, PropType } from '@vue/composition-api'
 
 import { InterfaceItem, InterfaceItemMedia } from '../../interfaces'
 import ItemActions from '../Item/Actions.vue'
 
+import ItemCardExpanded from './ItemCard.expanded.vue'
+import ItemCardNarrow from './ItemCard.narrow.vue'
+
 export default defineComponent({
   name: 'ItemCard',
   components: {
     ItemActions,
+    ItemCardExpanded,
+    ItemCardNarrow,
   },
   props: {
     item: Object as PropType<InterfaceItem>
   },
   setup(props) {
-    const {item} = props
+    const { item } = props
     const mediaExtensions: Record<string, number> = {}
+    const formattedUpdatedAt = dayjs(item?.updated_at).format('DD MMM YYYY')
 
     if (item && item.media && Array.isArray(item.media)) {
       item.media.forEach((media: InterfaceItemMedia) => {
@@ -72,31 +53,59 @@ export default defineComponent({
     }
 
     return {
+      category: item?.categories[0].title?.toUpperCase(),
+      formattedUpdatedAt,
       mediaExtensions,
+      isMobile: Platform.is.mobile as boolean,
     }
   }
 })
 </script>
 
+<style lang="scss">
+.resources {
+  align-items: center;
+
+  .cursor-pointer {
+    padding-right: 0;
+    margin-left: -5px;
+    align-items: flex-start;
+    min-width: 30px;
+  }
+  .category {
+    font-size: 0.7em;
+  }
+}
+</style>
+
 <style scoped lang="scss">
 .item-card {
-  transition: box-shadow 0.2s ease-in-out;
-
-  &:hover {
-    box-shadow: 
-      0 1px 10px rgba(0, 0, 0, 0.5),
-      0 2px 4px rgba(0, 0, 0, 0.44),
-      0 3px 2px -2px rgba(0, 0, 0, 0.42);
-    cursor: pointer;
+  border-top: 1px solid $grey-4;
+  .content {
+    width: calc(100% - 100px)
+  }
+  .details {
+    height: 57px;
+  }
+  .category-image {
+    height: 100px;
+    width: 100px;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
   .title {
-    height: 90px;
+    font-weight: 600;
+    line-height: 1;
   }
-  .description {
-    height: 80px;
+  .media-extension {
+    font-size: 0.6em;
+    padding: 0 1em;
+    height: 1.9em;
+    display: flex;
   }
-  .media {
-    height: 30px;
+
+  .resource {
+    border-top: 1px solid $grey-4;
   }
 }
 .no-decoration {

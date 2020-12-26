@@ -2,7 +2,14 @@
 <div
   class="actions"
   >
-  <q-btn-dropdown class="collections" flat round color="teal" icon="bookmark_border">
+  <q-btn-dropdown
+    class="collections"
+    flat
+    round
+    padding="none"
+    :color="isInACollection() ? 'teal' : ''"
+    :icon="isInACollection() ? 'bookmark' : 'bookmark_border'"
+    >
       <q-list dense separator>
         <q-item clickable v-close-popup @click="createNewCollection">
           <q-item-section>
@@ -34,7 +41,8 @@
   <q-btn
     flat
     round
-    color="primary"
+    class="q-ml-md"
+    padding="none"
     icon="share"
     v-if="item"
     @click="() => shareItem(item)"
@@ -125,12 +133,19 @@ export default defineComponent({
      * Filters for the collections that have items
      */
     const getItemCollections = () => {
-      console.log(collectionsState.collections)
-      console.log('item', props.item)
       const collections: InterfaceCollection[] = collectionsState.collections.filter(collection => {
         return collection.items.find(item => item.id === props.item.id) !== undefined
       })
       itemCollections.value = collections.map(collection => collection.id)
+    }
+
+    /**
+     * Checks if in a collection
+     */
+    const isInACollection = () => {
+      const collectionIds = collectionsState.collections.map(collection => collection.id)
+      const intersect = itemCollections.value.filter(value => collectionIds.includes(value))
+      return intersect.length > 0
     }
 
     watch(
@@ -142,6 +157,7 @@ export default defineComponent({
       collectionsState,
       createNewCollection,
       itemCollections,
+      isInACollection,
       shareItem,
       toggleCollection,
     }

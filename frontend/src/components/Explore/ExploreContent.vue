@@ -12,7 +12,7 @@
       :rows-per-page-options="rowsPerPageOptions"
     >
       <template v-slot:item="props">
-        <div class="q-pa-sm col-xs-12 col-sm-6 col-md-4">
+        <div class="col-xs-12">
           <ItemCard
             :item="props.row"
             />
