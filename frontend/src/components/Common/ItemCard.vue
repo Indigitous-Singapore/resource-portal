@@ -1,147 +1,37 @@
 <template>
-  <div class="row item-card" v-if="item">
-      <div class="category-image">
-        <q-img
-          src="/assets/musicfile.jpg"
-          :ratio="1"
-          />
-      </div>
-      <div class="content">
-        <div class="row details">
-          <div class="column col-xs-8 q-pt-md q-px-md title">
-            <span>{{ item.title }}</span>
-          </div>
-          <div class="column col-xs-2 justify-center text-center">
-            <span class="color-grey-6">{{ formattedUpdatedAt }}</span>
-          </div>
-          <div class="column col-xs-2 justify-center text-right">
-            <ItemActions
-              :item="item"
-              />
-          </div>
-        </div>
-        <div class="column" style="margin-bottom: 5px">
-            <q-expansion-item
-              switch-toggle-side
-              header-class="resources"
-              expand-icon="arrow_right"
-              expanded-icon="arrow_drop_down"
-            >
-              <template v-slot:header>
-                <div class="row fit">
-                  <span class="category flex items-center text-accent">
-                    {{ category }}
-                  </span>
-                  <q-badge
-                    v-for="(number, ext) of mediaExtensions"
-                    :key="ext"
-                    class="q-ml-sm media-extension"
-                    outline
-                    align="middle"
-                    text-color="black"
-                    >
-                    {{ ext.toUpperCase() }}
-                  </q-badge>
-                </div>
-              </template>
-              <div class="column q-pl-lg">
-                  <div
-                    v-for="resource in item.media"
-                    :key="resource.id"
-                    class="row items-center resource"
-                    >
-                    <div class="column col-xs-6 q-py-sm">
-                      <span class="text-body2 q-pl-sm">
-                        <q-icon
-                          v-if="resource.ext === '.mp3'"
-                          name="music_note"
-                          />
-                        <q-icon
-                          v-else
-                          name="description"
-                          />
-                        {{ resource.name }}
-                      </span>
-                    </div>
-                    <div class="column col-xs-1 justify-center items-center">
-                      <q-badge
-                        class="media-extension"
-                        outline
-                        align="middle"
-                        text-color="black"
-                        >
-                        {{ resource.ext.toUpperCase() }}
-                      </q-badge>
-                    </div>
-                    <div class="column col-xs-5 justify-center items-end">
-                      <q-btn
-                        type="a"
-                        target="_blank"
-                        :href="resource.url"
-                        padding="none"
-                        flat
-                        size="sm"
-                        color="grey-5"
-                        icon="cloud_download"
-                        label="Download"
-                        no-caps
-                        />
-                    </div>
-                  </div>
-                  <div
-                    v-for="resource in item.link"
-                    :key="resource.title"
-                    class="row resource"
-                    >
-                    <div class="column justify-center col-xs-6 q-py-sm">
-                      <span class="text-body2 q-pl-sm">
-                        <q-icon name="tv"/>
-                        {{ resource.title }}
-                      </span>
-                    </div>
-                    <div class="column col-xs-1 justify-center items-center">
-                      <q-badge
-                        class="media-extension"
-                        outline
-                        align="middle"
-                        text-color="black"
-                        >
-                        LINK
-                      </q-badge>
-                    </div>
-                    <div class="column col-xs-5 justify-center items-end">
-                      <q-btn
-                        type="a"
-                        target="_blank"
-                        :href="resource.url"
-                        padding="none"
-                        flat
-                        size="sm"
-                        color="grey-5"
-                        icon="live_tv"
-                        label="Watch on YouTube"
-                        no-caps
-                        />
-                    </div>
-                  </div>
-              </div>
-            </q-expansion-item>
-        </div>
-      </div>
-  </div>
+  <ItemCardNarrow
+    v-if="isMobile"
+    :item="item"
+    :category="category"
+    :formattedUpdatedAt="formattedUpdatedAt"
+    :mediaExtensions="mediaExtensions"
+    />
+  <ItemCardExpanded
+    v-else
+    :item="item"
+    :category="category"
+    :formattedUpdatedAt="formattedUpdatedAt"
+    :mediaExtensions="mediaExtensions"
+    />
 </template>
 
 <script lang="ts">
+import { Platform } from 'quasar'
 import dayjs from 'dayjs'
 import { defineComponent, PropType } from '@vue/composition-api'
 
 import { InterfaceItem, InterfaceItemMedia } from '../../interfaces'
 import ItemActions from '../Item/Actions.vue'
 
+import ItemCardExpanded from './ItemCard.expanded.vue'
+import ItemCardNarrow from './ItemCard.narrow.vue'
+
 export default defineComponent({
   name: 'ItemCard',
   components: {
     ItemActions,
+    ItemCardExpanded,
+    ItemCardNarrow,
   },
   props: {
     item: Object as PropType<InterfaceItem>
@@ -166,6 +56,7 @@ export default defineComponent({
       category: item?.categories[0].title?.toUpperCase(),
       formattedUpdatedAt,
       mediaExtensions,
+      isMobile: Platform.is.mobile as boolean,
     }
   }
 })

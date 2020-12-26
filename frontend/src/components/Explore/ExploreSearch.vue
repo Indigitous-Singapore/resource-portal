@@ -1,12 +1,18 @@
 <template>
    <q-input
       debounce="500"
-      filled
-      placeholder="Search by Title"
+      outlined
+      rounded
+      placeholder="Search Resources"
       v-model="searchValue"
+      bg-color="white"
+      class="full-width"
     >
-      <template v-slot:append>
-        <q-icon name="search" />
+      <template v-slot:prepend>
+        <q-icon
+          class="q-pl-md q-pr-sm"
+          name="search"
+          />
       </template>
     </q-input>
 </template>

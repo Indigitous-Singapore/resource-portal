@@ -6,6 +6,7 @@
     class="collections"
     flat
     round
+    padding="none"
     :color="isInACollection() ? 'teal' : ''"
     :icon="isInACollection() ? 'bookmark' : 'bookmark_border'"
     >
@@ -40,6 +41,8 @@
   <q-btn
     flat
     round
+    class="q-ml-md"
+    padding="none"
     icon="share"
     v-if="item"
     @click="() => shareItem(item)"

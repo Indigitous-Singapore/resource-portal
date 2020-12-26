@@ -1,9 +1,25 @@
 <template>
   <q-page>
+    <div>
+      <q-img
+        src="https://cdn.quasar.dev/img/parallax2.jpg"
+        :ratio="isMobile ? 1/1 : 5/1"
+        >
+        <div class="text-center absolute-full text-subtitle2 flex flex-center column">
+          <h3 class="text-h3 q-mb-sm">More Than A Song</h3>
+          <h6 class="text-h6">Discover worship resources readily available to your ministry</h6>
+          <div class="search">
+            <ExploreSearch
+              @update-search="updateCurrentSearch"
+              />
+          </div>
+        </div>
+      </q-img>
+    </div>
     <div class="container">
-      <div class="row q-py-xl">
+      <div class="row q-py-md">
         <div class="col-12 col-sm-3">
-          <h4 class="xs-hide"><b>Filters</b></h4>
+          <h4 class="xs-hide"><b>FILTER BY</b></h4>
           <div class="xs-hide">
             <ExploreFilters
               :clearCurrentCategory="clearCurrentCategory"
@@ -16,13 +32,17 @@
               />
           </div>
           <q-dialog
+            full-width
+            full-height
+            square
+            maximized
             v-model="dialogIsOpen"
             >
             <q-card
               class="dialog-filters"
               >
               <q-card-section class="row items-center q-pb-none">
-                <div class="text-h6">Filters</div>
+                <div class="text-h6">FILTER BY</div>
                 <q-space />
                 <q-btn icon="close" flat round dense v-close-popup />
               </q-card-section>
@@ -54,23 +74,14 @@
           v-else
           class="col-12 col-sm-9"
           >
-          <!--
-          <ExploreSearch
-            v-if="itemsState.items.length > 0"
-            @update-search="updateCurrentSearch"
-            />
-          <q-separator
-            v-if="itemsState.items.length > 0"
-            spaced="xl"
-            />
-          -->
           <h3>
-            <b>Search Results</b>
+            <b class="text-accent">Search Results</b>
             <q-btn
               icon="filter_alt"
-              class="sm-hide md-hide lg-hide xl-hide q-mt-xs float-right"
+              padding="none"
+              class="sm-hide md-hide lg-hide xl-hide q-mt-sm float-right"
               color="accent"
-              label="Filters"
+              label="Filter"
               @click="toggleFilter"
               flat
               size="sm"
@@ -93,6 +104,7 @@ import ExploreBanner from '../../components/Explore/ExploreBanner.vue'
 import ExploreContent from '../../components/Explore/ExploreContent.vue'
 import ExploreFilters from '../../components/Explore/ExploreFilters.vue'
 import ExploreSearch from '../../components/Explore/ExploreSearch.vue'
+import { Platform } from 'quasar'
 
 
 export default defineComponent({
@@ -226,6 +238,7 @@ export default defineComponent({
       dialogIsOpen,
       loading,
       itemsState,
+      isMobile: Platform.is.mobile as Boolean,
       tagsState,
       toggleFilter,
       search,
@@ -242,5 +255,9 @@ export default defineComponent({
 <style scoped lang="scss">
 .dialog-filters {
   width: 100%;
+}
+.search {
+  width: 100%;
+  max-width: 600px;
 }
 </style>
