@@ -53,85 +53,8 @@
                 </div>
               </template>
               <div class="column q-pl-lg">
-                  <div
-                    v-for="resource in item.media"
-                    :key="resource.id"
-                    class="row items-center resource"
-                    >
-                    <div class="column col-xs-6 q-py-sm">
-                      <span class="text-body2 q-pl-sm">
-                        <q-icon
-                          v-if="resource.ext === '.mp3'"
-                          name="music_note"
-                          />
-                        <q-icon
-                          v-else
-                          name="description"
-                          />
-                        {{ resource.name }}
-                      </span>
-                    </div>
-                    <div class="column col-xs-1 justify-center items-center">
-                      <q-badge
-                        class="media-extension"
-                        outline
-                        align="middle"
-                        text-color="black"
-                        >
-                        {{ resource.ext.toUpperCase() }}
-                      </q-badge>
-                    </div>
-                    <div class="column col-xs-5 justify-center items-end">
-                      <q-btn
-                        type="a"
-                        target="_blank"
-                        :href="resource.url"
-                        padding="none"
-                        flat
-                        size="sm"
-                        color="grey-5"
-                        icon="cloud_download"
-                        label="Download"
-                        no-caps
-                        />
-                    </div>
-                  </div>
-                  <div
-                    v-for="resource in item.link"
-                    :key="resource.title"
-                    class="row resource"
-                    >
-                    <div class="column justify-center col-xs-6 q-py-sm">
-                      <span class="text-body2 q-pl-sm">
-                        <q-icon name="tv"/>
-                        {{ resource.title }}
-                      </span>
-                    </div>
-                    <div class="column col-xs-1 justify-center items-center">
-                      <q-badge
-                        class="media-extension"
-                        outline
-                        align="middle"
-                        text-color="black"
-                        >
-                        LINK
-                      </q-badge>
-                    </div>
-                    <div class="column col-xs-5 justify-center items-end">
-                      <q-btn
-                        type="a"
-                        target="_blank"
-                        :href="resource.url"
-                        padding="none"
-                        flat
-                        size="sm"
-                        color="grey-5"
-                        icon="live_tv"
-                        label="Watch on YouTube"
-                        no-caps
-                        />
-                    </div>
-                  </div>
+                <ItemResources :item="item" />
+                <ItemLinks :item="item" />
               </div>
             </q-expansion-item>
         </div>
@@ -143,11 +66,15 @@
 import { defineComponent, PropType } from '@vue/composition-api'
 import { InterfaceItem } from '../../interfaces'
 import ItemActions from '../Item/Actions.vue'
+import ItemLinks from '../Item/Links.vue'
+import ItemResources from '../Item/Resources.vue'
 
 export default defineComponent({
   name: 'ItemCardExpanded',
   components: {
     ItemActions,
+    ItemLinks,
+    ItemResources,
   },
   props: {
     category: String,
@@ -157,22 +84,6 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss">
-.resources {
-  align-items: center;
-
-  .cursor-pointer {
-    padding-right: 0;
-    margin-left: -5px;
-    align-items: flex-start;
-    min-width: 30px;
-  }
-  .category {
-    font-size: 0.7em;
-  }
-}
-</style>
 
 <style scoped lang="scss">
 .item-card {
@@ -198,10 +109,6 @@ export default defineComponent({
     padding: 0 1em;
     height: 1.9em;
     display: flex;
-  }
-
-  .resource {
-    border-top: 1px solid $grey-4;
   }
 }
 .no-decoration {

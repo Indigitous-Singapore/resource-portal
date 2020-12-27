@@ -1,29 +1,44 @@
 <template>
 <div
+  class="row resources"
   v-if="item.link.length > 0"
-  class="q-mb-lg"
   >
-  <h4 class="q-mb-sm">Links</h4>
-  <q-list bordered separator>
-    <q-item
-      v-for="(link, key) in item.link"
-      :key="key"
-      v-ripple
-      clickable
-      class="q-py-md"
-      @click="() => open(link.url)"
-      >
-      <q-item-section>
-        <p class="text-subtitle2 q-mb-none"><b>{{ link.title }}</b></p>
-      </q-item-section>
-      <q-item-section avatar>
-        <q-icon
-          name="open_in_new"
-          style="font-size: 1em"
-          />
-      </q-item-section>
-    </q-item>
-  </q-list>
+  <div
+    v-for="resource in item.link"
+    :key="resource.title"
+    class="row items-center resource full-width"
+    >
+    <div class="column justify-center col-xs-6 col-sm-8 q-py-sm">
+      <span class="text-body2 text-bold">
+        <q-icon name="tv"/>
+        {{ resource.title }}
+      </span>
+    </div>
+    <div class="column col-xs-1 justify-center items-center">
+      <q-badge
+        class="media-extension q-px-sm text-center"
+        outline
+        align="middle"
+        text-color="black"
+        >
+        <small>LINK</small>
+      </q-badge>
+    </div>
+    <div class="column col-xs-5 col-sm-3 justify-center items-end">
+      <q-btn
+        type="a"
+        target="_blank"
+        :href="resource.url"
+        padding="none"
+        flat
+        size="sm"
+        color="grey-5"
+        icon="live_tv"
+        label="Watch on YouTube"
+        no-caps
+        />
+    </div>
+  </div>
 </div>
 </template>
 

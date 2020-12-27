@@ -1,16 +1,14 @@
 <template>
   <q-drawer
-    v-model="leftDrawerOpen"
-    bordered
-    class='full-height'
+    :width="screenWidth"
+    side="right"
+    v-model="rightDrawerOpen"
+    no-swipe-backdrop
+    no-swipe-close
+    no-swipe-open
   >
-    <q-scroll-area class="fit">
+    <q-scroll-area class="fit q-pt-xl q-mt-md">
       <q-list>
-        <q-item>
-          <q-item-section class="col justify-center q-py-lg">
-            <img src="../../../assets/logo.png" style="width:150px" class="self-center" />
-          </q-item-section>
-        </q-item>
         <q-item>
           <q-item-section>
             <DrawerSearch />
@@ -38,7 +36,7 @@
   </q-drawer>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import DrawerSearch from './DrawerSearch.vue'
 import DrawerBottom from './DrawerBottom.vue'
@@ -50,9 +48,14 @@ export default defineComponent({
     DrawerSearch,
   },
   props: {
-    leftDrawerOpen: {
+    rightDrawerOpen: {
       type: Boolean,
       default: false
+    }
+  },
+  setup() {
+    return {
+      screenWidth: window.innerWidth
     }
   }
 })
