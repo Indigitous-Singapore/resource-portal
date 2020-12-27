@@ -238,7 +238,7 @@ export default defineComponent({
       dialogIsOpen,
       loading,
       itemsState,
-      isMobile: Platform.is.mobile as Boolean,
+      isMobile: Platform.is.mobile as boolean,
       tagsState,
       toggleFilter,
       search,
