@@ -1,33 +1,48 @@
 <template>
-<div
-  v-if="item.media.length > 0"
-  class="q-mb-lg"
-  >
-  <h4 class="q-mb-sm">Downloads</h4>
-  <q-list bordered separator>
-    <q-item
-      v-for="(media, key) in item.media"
-      :key="key"
-      v-ripple
-      clickable
-      class="q-py-md"
-      @click="() => download(media)"
-      >
-      <q-item-section>
-        <p class="text-subtitle2 q-mb-none"><b>{{ media.name }}</b></p>
-      </q-item-section>
-      <q-item-section avatar>
-        <q-btn
-          round
-          :label="media.ext.replace('.','')"
-          size="sm"
-          class="q-pa-xs q-mr-sm"
-          color="light-blue-1"
-          text-color="grey-9"
+<div class="row resources">
+  <div
+    v-for="resource in item.media"
+    :key="resource.id"
+    class="row items-center resource full-width"
+    >
+    <div class="column col-xs-6 col-sm-8 q-py-md">
+      <span class="text-body2 text-bold">
+        <q-icon
+          v-if="resource.ext === '.mp3'"
+          name="music_note"
           />
-      </q-item-section>
-    </q-item>
-  </q-list>
+        <q-icon
+          v-else
+          name="description"
+          />
+        {{ resource.name }}
+      </span>
+    </div>
+    <div class="column col-xs-1 justify-center items-center">
+      <q-badge
+        class="media-extension q-px-sm text-center"
+        outline
+        align="middle"
+        text-color="black"
+        >
+        <small>{{ resource.ext.toUpperCase().replace('.', '') }}</small>
+      </q-badge>
+    </div>
+    <div class="column col-xs-5 col-sm-3 justify-center items-end">
+      <q-btn
+        type="a"
+        target="_blank"
+        :href="resource.url"
+        padding="none"
+        flat
+        size="sm"
+        color="grey-5"
+        icon="cloud_download"
+        label="Download"
+        no-caps
+        />
+    </div>
+  </div>
 </div>
 </template>
 
@@ -53,3 +68,22 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss">
+.resource {
+  border-top: 1px solid $grey-4
+}
+.resources {
+  align-items: center;;
+
+  .cursor-pointer {
+    padding-right: 0;
+    margin-left: -5px;
+    align-items: flex-start;
+    min-width: 30px;
+  }
+  .category {
+    font-size: 0.7em;
+  }
+}
+</style>

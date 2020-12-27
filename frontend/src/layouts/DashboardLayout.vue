@@ -1,18 +1,22 @@
 <template>
-  <q-layout view="hHh lpR fff">
-    <q-header bordered class="bg-white text-black">
-      <!--
-      <q-banner inline-actions class="bg-primary text-white">
-        We are currently in <b>beta</b>! We apologise if you experience any bugs.
-        <template v-slot:action>
-          <a href="mailto:developer@indigitous.sg" target="_blank" class="text-white" style="text-decoration:none">
-            Contact Us
-          </a>
-        </template>
-      </q-banner>
-      -->
+  <q-layout view="hHh lpr lff">
+    <q-header bordered class="bg-white text-black" style="z-index: 10000">
       <div class="row">
         <q-toolbar class="col-grow">
+          <router-link
+            to="/"
+            >
+            <img
+              :src="config.app.logoUrl"
+              :alt="config.app.logoAlt"
+              style="width:150px"
+              />
+          </router-link>
+          <div class="gt-sm row">
+            <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="ABOUT" to="/about" />
+            <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="EXPLORE" to="/explore" />
+          </div>
+          <q-toolbar-title class="lt-md"></q-toolbar-title>
           <q-btn
             flat
             dense
@@ -22,20 +26,6 @@
             @click="toggleDrawer()"
             class="lt-md"
           />
-          <router-link
-            to="/"
-            >
-            <img
-              :src="config.app.logoUrl"
-              :alt="config.app.logoAlt"
-              style="width:150px"
-              class="q-mr-lg q-ml-md"
-              />
-          </router-link>
-          <div class="gt-sm row">
-            <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="ABOUT" to="/about" />
-            <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="EXPLORE" to="/explore" />
-          </div>
         </q-toolbar>
         
         <NavbarRight />
@@ -43,7 +33,7 @@
     </q-header>
 
     <ComponentDrawer
-      :leftDrawerOpen="leftDrawerOpen"
+      :rightDrawerOpen="rightDrawerOpen"
       />
 
     <q-page-container>
@@ -59,7 +49,6 @@ import config from '../config/config'
 import ComponentDrawer from 'components/Structure/MainDrawer/Drawer.vue'
 import NavbarRight from 'components/Structure/NavbarRight.vue'
 import Footer from 'components/Structure/Footer.vue'
-import { mdiInstagram , mdiFacebook, mdiTwitter } from '@quasar/extras/mdi-v5'
 import { defineComponent, ref } from '@vue/composition-api'
  
 export default defineComponent({
@@ -70,22 +59,15 @@ export default defineComponent({
     NavbarRight,
   },
   setup () {
-    const leftDrawerOpen = ref(false)
-    const search = ref('')
-    const mailingList = ref('')
+    const rightDrawerOpen = ref(false)
     const toggleDrawer = () => {
-      leftDrawerOpen.value  = !leftDrawerOpen.value
+      rightDrawerOpen.value  = !rightDrawerOpen.value
     }
 
     return {
       config,
       toggleDrawer,
-      leftDrawerOpen,
-      search,
-      mailingList,
-      mdiInstagram,
-      mdiFacebook,
-      mdiTwitter
+      rightDrawerOpen
     }
   }
 })

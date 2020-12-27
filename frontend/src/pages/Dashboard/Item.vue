@@ -1,12 +1,28 @@
 <template>
   <q-page
-      v-if="item !== undefined"
-      >
+    class="container"
+    v-if="item !== undefined"
+    >
     <div
-      class="container"
+      :class="'row ' + (isMobile ? 'q-pt-md' : 'q-pt-xl')"
       >
-      <ItemHeader :item="item" />
-      <ItemContent :item="item" />
+      <div
+        :class="'column col-xs-12 col-sm-12 col-md-4 col-lg-3 ' + (isMobile ? 'items-center' : '')"
+        >
+        <ItemCategories
+          v-if="isMobile"
+          :item="item"
+          />
+        <q-img
+          src="/assets/musicfile.jpg"
+          :style="'max-width: ' + (isMobile ? '260' : '300') + 'px'"
+          />
+      </div>
+      <div
+        :class="'column col-xs-12 col-sm-12 col-md-8 col-lg-9 ' + (isMobile ? 'q-mt-md' : '')">
+        <ItemHeader :item="item" />
+        <ItemContent :item="item" />
+      </div>
     </div>
   </q-page>
   <q-page
@@ -26,16 +42,19 @@ import { ref, Ref, watch, onBeforeMount } from '@vue/composition-api'
 import { InterfaceItem } from 'src/interfaces'
 import { defineComponent } from '@vue/composition-api'
 
+import ItemCategories from '../../components/Item/Categories.vue'
 import ItemHeader from '../../components/Item/Header.vue'
 import ItemContent from '../../components/Item/Content.vue'
 import Loading from '../../components/Common/Loading.vue'
 
 import { useItems } from '../../services/items'
 import { useCollections } from '../../services/collections'
+import { Platform } from 'quasar'
 
 export default defineComponent({
   name: 'PageItemsSingle',
   components: {
+    ItemCategories,
     ItemHeader,
     ItemContent,
     Loading,
@@ -65,6 +84,7 @@ export default defineComponent({
 
     return {
       item,
+      isMobile: Platform.is.mobile as boolean,
       loading
     }
   }

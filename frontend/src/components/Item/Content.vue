@@ -1,83 +1,53 @@
 <template>
-<div>
-  <div
-    class="row q-col-gutter-xl q-mt-sm q-mb-xl mobile-hide"
+<div
+  class="row q-mt-xs q-mb-xl"
+  >
+  <div class="column col-xs-12 col-sm-10 q-mb-xl">
+    <div
+      :style="`height: ${expanded ? expandedHeight : '110'}px`"
+      class="description-container"
     >
-    <div class="column col-8">
-      <h4 class="q-mb-md">Description</h4>
       <div
+        ref="description"
         v-html="description_long"
         />
-      <ItemTags
-        :item="item"
-        />
     </div>
-    <div class="column col-4">
-      <q-card>
-        <q-card-section>
-          <ItemResources
-            :item="item"
-            />
-          <ItemLinks
-            :item="item"
-            />
-        </q-card-section>
-      </q-card>
-    </div>
-  </div>
-  <div class="q-mt-sm desktop-hide">
+    <q-btn
+      flat
+      push
+      padding="none"
+      align="left"
+      :ripple="false"
+      @click="toggleExpanded"
+      class="view-more q-mb-md text-grey-8"
+      >
+      {{ expanded ? 'COLLAPSE' : 'VIEW MORE' }}
+    </q-btn>
     <ItemActions
+      v-if="!isMobile"
       :item="item"
       />
-    <q-tabs
-      class="q-mt-md"
-      v-model="tab"
-      active-color="primary"
-      indicator-color="primary"
-      align="left"
-    >
-      <q-tab name="description" label="Description" />
-      <q-tab name="resources" label="Resources" />
-    </q-tabs>
-
-    <q-separator
-      class="q-mb-md"
+  </div>
+  <div class="column col-xs-12 q-mt-xl">
+    <h5 class="text-h5 text-bold q-mb-sm">Resources</h5>
+    <span class="text-grey-8 q-mb-md">Last updated: {{ updatedAt }}</span>
+    <ItemResources
+      :item="item"
       />
-
-    <q-tab-panels v-model="tab" animated>
-      <q-tab-panel
-        class="q-px-none"
-        name="description">
-        <div
-          v-html="description_long"
-          />
-        <ItemTags
-          :item="item"
-          />
-      </q-tab-panel>
-      <q-tab-panel
-        class="q-px-none"
-        name="resources"
-        >
-        <ItemResources
-          :item="item"
-          />
-
-        <ItemLinks
-          :item="item"
-          />
-      </q-tab-panel>
-    </q-tab-panels>
+    <ItemLinks
+      :item="item"
+      />
   </div>
 </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, Ref, ref } from '@vue/composition-api'
+import dayjs from 'dayjs'
+import { Platform } from 'quasar'
 import { markdownToHtml } from '../../utilities/html'
 
 import ItemActions from './Actions.vue'
-import ItemTags from './Tags.vue'
 import ItemLinks from './Links.vue'
 import ItemResources from './Resources.vue'
 
@@ -86,7 +56,6 @@ export default defineComponent({
   components: {
     ItemActions,
     ItemLinks,
-    ItemTags,
     ItemResources,
   },
   props: {
@@ -98,12 +67,45 @@ export default defineComponent({
     }
   },
   setup (props) {
+    const description = ref(null)
+    const expanded: Ref<boolean> = ref(false)
+    const expandedHeight: Ref<number> = ref(0)
     const tab: Ref<string> = ref('description')
+    const updatedAt: string = dayjs(props.item.updated_at).format('DD MMMM YYYY')
+
+    const toggleExpanded = () => {
+      let value = description.value as Element|null
+      expandedHeight.value = (value !== null && value.clientHeight !== null) ? value.clientHeight : 0
+      
+      expanded.value = !expanded.value
+    }
     
     return {
+      description,
       description_long: markdownToHtml(props.item.description_long),
-      tab
+      expanded,
+      expandedHeight,
+      isMobile: Platform.is.mobile as boolean,
+      tab,
+      toggleExpanded,
+      updatedAt,
     }
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.description-container {
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+  overflow-wrap: anywhere;
+}
+</style>
+
+<style lang="scss">
+.view-more {
+  &:hover .q-focus-helper {
+    background-color: transparent !important;
+  }
+}
+</style>

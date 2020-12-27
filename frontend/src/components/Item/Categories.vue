@@ -6,11 +6,11 @@
   <p
     class="q-mb-xs"
     >
-    <b
-      class="text-grey-9"
+    <span
+      class="text-accent"
       v-for="(category, index) in item.categories"
       :key="index"
-      >{{ index > 0 ? ',' : ''}} {{ category.title }}</b>
+      >{{ index > 0 ? ',' : ''}} {{ category.title.toUpperCase() }}</span>
   </p>
 </div>
 </template>
