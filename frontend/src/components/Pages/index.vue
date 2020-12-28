@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-py-md container page">
+  <q-page class="q-py-md container">
     <div
       class="flex full-width justify-center items-center"
       style="height: 500px"
@@ -11,13 +11,15 @@
       v-else-if="is404"
       />
     <div
-      class="container"
+      class="row"
       v-else-if="title !== undefined && content !== undefined"
       >
-      <h1 class="text-h3 text-bold q-mt-md q-mb-xl">{{ title }}</h1>
-      <div
-        v-html="content"
-        />
+      <div class="column col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2">
+        <h1 class="text-h4 text-bold q-mt-md q-mb-xl">{{ title }}</h1>
+        <section
+          v-html="content"
+          />
+      </div>
     </div>
   </q-page>
 </template>
@@ -73,9 +75,3 @@ export default defineComponent({
   }
 });
 </script>
-<style scoped lang="scss">
-.page {
-  width: 50vw;
-  min-width: 420px;
-}
-</style>
