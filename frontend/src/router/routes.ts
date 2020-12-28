@@ -16,8 +16,6 @@ const routes: RouteConfig[] = [
     children: [
       { path: '', redirect: '/explore' },
       { path: 'dashboard', redirect: '/explore' },
-      { path: 'about', name: 'about', component: () => import('pages/Pages/About.vue') },
-      { path: 'privacy', name: 'privacy', component: () => import('pages/Pages/Privacy.vue') },
       { path: 'register', name:'register', component: () => import('pages/Authentication/Signup.vue') },
       { path: 'forgot-password', name: 'forgot-password', component: () => import('pages/Authentication/ForgotPassword.vue') },
       { path: 'reset-password', name: 'reset-password', component: () => import('pages/Authentication/ResetPassword.vue') },
@@ -68,7 +66,10 @@ const routes: RouteConfig[] = [
   {
     name: 'error404',
     path: '*',
-    component: () => import('../pages/Error404.vue')
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', name: 'profile', component: () => import('pages/Pages/Generic.vue') }
+    ]
   }
 ];
 

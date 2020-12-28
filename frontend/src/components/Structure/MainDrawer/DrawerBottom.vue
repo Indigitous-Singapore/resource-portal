@@ -2,23 +2,41 @@
 <q-list
   v-if="user && user.email !== null"
   >
-  <q-item to="/dashboard" exact>
+  <q-item to="/about" exact>
     <q-item-section>
-      Dashboard
+      About
+    </q-item-section>
+  </q-item>
+  <q-item to="/privacy" exact>
+    <q-item-section>
+      Privacy
+    </q-item-section>
+  </q-item>
+  <q-item to="/terms" exact>
+    <q-item-section>
+      Terms
+    </q-item-section>
+  </q-item>
+
+  <q-separator spaced="md"/>
+
+  <q-item to="/logout" exact>
+    <q-item-section>
+      Logout
     </q-item-section>
   </q-item>
 </q-list>
 <q-list
   v-else
   >
-  <q-item to="/start" exact>
+  <q-item to="/register" exact>
     <q-item-section>
-      <q-btn color="accent" bg-color="white" outline rounded label="START A PROJECT" class="accent" />
+      <q-btn color="accent" bg-color="white" outline rounded label="SIGN UP" class="accent" />
     </q-item-section>
   </q-item>
   <q-item to="/login" exact>
     <q-item-section>
-      <q-btn color="muted" bg-color="white" outline rounded label="LOGIN" class="accent" />
+      <q-btn color="primary" bg-color="white" outline rounded label="LOGIN" class="accent" />
     </q-item-section>
   </q-item>
 </q-list>

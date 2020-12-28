@@ -21,7 +21,7 @@
             flat
             dense
             round
-            icon="menu"
+            :icon="rightDrawerOpen ? 'close' : 'menu'"
             aria-label="Menu"
             @click="toggleDrawer()"
             class="lt-md"

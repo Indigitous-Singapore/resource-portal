@@ -9,22 +9,19 @@
   >
     <q-scroll-area class="fit q-pt-xl q-mt-md">
       <q-list>
-        <q-item>
-          <q-item-section>
-            <DrawerSearch />
-          </q-item-section>
-        </q-item>
-        
-        <q-separator spaced="md"/>
-
-        <q-item to="/about" exact>
-          <q-item-section>
-            About
-          </q-item-section>
-        </q-item>
-        <q-item to="/explore" exact>
+        <q-item to="/explore">
           <q-item-section>
             Explore
+          </q-item-section>
+        </q-item>
+        <q-item to="/profile" exact>
+          <q-item-section>
+            My Profile
+          </q-item-section>
+        </q-item>
+        <q-item to="/profile/collections">
+          <q-item-section>
+            My Collections
           </q-item-section>
         </q-item>
 
@@ -38,6 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
+import { useUser } from '../../../services/user'
 import DrawerSearch from './DrawerSearch.vue'
 import DrawerBottom from './DrawerBottom.vue'
 
@@ -54,8 +52,11 @@ export default defineComponent({
     }
   },
   setup() {
+    const { user } = useUser()
+
     return {
-      screenWidth: window.innerWidth
+      screenWidth: window.innerWidth,
+      user,
     }
   }
 })
