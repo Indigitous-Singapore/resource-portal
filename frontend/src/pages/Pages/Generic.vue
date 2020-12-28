@@ -9,7 +9,7 @@ import { defineComponent } from '@vue/composition-api'
 import ComponentsPage from '../../components/Pages/index.vue'
 
 export default defineComponent({
-  name: 'PageAbout',
+  name: 'PageGeneric',
   components: {
     ComponentsPage,
   },

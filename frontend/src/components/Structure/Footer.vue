@@ -54,25 +54,29 @@
   <q-toolbar class="container">
       <span class="q-mx-md text-caption">&copy; Copyright {{ currentYear }} | {{ config.app.organisation }}</span>
       <q-separator dark vertical inset spaced="md" class="q-my-md" />
-      <q-btn
-        dense
-        flat
-        no-caps
-        padding="sm"
-        label="About"
-        class="q-mx-md text-caption"
+      <router-link
+        class="q-mx-md text-caption text-white no-decoration"
+        exact
         to="/about"
-        />
+        >
+        About
+      </router-link>
       <q-separator dark vertical inset spaced="md" class="q-my-md text-caption" />
-      <q-btn
-        dense
-        flat
-        no-caps
-        padding="sm"
-        label="Privacy"
-        class="q-mx-md text-caption"
+      <router-link
+        class="q-mx-md text-caption text-white no-decoration"
+        exact
         to="/privacy"
-        />
+        >
+        Privacy
+      </router-link>
+      <q-separator dark vertical inset spaced="md" class="q-my-md text-caption" />
+      <router-link
+        class="q-mx-md text-caption text-white no-decoration"
+        exact
+        to="/terms"
+        >
+        Terms of Use
+      </router-link>
   </q-toolbar>
 </q-footer>
 </template>
