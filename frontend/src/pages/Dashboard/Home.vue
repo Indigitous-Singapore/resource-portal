@@ -54,7 +54,7 @@
                   :selectedCategory="selectedCategory"
                   :selectedTags="selectedTags"
                   :categories="categories"
-                  :tags="tagsState"
+                  :tags="tagsState.filter(tag => tag.display_in_filters === true)"
                   @update-selected-tags="updateSelectedTags"
                   />
               </q-card-section>
@@ -248,6 +248,10 @@ export default defineComponent({
 <style scoped lang="scss">
 .dialog-filters {
   width: 100%;
+
+  @media (max-width: 767px) {
+    padding-top: 50px;
+  }
 }
 .search {
   width: 100%;
