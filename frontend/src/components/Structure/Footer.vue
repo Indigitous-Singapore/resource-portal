@@ -51,17 +51,20 @@
     </div>
   </div>
   -->
-  <q-toolbar class="container">
+  <div class="container row">
+    <div class="column col-12 col-sm-4 col-lg-3 justify-center">
       <span class="q-mx-md text-caption">&copy; Copyright {{ currentYear }} | {{ config.app.organisation }}</span>
-      <q-separator dark vertical inset spaced="md" class="q-my-md" />
+    </div>
+
+    <q-toolbar class="row col-12 col-md-8 items-center">
       <router-link
-        class="q-mx-md text-caption text-white no-decoration"
+        class="q-mr-md text-caption text-white no-decoration"
         exact
         to="/about"
         >
         About
       </router-link>
-      <q-separator dark vertical inset spaced="md" class="q-my-md text-caption" />
+      <q-separator vertical dark spaced="md" class="q-my-md" />
       <router-link
         class="q-mx-md text-caption text-white no-decoration"
         exact
@@ -69,7 +72,7 @@
         >
         Privacy
       </router-link>
-      <q-separator dark vertical inset spaced="md" class="q-my-md text-caption" />
+      <q-separator vertical dark spaced="md" class="q-my-md" />
       <router-link
         class="q-mx-md text-caption text-white no-decoration"
         exact
@@ -77,7 +80,8 @@
         >
         Terms of Use
       </router-link>
-  </q-toolbar>
+    </q-toolbar>
+  </div>
 </q-footer>
 </template>
 
