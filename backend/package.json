@@ -2,7 +2,7 @@
   "name": "resource-portal",
   "private": true,
   "version": "0.1.0",
-  "description": "A Strapi application",
+  "description": "Resource Portal Admin",
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
@@ -13,20 +13,20 @@
   "dependencies": {
     "knex": "<0.20.0",
     "pg": "^8.5.0",
-    "strapi": "3.3.4",
-    "strapi-admin": "3.3.4",
-    "strapi-connector-bookshelf": "3.3.4",
-    "strapi-plugin-content-manager": "3.3.4",
-    "strapi-plugin-content-type-builder": "3.3.4",
-    "strapi-plugin-email": "3.3.4",
-    "strapi-plugin-upload": "3.3.4",
-    "strapi-plugin-users-permissions": "3.3.4",
-    "strapi-provider-email-sendgrid": "^3.3.4",
-    "strapi-provider-upload-aws-s3": "^3.3.4",
-    "strapi-utils": "3.3.4"
+    "strapi": "3.4.1",
+    "strapi-admin": "3.4.1",
+    "strapi-connector-bookshelf": "3.4.1",
+    "strapi-plugin-content-manager": "3.4.1",
+    "strapi-plugin-content-type-builder": "3.4.1",
+    "strapi-plugin-email": "3.4.1",
+    "strapi-plugin-upload": "3.4.1",
+    "strapi-plugin-users-permissions": "3.4.1",
+    "strapi-provider-email-sendgrid": "^3.4.1",
+    "strapi-provider-upload-aws-s3": "^3.4.1",
+    "strapi-utils": "3.4.1"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Indigitous Singapore"
   },
   "strapi": {
     "uuid": "07e88e11-542f-497d-a916-9d3d6c6df29e"

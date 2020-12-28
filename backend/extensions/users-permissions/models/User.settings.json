@@ -6,7 +6,8 @@
     "description": ""
   },
   "options": {
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -53,6 +54,11 @@
       "plugin": "users-permissions",
       "configurable": false
     },
+    "confirmationToken": {
+      "type": "string",
+      "configurable": false,
+      "private": true
+    },
     "firstName": {
       "type": "string",
       "required": true
@@ -65,13 +71,11 @@
       "type": "string"
     },
     "collections": {
-      "via": "user",
-      "collection": "collection"
+      "collection": "collection",
+      "via": "user"
     },
-    "confirmationToken": {
-      "type": "string",
-      "configurable": false,
-      "private": true
+    "interests": {
+      "collection": "category"
     }
   }
 }

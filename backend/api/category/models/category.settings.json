@@ -29,6 +29,15 @@
     "items": {
       "collection": "item",
       "via": "categories"
+    },
+    "featured_image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true
     }
   }
 }

@@ -11,9 +11,9 @@
   },
   "attributes": {
     "user": {
+      "via": "collections",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "collections"
+      "model": "user"
     },
     "items": {
       "unique": true,

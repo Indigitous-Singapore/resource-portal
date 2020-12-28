@@ -21,6 +21,10 @@
     "items": {
       "collection": "item",
       "via": "tags"
+    },
+    "display_in_filters": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
