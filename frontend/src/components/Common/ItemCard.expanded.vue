@@ -5,7 +5,7 @@
           class="no-decoration"
           :to="`/items/${item.id}`">
           <q-img
-            src="/assets/musicfile.jpg"
+            :src="typeof item.categories[0].featured_image.url === 'string' ? item.categories[0].featured_image.url : '/assets/musicfile.jpg'"
             :ratio="1"
             />
         </router-link>

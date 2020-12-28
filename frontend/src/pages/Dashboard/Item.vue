@@ -14,7 +14,7 @@
           :item="item"
           />
         <q-img
-          src="/assets/musicfile.jpg"
+            :src="typeof item.categories[0].featured_image.url === 'string' ? item.categories[0].featured_image.url : '/assets/musicfile.jpg'"
           :style="'max-width: ' + (isMobile ? '260' : '300') + 'px'"
           />
       </div>
