@@ -95,6 +95,7 @@ export interface InterfaceCategory {
   items: InterfaceItem[];
   created_at: string;
   updated_at: string;
+  featured_image: string;
 }
 
 /**
