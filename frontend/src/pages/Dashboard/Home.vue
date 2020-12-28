@@ -27,7 +27,7 @@
               :selectedCategory="selectedCategory"
               :selectedTags="selectedTags"
               :categories="categories"
-              :tags="tagsState"
+              :tags="tagsState.filter(tag => tag.display_in_filters === true)"
               @update-selected-tags="updateSelectedTags"
               />
           </div>
@@ -54,7 +54,7 @@
                   :selectedCategory="selectedCategory"
                   :selectedTags="selectedTags"
                   :categories="categories"
-                  :tags="tagsState"
+                  :tags="tagsState.filter(tag => tag.display_in_filters === true)"
                   @update-selected-tags="updateSelectedTags"
                   />
               </q-card-section>
@@ -144,7 +144,7 @@ export default defineComponent({
      */
     onBeforeMount(async () => {
       await getFilteredCategories()
-      await getFilteredTags()
+      await getTags()
       await getFilteredItems()
       await getCollections()
     })
@@ -162,13 +162,6 @@ export default defineComponent({
         newCategories.push(newCategory)
       }
       categories.value = newCategories
-    }
-
-    /**
-     * Gets tags
-     */
-    const getFilteredTags = async () => {
-      await getTags()
     }
 
     /**
@@ -255,6 +248,10 @@ export default defineComponent({
 <style scoped lang="scss">
 .dialog-filters {
   width: 100%;
+
+  @media (max-width: 767px) {
+    padding-top: 50px;
+  }
 }
 .search {
   width: 100%;

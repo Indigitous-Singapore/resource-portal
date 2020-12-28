@@ -45,8 +45,7 @@ export default defineComponent({
 
     const getItemsPerPage = () => {
       if (Screen.lt.sm) { return 6 }
-      if (Screen.lt.md) { return 9 }
-      return 15
+      return 10
     }
 
     const tableOptions = reactive({
