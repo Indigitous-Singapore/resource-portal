@@ -40,7 +40,7 @@
       <router-view />
     </q-page-container>
 
-    <Footer class="gt-sm" />
+    <Footer />
   </q-layout>
 </template>
 

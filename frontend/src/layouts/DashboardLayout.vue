@@ -13,7 +13,21 @@
               />
           </router-link>
           <div class="gt-sm row">
-            <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="ABOUT" to="/about" />
+            <q-btn
+              color="transparent"
+              text-color="black"
+              flat
+              stretch
+              padding="lg lg"
+              >
+              <router-link
+                class="no-decoration"
+                exact
+                to="/about"
+                >
+                ABOUT
+              </router-link>
+            </q-btn>
             <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="EXPLORE" to="/explore" />
           </div>
           <q-toolbar-title class="lt-md"></q-toolbar-title>
@@ -40,7 +54,7 @@
       <router-view />
     </q-page-container>
 
-    <Footer class="gt-sm" />
+    <Footer />
   </q-layout>
 </template>
 
