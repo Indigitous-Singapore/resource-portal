@@ -80,7 +80,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .item-card {
-  border-top: 1px solid $grey-4;
   .content {
     width: calc(100% - 100px)
   }

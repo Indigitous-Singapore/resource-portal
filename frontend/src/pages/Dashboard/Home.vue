@@ -17,9 +17,17 @@
       </q-img>
     </div>
     <div class="container">
+      <div
+        v-if="!isMobile"
+        class="row q-py-md"
+        >
+        <div class="col-12 col-sm-9 offset-sm-3">
+          <h1 class="text-h3 text-accent text-semibold q-my-md">Search Results</h1>
+        </div>
+      </div>
       <div class="row q-py-md">
         <div class="col-12 col-sm-3">
-          <h4 class="xs-hide"><b>FILTER BY</b></h4>
+          <h5 class="text-h5 text-bold xs-hide">FILTER BY</h5>
           <div class="xs-hide">
             <ExploreFilters
               :clearCurrentCategory="clearCurrentCategory"
@@ -42,7 +50,7 @@
               class="dialog-filters"
               >
               <q-card-section class="row items-center q-pb-none">
-                <div class="text-h6">FILTER BY</div>
+                <h5 class="text-h5 q-mb-none">FILTER BY</h5>
                 <q-space />
                 <q-btn icon="close" flat round dense v-close-popup />
               </q-card-section>
@@ -74,19 +82,18 @@
           v-else
           class="col-12 col-sm-9"
           >
-          <h3>
-            <b class="text-accent">Search Results</b>
+          <div class="row justify-between items-center sm-hide md-hide lg-hide xl-hide">
+            <h5 class="text-h5 text-accent text-semibold q-mb-md">Search Results</h5>
             <q-btn
               icon="filter_alt"
               padding="none"
-              class="sm-hide md-hide lg-hide xl-hide q-mt-sm float-right"
-              color="accent"
+              class="float-right q-mb-md"
               label="Filter"
               @click="toggleFilter"
               flat
               size="sm"
               />
-          </h3>
+          </div>
           <ExploreContent />
         </div>
       </div>
