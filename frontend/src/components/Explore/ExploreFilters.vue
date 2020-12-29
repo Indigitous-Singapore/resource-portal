@@ -1,7 +1,7 @@
 <template>
 <div class="filters q-pr-lg">
   <div class="item-categories">
-    <h5 class="text-grey-6 q-mb-sm">CATEGORIES</h5>
+    <h6 class="text-h6 text-bold text-grey-7 q-mb-sm">CATEGORIES</h6>
     <q-list
       id="item-categories"
       >
@@ -32,7 +32,7 @@
     v-if="tags"
     class="item-tags"
     >
-    <h5 class="text-grey-6 q-mb-sm">TAGS</h5>
+    <h6 class="text-h6 text-bold text-grey-7 q-mb-sm">TAGS</h6>
     <q-list
       id="item-tags">
       <q-checkbox
