@@ -25,9 +25,11 @@ module.exports = configure(function (ctx) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
+      'hotjar',
       'composition-api',
       'i18n',
       'axios',
+      'gtm',
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -52,7 +54,8 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
       env: {
-        apiUrl: process.env.apiUrl || 'https://content.msmusic.edu.sg'
+        apiUrl: process.env.apiUrl || 'https://content.msmusic.edu.sg',
+        hotjarId: process.env.hotjarId || null
       },
 
       // transpile: false,

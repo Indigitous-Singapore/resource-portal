@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "productName": "Resource Portal",
+  "gtm": "GTM-TJ5RFN4",
   "author": "indigitious<developer@indigitous.sg>",
   "private": true,
   "scripts": {
@@ -31,6 +32,7 @@
     "qs": "^6.9.4",
     "quasar": "^1.14.7",
     "share-api-polyfill": "^1.0.20",
+    "vue-hotjar": "^1.2.0",
     "vue-i18n": "^8.0.0",
     "vue-property-decorator": "^9.0.2"
   },
