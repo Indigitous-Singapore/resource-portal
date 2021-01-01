@@ -14,7 +14,7 @@ const routes: RouteConfig[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', redirect: '/explore' },
+      { path: '', name:'landing', component: () => import('pages/Pages/Landing.vue') },
       { path: 'dashboard', redirect: '/explore' },
       { path: 'register', name:'register', component: () => import('pages/Authentication/Signup.vue') },
       { path: 'forgot-password', name: 'forgot-password', component: () => import('pages/Authentication/ForgotPassword.vue') },
