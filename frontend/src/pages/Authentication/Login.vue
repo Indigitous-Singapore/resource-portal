@@ -2,8 +2,8 @@
   <q-page class="container column justify-center items-center">
     <q-card class="login">
       <q-card-section>
-        <h3 class="text-center q-mb-none"><b>Welcome Back!</b></h3>
-        <p class="text-center q-mb-none">Log in to continue</p>
+        <h1 class="text-h4 text-bold text-center q-mb-md">Welcome Back!</h1>
+        <p class="text-h6 text-center q-mb-none">Log in to continue</p>
       </q-card-section>
 
       <q-card-section class="q-pt-md q-mb-md">
@@ -14,7 +14,7 @@
       <q-separator />
 
       <q-card-actions horizontal class="card-actions justify-center q-py-lg q-px-md">
-        Don't have an account?&nbsp;<router-link to="/start">Sign up here</router-link>
+        Don't have an account?&nbsp;<router-link to="/register">Sign up here</router-link>
       </q-card-actions>
     </q-card>
   </q-page>

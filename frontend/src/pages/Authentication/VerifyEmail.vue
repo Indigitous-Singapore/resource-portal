@@ -2,7 +2,7 @@
   <q-page class="container column justify-center items-center">
     <q-card class="verify-email">
       <q-card-section>
-        <h3 class="text-center q-mb-none"><b>Verify Your Email</b></h3>
+        <h3 class="text-h4 text-center q-mb-none"><b>Verify Your Email</b></h3>
       </q-card-section>
 
       <q-card-section class="q-pt-md q-mb-md">

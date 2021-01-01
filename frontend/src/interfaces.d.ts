@@ -41,6 +41,7 @@ export interface InterfaceImage {
 export interface InterfaceStateAuthenticationLogin {
   email: string|null;
   password: string|null;
+  onboarding: boolean;
 }
 
 export interface InterfaceLoginResponse {

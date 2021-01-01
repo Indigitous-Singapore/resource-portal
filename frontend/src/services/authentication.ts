@@ -11,6 +11,7 @@ import { useUser } from './user'
 const defaultAuthenticationLoginState: InterfaceStateAuthenticationLogin = {
   email: null,
   password: null,
+  onboarding: false,
 }
 const defaultAuthenticationErrors: InterfaceAuthenticationErrors = {
   email: null,
@@ -87,8 +88,8 @@ const useAuthentication = () => {
   /**
    * Redirects to the dashboard
    */
-  const redirectToDashboard = (): void => {
-    void Router.push('/dashboard')
+  const redirectToDashboard = (showOnboarding = false): void => {
+    void Router.push(`/dashboard${showOnboarding ? '?onboarding=true' : ''}`)
   }
 
   /**
@@ -105,7 +106,7 @@ const useAuthentication = () => {
       })
       .then((response: AxiosResponse) => {
         saveUserProfile(response.data)
-        redirectToDashboard()
+        redirectToDashboard(state.onboarding || false)
       })
       .catch((error: AxiosError) => {
         loading.value = false
