@@ -14,7 +14,7 @@ const routes: RouteConfig[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', redirect: '/explore' },
+      { path: '', name:'landing', component: () => import('pages/Pages/Landing.vue') },
       { path: 'dashboard', redirect: '/explore' },
       { path: 'register', name:'register', component: () => import('pages/Authentication/Signup.vue') },
       { path: 'forgot-password', name: 'forgot-password', component: () => import('pages/Authentication/ForgotPassword.vue') },
@@ -48,16 +48,16 @@ const routes: RouteConfig[] = [
     path: '/profile',
     component: () => import('../layouts/DashboardLayout.vue'),
     children: [
-      { path: '', name: 'profile', component: () => import('../pages/Dashboard/Profile.vue') },
-      { path: ':section', component: () => import('../pages/Dashboard/Profile.vue') }
+      { path: '', name: 'profile', meta: {private: true}, component: () => import('../pages/Dashboard/Profile.vue') },
+      { path: ':section', meta: {private: true}, component: () => import('../pages/Dashboard/Profile.vue') }
     ]
   },
   {
     path: '/items',
     component: () => import('../layouts/DashboardLayout.vue'),
     children: [
-      { path: '', redirect: { name: 'explore' }},
-      { path: ':itemId', name: 'item', component: () => import('../pages/Dashboard/Item.vue') }
+      { path: '', meta: {private: true}, redirect: { name: 'explore' }},
+      { path: ':itemId', name: 'item', meta: {private: true}, component: () => import('../pages/Dashboard/Item.vue') }
     ]
   },
 
@@ -68,7 +68,7 @@ const routes: RouteConfig[] = [
     path: '*',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', name: 'profile', component: () => import('pages/Pages/Generic.vue') }
+      { path: '', name: 'generic', component: () => import('pages/Pages/Generic.vue') }
     ]
   }
 ];

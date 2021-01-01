@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-py-md container">
+  <q-page id="page" class="q-pt-md container">
     <div
       class="flex full-width justify-center items-center"
       style="height: 500px"
@@ -11,10 +11,10 @@
       v-else-if="is404"
       />
     <div
-      class="row"
+      class="row q-pb-xl"
       v-else-if="title !== undefined && content !== undefined"
       >
-      <div class="column col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2">
+      <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2">
         <h1 class="text-h4 text-bold q-mt-md q-mb-xl">{{ title }}</h1>
         <section
           v-html="content"
@@ -75,3 +75,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss">
+#page code {
+  white-space: pre-line;
+}
+</style>

@@ -4,12 +4,13 @@
       class="signup"
     >
       <q-card-section>
-        <h3 class="text-center q-mb-none"><b>Welcome!</b></h3>
-        <p class="text-center q-mb-none">Sign up or <router-link to="/login">log in</router-link> to start a project</p>
+        <h3 class="text-h4 text-center q-mb-none"><b>Create Account</b></h3>
       </q-card-section>
 
-      <q-card-section class="q-pt-md q-mb-md">
+      <q-card-section class="q-pt-md q-mb-xs">
         <AuthenticationSignupForm />
+        
+        <p class="text-body2 q-mt-md q-mb-none"><router-link to="/login">Already have an account? Login</router-link></p>
       </q-card-section>
 
       <q-separator />

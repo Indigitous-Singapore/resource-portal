@@ -1,8 +1,11 @@
 <template>
   <q-page>
+    <OnboardingDialog
+      :showOnboarding="showOnboarding"
+      />
     <div>
       <q-img
-        src="https://cdn.quasar.dev/img/parallax2.jpg"
+        src="/assets/explore-banner.jpg"
         :ratio="isMobile ? 1/1 : 5/1"
         >
         <div class="text-center absolute-full text-subtitle2 flex flex-center column">
@@ -102,6 +105,7 @@
 </template>
 
 <script lang="ts">
+import { Platform } from 'quasar'
 import { defineComponent, onBeforeMount, ref, Ref, watch } from '@vue/composition-api'
 import { useItems } from '../../services/items'
 import { useTags } from '../../services/tags'
@@ -111,8 +115,7 @@ import ExploreBanner from '../../components/Explore/ExploreBanner.vue'
 import ExploreContent from '../../components/Explore/ExploreContent.vue'
 import ExploreFilters from '../../components/Explore/ExploreFilters.vue'
 import ExploreSearch from '../../components/Explore/ExploreSearch.vue'
-import { Platform } from 'quasar'
-
+import OnboardingDialog from '../../components/Dashboard/OnboardingDialog.vue'
 
 export default defineComponent({
   name: 'PageHome',
@@ -120,9 +123,10 @@ export default defineComponent({
     ExploreBanner,
     ExploreContent,
     ExploreFilters,
-    ExploreSearch
+    ExploreSearch,
+    OnboardingDialog
   },
-  setup () {
+  setup (_props, ctx) {
     const loading = ref(true)
     const dialogIsOpen = ref(false)
     const categories: Ref<Record<string, string>[]> = ref([])
@@ -244,6 +248,7 @@ export default defineComponent({
       search,
       selectedTags,
       selectedCategory,
+      showOnboarding: ctx.root.$route.query.onboarding === 'true',
       updateCurrentCategory,
       updateCurrentSearch,
       updateSelectedTags,

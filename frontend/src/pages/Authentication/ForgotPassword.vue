@@ -2,7 +2,7 @@
   <q-page class="container column justify-center items-center">
     <q-card class="forgot-password">
       <q-card-section>
-        <h3 class="text-center q-mb-none"><b>Forgot Your Password?</b></h3>
+        <h3 class="text-h4 text-center q-mb-none"><b>Forgot Your Password?</b></h3>
       </q-card-section>
 
       <q-card-section class="q-pt-md q-mb-md">
@@ -12,7 +12,7 @@
       <q-separator />
 
       <q-card-actions horizontal class="card-actions justify-center q-py-lg q-px-md">
-        Don't have an account?&nbsp;<router-link to="/start">Sign up here</router-link>
+        Don't have an account?&nbsp;<router-link to="/register">Sign up here</router-link>
       </q-card-actions>
     </q-card>
   </q-page>

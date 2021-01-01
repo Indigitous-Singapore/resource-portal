@@ -59,8 +59,16 @@ import { useAuthentication } from '../../services/authentication'
 
 export default defineComponent({
   name: 'AuthenticationLoginForm',
-  setup () {
+  props: {
+    onboarding: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  setup (props) {
     const { errors, loading, state, login } = useAuthentication()
+
+    state.onboarding = props.onboarding
 
     return {
       errors,

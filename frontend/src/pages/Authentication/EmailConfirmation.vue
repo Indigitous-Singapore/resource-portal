@@ -2,12 +2,14 @@
   <q-page class="container column justify-center items-center">
     <q-card class="login">
       <q-card-section>
-        <h3 class="text-center q-mb-none"><b>Login To Continue</b></h3>
-        <p class="text-center q-mb-none">Thanks For Confirming Your Email</p>
+        <h3 class="text-h4 text-center q-mb-md"><b>Login To Continue</b></h3>
+        <p class="text-h6 text-center q-mb-none">Thanks For Confirming Your Email</p>
       </q-card-section>
 
       <q-card-section class="q-pt-md q-mb-md">
-        <AuthenticationLoginForm />
+        <AuthenticationLoginForm
+          :onboarding="true"
+          />
         <div class="q-pt-md text-body2"><router-link to="/forgot-password">Forgot your password?</router-link></div>
       </q-card-section>
 

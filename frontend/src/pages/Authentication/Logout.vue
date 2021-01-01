@@ -1,8 +1,8 @@
 <template>
   <q-page class="container column justify-center items-center q-pa-xl">
-    <h3>Please wait a moment...</h3>
+    <h3 class="text-h4">Please wait a moment...</h3>
     <q-spinner-tail size="10em" color="accent"/>
-    <h5 class="q-mt-lg">We are logging you out</h5>
+    <h5 class="text-h5 q-mt-lg">We are logging you out</h5>
   </q-page>
 </template>
 

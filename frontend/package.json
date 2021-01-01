@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "",
   "productName": "Resource Portal",
-  "gtm": "GTM-TJ5RFN4",
   "author": "indigitious<developer@indigitous.sg>",
   "private": true,
   "scripts": {
