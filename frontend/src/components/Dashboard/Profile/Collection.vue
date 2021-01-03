@@ -22,7 +22,7 @@
     <div
       v-for="(item, index) in collection.items"
       :key="index"
-      class="q-pa-sm col-xs-12 col-sm-6 col-md-4"
+      class="q-px-sm col-xs-12"
       >
       <ItemCard
         :item="item"
@@ -61,7 +61,7 @@ export default defineComponent({
   },
   setup(props) {
     const { deleteCollection } = useCollections()
-
+    
     const destroyCollection = async () => {
       if(props.collection) {
         if(confirm(`Please confirm that you want to delete: ${String(props.collection.title)}`)) {
