@@ -6,7 +6,7 @@
 
   <q-card-section class="q-pt-md q-mb-md">
     <AuthenticationForgotPasswordForm
-      maxWidth="1000"
+      :maxWidth="1000"
       />
   </q-card-section>
 </q-card>

@@ -6,6 +6,21 @@ const { sanitizeEntity } = require('strapi-utils');
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
  * to customize this controller
  */
+let populate = ['items']
+
+const populateEntityItems = async (entity) => {
+  const itemIds = entity.items.map(item => item.id)
+  entity.items = await strapi.query('item').find({ id: itemIds })
+}
+
+const populateItems = async (entities) => {
+  const newEntities = [...entities]
+  for (const entity of newEntities) {
+    await populateEntityItems(entity)
+  }
+
+  return newEntities
+}
 
 module.exports = {
   async find(ctx) {
@@ -13,10 +28,12 @@ module.exports = {
     ctx.query['user.id'] = ctx.state.user.id
 
     if (ctx.query._q) {
-      entities = await strapi.services.collection.search(ctx.query);
+      entities = await strapi.services.collection.search(ctx.query, populate);
     } else {
-      entities = await strapi.services.collection.find(ctx.query);
+      entities = await strapi.services.collection.find(ctx.query, populate);
     }
+
+    entities = await populateItems(entities)
 
     return entities.map(entity => sanitizeEntity(entity, { model: strapi.models.collection }));
   },
@@ -26,7 +43,10 @@ module.exports = {
     const entity = await strapi.services.collection.findOne({
       id: ctx.params.id,
       'user.id': ctx.state.user.id
-    });
+    }, populate);
+
+    entity = await populateEntityItems(entity)
+
     return sanitizeEntity(entity, { model: strapi.models.collection });
   },
   count(ctx) {

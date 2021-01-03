@@ -7,5 +7,5 @@ export default {
     'logoUrl': '../assets/logo.png',
     'logoAlt': 'MSM Resource Portal',
   },
-  'apiUrl': process.env.API_URL || 'https://content.msmusic.edu.sg'
+  'apiUrl': process.env.apiUrl
 }
