@@ -46,9 +46,7 @@ const fetchItems = async (
         })
       }
       if (search.length > 0) {
-        queryOptions._where.push({
-          title_contains: search
-        })
+        queryOptions._q = search
       }
 
       const response: AxiosResponse = await axios.get(`${config.apiUrl}/items?${qs.stringify(queryOptions)}`)
