@@ -4,9 +4,9 @@
     <div id="banner-overlay" class="" />
     <div id="banner-content" class="container">
       <div class="row">
-        <div class="column col-12 col-md-8 col-lg-7 q-py-xl q-pr-lg">
+        <div class="column col-12 col-md-8 col-lg-7 q-pr-lg">
           <h1 class="text-h2 text-weight-medium text-white">Equipping Worship Servants for His Glory</h1>
-          <p class="text-h5 text-white q-mb-xl">Bringing local & regional worship resources to worship leaders, musicians and the church</p>
+          <p class="text-h5 text-white q-mb-xl">Bringing local &amp; regional worship resources to worship leaders, musicians and the church</p>
           <div class="row">
             <q-btn
               id="sign-up"
@@ -19,7 +19,7 @@
               />
             <q-btn
               id="learn-more"
-              class="q-py-xs"
+              class="q-py-xs q-mx-none"
               rounded
               flat
               color="white"
@@ -106,6 +106,13 @@
 </template>
 
 <style scoped lang="scss">
+h1 {
+  @media screen and (max-width: 599px){
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 3rem;
+  }
+}
 #banner {
   position: relative;
   background-size: cover;
@@ -128,6 +135,11 @@
 #sign-up, #learn-more {
   padding-left: 2.5em;
   padding-right: 2.5em;
+
+  @media screen and (max-width: 599px){
+    padding-left: 1.8em;
+    padding-right: 1.8em;
+  }
 }
 #row-or-column {
   display: flex;
