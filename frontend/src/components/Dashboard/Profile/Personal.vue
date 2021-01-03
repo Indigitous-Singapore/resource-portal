@@ -2,9 +2,9 @@
 <q-form
   @submit.prevent="onSubmit"
   >
-  <div class="row">
-    <div class="col-12">
-      <h4 class="text-bold">About Me</h4>
+  <div class="row q-gutter-sm">
+    <div class="col">
+      <h4 class="text-h5 text-bold q-mb-sm">My Details</h4>
     </div>
   </div>
   <div class="row q-gutter-sm">
@@ -40,9 +40,29 @@
     </div>
   </div>
 
-
   <div class="row q-gutter-sm">
-    <div class="col text-right">
+    <div class="col">
+      <h4 class="text-h5 text-bold q-mt-lg q-mb-sm">My Interests</h4>
+    </div>
+  </div>
+  <div class="row q-gutter-none">
+    <div
+      class="column col-xs-6"
+      v-for="(category) in categoriesState"
+      :key="category.id"
+      >
+      <q-checkbox
+        :val="category.id"
+        style="margin-left: -10px"
+        class="q-pl-none"
+        v-model="formUser.interests"
+        :label="category.title"
+        />
+    </div>
+  </div>
+
+  <div class="row q-gutter-sm q-mt-lg">
+    <div class="col">
       <q-btn
         type="submit"
         :loading="submitting"
@@ -51,7 +71,6 @@
         class="q-px-md q-py-xs"
         rounded
         unelevated
-        no-caps
       >
         <template v-slot:loading>
           <q-spinner-tail />
@@ -65,20 +84,31 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, Ref } from '@vue/composition-api'
 import { AxiosError } from 'axios'
+
 import { useUser } from '../../../services/user'
+import { useCategories } from '../../../services/categories'
 
 export default defineComponent({
   name: 'ComponentDashboardProfilePersonal',
   setup () {
     const submitting: Ref<boolean> = ref(false)
-    const formUser: Record<string, string> = reactive({
+    const formUser: Record<string, any> = reactive({
       firstName: '',
       lastName:'',
-      email: ''
+      email: '',
+      interests: [],
     })
     const { user, updateProfile } = useUser()
+    const { 
+      state: categoriesState,
+      getCategories
+    } = useCategories()
 
-    onMounted(() => {
+    onMounted(async () => {
+      await getCategories()
+      if (user.value && user.value.interests) {
+        formUser.interests = user.value.interests.map(interest => interest.id)
+      }
       if (user.value) {
         formUser.firstName = user.value.firstName || ''
         formUser.lastName = user.value.lastName || ''
@@ -103,6 +133,7 @@ export default defineComponent({
     }
 
     return {
+      categoriesState,
       formUser,
       onSubmit,
       submitting,
