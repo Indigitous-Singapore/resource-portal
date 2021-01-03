@@ -7,6 +7,7 @@ const defaultState: InterfaceStateSignup = {
   firstName: null,
   lastName: null,
   email: null,
+  interests: [],
   password: null,
   passwordconfirm: null,
 }
@@ -14,6 +15,7 @@ const defaultSignupErrors: InterfaceSignupErrors = {
   firstName: null,
   lastName: null,
   email: null,
+  interests: null,
   password: null,
   passwordconfirm: null,
   others: null,
@@ -41,6 +43,7 @@ const useSignup = () => {
     errors.firstName = null
     errors.lastName = null
     errors.email = null
+    errors.interests = null
     errors.password = null
     errors.passwordconfirm = null
     errors.others = null
@@ -131,6 +134,7 @@ const useSignup = () => {
       .post(String(process.env.apiUrl) + '/auth/local/register', {
         firstName: state.firstName,
         lastName: state.lastName,
+        interests: state.interests as number[],
         username: state.email?.toLowerCase(),
         email: state.email?.toLowerCase(),
         password: state.password,

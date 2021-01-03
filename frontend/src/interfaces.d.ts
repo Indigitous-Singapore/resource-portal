@@ -1,3 +1,5 @@
+import { number } from "joi"
+
 /**
  * Generic interfaces
  */
@@ -60,6 +62,7 @@ export interface InterfaceSignupErrors {
   firstName: string|null;
   lastName: string|null;
   email: string|null;
+  interests: string|null;
   password: string|null;
   passwordconfirm: string|null;
   others: string|null;
@@ -82,6 +85,7 @@ export interface InterfaceStateSignup {
   firstName: string|null;
   lastName: string|null;
   email: string|null;
+  interests: number[]|null;
   password: string|null;
   passwordconfirm: string|null;
 }
@@ -171,6 +175,9 @@ export interface InterfaceCollection {
 /**
  * User
  */
+export interface InterfaceInterest {
+  id: number;
+}
 export interface InterfaceUser {
   id: number|null;
   username: string|null;
@@ -179,6 +186,7 @@ export interface InterfaceUser {
   lastName: string|null;
   email: string|null;
   displayPictureUrl?: InterfaceImage|string|null;
+  interests: InterfaceInterest[]|null;
   provider?: string;
   confirmed?: boolean|null;
   blocked?: boolean|null;

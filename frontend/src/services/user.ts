@@ -19,6 +19,7 @@ const defaultUser: InterfaceUser = {
   lastName: null,
   email: null,
   displayPictureUrl: null,
+  interests: null,
   username: null,
   created_at: null,
   updated_at: null,
@@ -28,7 +29,6 @@ const defaultUser: InterfaceUser = {
 const user: Ref<InterfaceUser|null> = ref({...defaultUser})
 
 const useUser = () => {
-
   const populateUser = (loggedInUser: InterfaceUser) => {
     let newUser: InterfaceUser|null = null
     newUser = {...loggedInUser}
@@ -58,7 +58,6 @@ const useUser = () => {
     await Storage.clear()
     user.value = {...defaultUser}
   }
-
 
   /**
    * Fetch profile
