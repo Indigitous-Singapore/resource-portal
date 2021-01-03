@@ -1,6 +1,6 @@
 <template>
   <q-page class="container">
-    <div class="row q-mt-xl">
+    <div class="row q-mt-md">
       <div class="column col-xs-12">
         <ComponentDashboardProfileHeader />
       </div>
@@ -36,10 +36,10 @@
 
           <q-tab-panel name="profile" class="q-my-lg q-px-none">
             <div class="row">
-              <div class="column col-12 col-sm-7">
+              <div id="personal" class="column col-xs-12 col-sm-7">
                 <ComponentDashboardProfilePersonal />
               </div>
-              <div class="column col-12 col-sm-5">
+              <div class="column col-xs-12 col-sm-5 q-mt-lg">
                 <ComponentDashboardProfileResetPassword />
               </div>
             </div>
@@ -83,3 +83,11 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss" scoped>
+#personal {
+  @media screen and (min-width: 600px){
+    padding-right: 1em;
+  }
+}
+</style>

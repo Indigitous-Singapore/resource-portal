@@ -61,9 +61,7 @@ export default defineComponent({
   },
   setup(props) {
     const { deleteCollection } = useCollections()
-
-      console.log(props.collection)
-
+    
     const destroyCollection = async () => {
       if(props.collection) {
         if(confirm(`Please confirm that you want to delete: ${String(props.collection.title)}`)) {
