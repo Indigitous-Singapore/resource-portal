@@ -7,5 +7,5 @@ export default {
     'logoUrl': '../assets/logo.png',
     'logoAlt': 'MSM Resource Portal',
   },
-  'apiUrl': process.env.apiUrl
+  'apiUrl': String(process.env.apiUrl)
 }
