@@ -36,8 +36,12 @@
               :clearCurrentCategory="clearCurrentCategory"
               :updateCurrentCategory="updateCurrentCategory"
               :selectedCategory="selectedCategory"
-              :selectedTags="selectedTags"
               :categories="categories"
+              :clearCurrentSeriesItem="clearCurrentSeriesItem"
+              :updateCurrentSeriesItem="updateCurrentSeriesItem"
+              :selectedSeriesItem="selectedSeriesItem"
+              :seriesItems="seriesItems"
+              :selectedTags="selectedTags"
               :tags="tagsState.filter(tag => tag.display_in_filters === true)"
               @update-selected-tags="updateSelectedTags"
               />
@@ -63,8 +67,12 @@
                   :clearCurrentCategory="clearCurrentCategory"
                   :updateCurrentCategory="updateCurrentCategory"
                   :selectedCategory="selectedCategory"
-                  :selectedTags="selectedTags"
                   :categories="categories"
+                  :clearCurrentSeriesItem="clearCurrentSeriesItem"
+                  :updateCurrentSeriesItem="updateCurrentSeriesItem"
+                  :selectedSeriesItem="selectedSeriesItem"
+                  :seriesItems="seriesItems"
+                  :selectedTags="selectedTags"
                   :tags="tagsState.filter(tag => tag.display_in_filters === true)"
                   @update-selected-tags="updateSelectedTags"
                   />
@@ -110,6 +118,7 @@ import { defineComponent, onBeforeMount, ref, Ref, watch } from '@vue/compositio
 import { useItems } from '../../services/items'
 import { useTags } from '../../services/tags'
 import { useCategories } from '../../services/categories'
+import { useSeriesItems } from '../../services/seriesItems'
 import { useCollections } from '../../services/collections'
 import ExploreBanner from '../../components/Explore/ExploreBanner.vue'
 import ExploreContent from '../../components/Explore/ExploreContent.vue'
@@ -130,6 +139,7 @@ export default defineComponent({
     const loading = ref(true)
     const dialogIsOpen = ref(false)
     const categories: Ref<Record<string, string>[]> = ref([])
+    const seriesItems: Ref<Record<string, string>[]> = ref([])
     const { 
       state: itemsState,
       getItems
@@ -142,11 +152,16 @@ export default defineComponent({
       state: categoriesState,
       getCategories
     } = useCategories()
+    const { 
+      state: seriesItemsState,
+      getSeriesItems
+    } = useSeriesItems()
     const {
       getCollections
     } = useCollections()
 
     const selectedCategory: Ref<string|null> = ref(null)
+    const selectedSeriesItem: Ref<string|null> = ref(null)
     const selectedTags: Ref<number[]> = ref([])
     const search: Ref<string> = ref('')
 
@@ -154,12 +169,12 @@ export default defineComponent({
      * Lifecyle
      */
     onBeforeMount(async () => {
+      await getFilteredSeriesItems()
       await getFilteredCategories()
       await getTags()
       await getFilteredItems()
       await getCollections()
     })
-
 
     /**
      * Gets Categories
@@ -176,12 +191,27 @@ export default defineComponent({
     }
 
     /**
+     * Gets Series Items
+     */
+    const getFilteredSeriesItems = async () => {
+      await getSeriesItems()
+      const newSeriesItems: Record<string, string>[] = []
+      for (let seriesItem of seriesItemsState.value) {
+        const newSeriesItem: Record<string, string> = {}
+        newSeriesItem[seriesItem.id] = String(seriesItem.title)
+        newSeriesItems.push(newSeriesItem)
+      }
+      seriesItems.value = newSeriesItems
+    }
+
+    /**
      * Gets the items based on the filters
      */
     const getFilteredItems = async () => {
       await getItems(
         (selectedCategory.value === null) ? [] : [selectedCategory.value],
         (selectedTags.value.length > 0) ? selectedTags.value : [],
+        (selectedSeriesItem.value === null) ? [] : [selectedSeriesItem.value],
         search.value
       )
       loading.value = false
@@ -216,6 +246,24 @@ export default defineComponent({
     }
 
     /**
+     * Updates the current series item to the selected one
+     * 
+     * @param {string} key
+     */
+    const updateCurrentSeriesItem = (key: string): void => {
+      selectedSeriesItem.value = key.toString()
+    }
+
+    /**
+     * clears the current series item
+     * 
+     * @param {string} key
+     */
+    const clearCurrentSeriesItem = (): void => {
+      selectedSeriesItem.value = null
+    }
+
+    /**
      * Updates the selected tags
      * 
      * @param {string} s
@@ -234,11 +282,12 @@ export default defineComponent({
     /**
      * Observers
      */
-    watch([selectedCategory, selectedTags, search], async () => await getFilteredItems())
+    watch([selectedCategory, selectedTags, selectedSeriesItem, search], async () => await getFilteredItems())
 
     return {
       categories,
       clearCurrentCategory,
+      clearCurrentSeriesItem,
       dialogIsOpen,
       loading,
       itemsState,
@@ -248,9 +297,12 @@ export default defineComponent({
       search,
       selectedTags,
       selectedCategory,
+      selectedSeriesItem,
+      seriesItems,
       showOnboarding: ctx.root.$route.query.onboarding === 'true',
       updateCurrentCategory,
       updateCurrentSearch,
+      updateCurrentSeriesItem,
       updateSelectedTags,
     }
   }

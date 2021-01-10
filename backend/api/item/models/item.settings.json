@@ -51,6 +51,10 @@
       "via": "items",
       "collection": "collection",
       "private": true
+    },
+    "series_items": {
+      "via": "items",
+      "collection": "series-item"
     }
   }
 }

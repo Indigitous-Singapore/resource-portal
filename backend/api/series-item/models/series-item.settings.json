@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "series",
+  "info": {
+    "name": "SeriesItem",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "items": {
+      "collection": "item",
+      "via": "series_items",
+      "dominant": true
+    }
+  }
+}
