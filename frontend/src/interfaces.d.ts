@@ -1,5 +1,3 @@
-import { number } from "joi"
-
 /**
  * Generic interfaces
  */
@@ -166,6 +164,19 @@ export interface InterfaceCollection {
   id: number;
   user: InterfaceUser;
   title: string;
+  published_at: string;
+  created_at: string;
+  updated_at: string;
+  items: InterfaceItem[]; 
+}
+
+/**
+ * SeriesItems
+ */
+export interface InterfaceSeriesItem {
+  id: number;
+  title: string;
+  description: string;
   published_at: string;
   created_at: string;
   updated_at: string;

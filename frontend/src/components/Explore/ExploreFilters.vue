@@ -28,6 +28,34 @@
     <q-separator spaced="2em" inset="true" style="margin-left: -6px"/>
   </div>
 
+  <div class="item-series-items">
+    <h6 class="text-h6 text-bold text-grey-7 q-mb-sm">SERIES</h6>
+    <q-list
+      id="item-series-items"
+      >
+      <q-item
+        v-for="(seriesItem, key) in seriesItems"
+        :key="key"
+        :class="'q-py-none item-series-item ' + ((String(Object.keys(seriesItem)[0]) === selectedSeriesItem) ? 'q-item--active' : '')"
+        @click="() => { updateCurrentSeriesItem(Object.keys(seriesItem)[0]) }"
+        clickable
+        >
+        {{ seriesItem[Object.keys(seriesItem)[0]] }}
+      </q-item>
+      <q-item
+        :class="`bg-red-1 q-py-none item-series-item ${ selectedSeriesItem === null ? 'hidden' : '' }`"
+        @click="clearCurrentSeriesItem"
+        clickable
+        >
+        Clear&nbsp;&cross;
+      </q-item>
+    </q-list>
+  </div>
+
+  <div class="separator">
+    <q-separator spaced="2em" inset="true" style="margin-left: -6px"/>
+  </div>
+
   <div
     v-if="tags"
     class="item-tags"
@@ -67,9 +95,23 @@ export default defineComponent({
         return
       }
     },
+    updateCurrentSeriesItem: {
+      type: Function,
+      default: (key: string) => {
+        return key
+      }
+    },
+    clearCurrentSeriesItem: {
+      type: Function,
+      default: () => {
+        return
+      }
+    },
     tags: Array,
     categories: Array,
     selectedCategory: String,
+    seriesItems: Array,
+    selectedSeriesItem: String,
   },
   setup(props, ctx) {
     const selectedTags: Ref<Array<boolean>> = ref([])
@@ -93,11 +135,13 @@ export default defineComponent({
     flex-direction: row !important;
     width: 100%;
   }
-  .items-categories {
+  .items-categories,
+  .item-series-items {
     flex: 4;
     display: flex;
   }
-  .item-category {
+  .item-category,
+  .item-series-item {
     font-size: 0.8em;
     line-height: 1.25em;
     min-height: 1.25em;
@@ -117,7 +161,8 @@ export default defineComponent({
   display: flex;
   flex-direction: column
 }
-.item-category {
+.item-category,
+.item-series-item {
   line-height: 2.5em;
   min-height: 2.5em;
   color: $grey-8;

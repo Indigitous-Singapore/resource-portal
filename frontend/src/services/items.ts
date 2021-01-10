@@ -26,6 +26,7 @@ const packageItem = (item: InterfaceItem) => {
 const fetchItems = async (
     categories = ['all'],
     tags: number[] = [],
+    seriesItems = ['all'],
     search = ''
   ): Promise<InterfaceItem[]|undefined> => {
   try {
@@ -43,6 +44,11 @@ const fetchItems = async (
       if (tags.length > 0) {
         queryOptions._where.push({
           tags_in: tags,
+        })
+      }
+      if (seriesItems.indexOf('all') === -1) {
+        queryOptions._where.push({
+          series_items: seriesItems,
         })
       }
       if (search.length > 0) {
@@ -95,9 +101,10 @@ const useItems = () => {
   const getItems = async (
       categories: string[] = [],
       tags: number[] = [],
+      seriesItems: string[] = [],
       search: string,
     ) => {
-    const items: InterfaceItem[] | undefined = await fetchItems(categories, tags, search)
+    const items: InterfaceItem[] | undefined = await fetchItems(categories, tags, seriesItems, search)
 
     if (items === undefined) {
       console.error('Items is undefined')
