@@ -32,7 +32,7 @@
         :href="resource.url"
         padding="none"
         flat
-        size="sm"
+        size="md"
         color="grey-7"
         icon="live_tv"
         label="Watch on YouTube"
