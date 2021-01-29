@@ -36,6 +36,10 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "is_public": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
