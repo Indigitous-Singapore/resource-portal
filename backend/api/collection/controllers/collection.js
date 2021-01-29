@@ -10,7 +10,15 @@ let populate = ['items']
 
 const populateEntityItems = async (entity) => {
   const itemIds = entity.items.map(item => item.id)
-  entity.items = await strapi.query('item').find({ id: itemIds })
+  let items = await strapi.query('item').find({ id: itemIds })
+
+  //  Remove nested collections in items
+  items = items.map(item => {
+    delete item.collections
+    return item
+  })
+
+  entity.items = items
 }
 
 const populateItems = async (entities) => {
@@ -41,8 +49,7 @@ module.exports = {
     const { id } = ctx.params;
 
     const entity = await strapi.services.collection.findOne({
-      id: ctx.params.id,
-      'user.id': ctx.state.user.id
+      id: ctx.params.id
     }, populate);
 
     entity = await populateEntityItems(entity)
