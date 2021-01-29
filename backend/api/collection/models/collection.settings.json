@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "collections",
   "info": {
-    "name": "collection"
+    "name": "collection",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -11,9 +12,9 @@
   },
   "attributes": {
     "user": {
-      "via": "collections",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "collections"
     },
     "items": {
       "unique": true,
@@ -26,6 +27,15 @@
       "unique": true,
       "required": true,
       "default": "My Collection"
+    },
+    "featured_image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }

@@ -49,8 +49,7 @@
     },
     "collections": {
       "via": "items",
-      "collection": "collection",
-      "private": true
+      "collection": "collection"
     },
     "series_items": {
       "via": "items",
