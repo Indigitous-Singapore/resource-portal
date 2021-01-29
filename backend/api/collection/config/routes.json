@@ -25,14 +25,6 @@
       }
     },
     {
-      "method": "POST",
-      "path": "/collections",
-      "handler": "collection.create",
-      "config": {
-        "policies": []
-      }
-    },
-    {
       "method": "PUT",
       "path": "/collections/:id",
       "handler": "collection.update",
@@ -44,6 +36,14 @@
       "method": "DELETE",
       "path": "/collections/:id",
       "handler": "collection.delete",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/collections",
+      "handler": "collection.create",
       "config": {
         "policies": []
       }

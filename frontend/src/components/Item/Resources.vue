@@ -30,15 +30,27 @@
     </div>
     <div class="column col-xs-5 col-sm-3 justify-center items-end">
       <q-btn
+        v-if="isLoggedIn"
         type="a"
         target="_blank"
         :href="resource.url"
         padding="none"
         flat
-        size="sm"
-        color="grey-5"
+        size="md"
+        color="grey-7"
         icon="cloud_download"
         label="Download"
+        no-caps
+        />
+      <q-btn
+        v-else
+        type="a"
+        href="/login"
+        padding="none"
+        flat
+        size="md"
+        color="grey-5"
+        label="Login to Download"
         no-caps
         />
     </div>
@@ -47,8 +59,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, onMounted, ref, Ref } from '@vue/composition-api'
 
+import { isAuthenticated } from '../../services/authentication'
 import { download } from '../../utilities/download'
 
 export default defineComponent({
@@ -62,8 +75,15 @@ export default defineComponent({
     }
   },
   setup() {
+    const isLoggedIn: Ref<boolean> = ref(false)
+
+    onMounted(async () => {
+      isLoggedIn.value = await isAuthenticated()
+    })
+
     return {
-      download
+      download,
+      isLoggedIn,
     }
   }
 });

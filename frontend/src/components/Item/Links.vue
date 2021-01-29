@@ -26,15 +26,27 @@
     </div>
     <div class="column col-xs-5 col-sm-3 justify-center items-end">
       <q-btn
+        v-if="isLoggedIn"
         type="a"
         target="_blank"
         :href="resource.url"
         padding="none"
         flat
         size="sm"
-        color="grey-5"
+        color="grey-7"
         icon="live_tv"
         label="Watch on YouTube"
+        no-caps
+        />
+      <q-btn
+        v-else
+        type="a"
+        href="/login"
+        padding="none"
+        flat
+        size="md"
+        color="grey-5"
+        label="Login to Watch"
         no-caps
         />
     </div>
@@ -43,7 +55,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, onMounted, ref, Ref } from '@vue/composition-api'
+
+import { isAuthenticated } from '../../services/authentication'
 
 export default defineComponent({
   name: 'ItemLinks',
@@ -58,12 +72,19 @@ export default defineComponent({
     }
   },
   setup() {
+    const isLoggedIn: Ref<boolean> = ref(false)
+
     const open = (url: string) => {
       window.open(url)
     }
 
+    onMounted(async () => {
+      isLoggedIn.value = await isAuthenticated()
+    })
+
     return {
-      open
+      open,
+      isLoggedIn,
     }
   }
 });

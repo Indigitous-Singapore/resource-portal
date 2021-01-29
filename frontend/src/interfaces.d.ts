@@ -168,6 +168,8 @@ export interface InterfaceCollection {
   created_at: string;
   updated_at: string;
   items: InterfaceItem[]; 
+  is_public: boolean;
+  featured_image: string;
 }
 
 /**
