@@ -71,8 +71,8 @@
       "type": "string"
     },
     "collections": {
-      "collection": "collection",
-      "via": "user"
+      "via": "user",
+      "collection": "collection"
     },
     "interests": {
       "collection": "category"
