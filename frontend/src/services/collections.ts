@@ -32,7 +32,7 @@ const createNewCollection = async (title: string): Promise<InterfaceCollection|u
 }
 
 /**
- * Fetches collection
+ * Fetches collections
  */
 const fetchCollections = async (): Promise<InterfaceCollection[]|undefined> => {
   const token = await getAuthenticationToken()
@@ -44,6 +44,30 @@ const fetchCollections = async (): Promise<InterfaceCollection[]|undefined> => {
     })
 
     return response.data as InterfaceCollection[]
+  } catch (error) {
+    console.error(error as AxiosError)
+  }
+}
+
+/**
+ * Get collection
+ */
+const fetchCollection = async (id: number|string): Promise<InterfaceCollection|undefined> => {
+  if (id === null || id === undefined) {
+    console.error('Collection ID cannot be null')
+    return undefined
+  }
+
+  const token = await getAuthenticationToken()
+  const options = token ? {
+    headers: {
+      Authorization: `Bearer ${String(token)}`
+    }
+  } : undefined
+  try {
+    const response: AxiosResponse = await axios.get(`${config.apiUrl}/collections/${id}`, options)
+
+    return response.data as InterfaceCollection
   } catch (error) {
     console.error(error as AxiosError)
   }
@@ -100,7 +124,7 @@ const state = reactive({
  */
 const useCollections = () => {
   /**
-   * 
+   * Creates a new collection
    */
   const createCollection = async (title: string): Promise<InterfaceCollection|undefined> => {
     const newCollection: InterfaceCollection|undefined = await createNewCollection(title)
@@ -113,7 +137,7 @@ const useCollections = () => {
   }
 
   /**
-   * 
+   *  Get all collections of the users
    */
   const getCollections = async () => {
     const collections: InterfaceCollection[] | undefined = await fetchCollections()
@@ -126,6 +150,27 @@ const useCollections = () => {
     }
 
     return collections
+  }
+
+  /**
+   *  Get a single collection
+   */
+  const getCollection = async (id: number|string) => {
+    const collection: InterfaceCollection | undefined = await fetchCollection(id)
+
+    if (collection === undefined) {
+      console.error('Collections is undefined')
+    } else {
+      //  Search state for collection id
+      const index = state.collections.findIndex(stateCollection => stateCollection.id === collection.id)
+      if (index === -1) {
+        state.collections.push(collection)
+      } else {
+        state.collections[index] = collection
+      }
+    }
+
+    return collection
   }
 
   /**
@@ -197,6 +242,7 @@ const useCollections = () => {
     createCollection,
     deleteCollection,
     getCollections,
+    getCollection,
     removeItem,
     state,
   }

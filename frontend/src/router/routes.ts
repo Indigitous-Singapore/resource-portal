@@ -60,6 +60,14 @@ const routes: RouteConfig[] = [
       { path: ':itemId', name: 'item', meta: {private: true}, component: () => import('../pages/Dashboard/Item.vue') }
     ]
   },
+  {
+    path: '/collections',
+    component: () => import('../layouts/DashboardLayout.vue'),
+    children: [
+      { path: '', meta: {private: true}, redirect: { name: 'explore' }},
+      { path: ':collectionId', name: 'collection', meta: {private: false}, component: () => import('../pages/Pages/Collection.vue') }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it

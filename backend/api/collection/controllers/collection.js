@@ -9,18 +9,24 @@ const { sanitizeEntity } = require('strapi-utils');
 let populate = ['items']
 
 const populateEntityItems = async (entity) => {
+  if (entity === null) return
+
   const itemIds = entity.items.map(item => item.id)
   let items = await strapi.query('item').find({ id: itemIds })
 
   //  Remove nested collections in items
-  items = items.map(item => {
+  entity.items = items.map(item => {
     delete item.collections
     return item
   })
 
-  entity.items = items
+  return entity
 }
 
+/**
+ * 
+ * @param {*} entities 
+ */
 const populateItems = async (entities) => {
   const newEntities = [...entities]
   for (const entity of newEntities) {
@@ -28,6 +34,24 @@ const populateItems = async (entities) => {
   }
 
   return newEntities
+}
+
+/**
+ * Checks if the user has access to the collection
+ * -------------------------------------------
+ *            |     owner     |    not owner   
+ * -------------------------------------------
+ *  private   |      YES      |       NO
+ * -------------------------------------------
+ *  public    |      YES      |       YES
+ * -------------------------------------------
+ */
+const canAccessCollection = (collection, userId = null) => {
+  if (collection.is_public === true) {
+    return true
+  }
+
+  return collection.user === userId
 }
 
 module.exports = {
@@ -46,15 +70,24 @@ module.exports = {
     return entities.map(entity => sanitizeEntity(entity, { model: strapi.models.collection }));
   },
   async findOne(ctx) {
+    //  Gets the collection id from url params
     const { id } = ctx.params;
 
-    const entity = await strapi.services.collection.findOne({
-      id: ctx.params.id
+    //  Gets the user if exists
+    const user = (ctx.state.user && ctx.state.user.id) ? ctx.state.user.id : null
+
+    let entity = await strapi.services.collection.findOne({
+      id,
     }, populate);
+    
+    if (canAccessCollection(entity, user)) {
+      entity = await populateEntityItems(entity)
 
-    entity = await populateEntityItems(entity)
+      return sanitizeEntity(entity, { model: strapi.models.collection });
+    } else {
+      return null
+    }
 
-    return sanitizeEntity(entity, { model: strapi.models.collection });
   },
   count(ctx) {
     ctx.query['user.id'] = ctx.state.user.id
