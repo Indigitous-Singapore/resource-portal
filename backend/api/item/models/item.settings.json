@@ -33,13 +33,13 @@
       "required": false
     },
     "categories": {
-      "via": "items",
       "collection": "category",
+      "via": "items",
       "dominant": true
     },
     "tags": {
-      "via": "items",
       "collection": "tag",
+      "via": "items",
       "dominant": true
     },
     "link": {
@@ -48,12 +48,12 @@
       "component": "item-links.link"
     },
     "collections": {
-      "via": "items",
-      "collection": "collection"
+      "collection": "collection",
+      "via": "items"
     },
     "series_items": {
-      "via": "items",
-      "collection": "series-item"
+      "collection": "series-item",
+      "via": "items"
     }
   }
 }

@@ -17,9 +17,8 @@
       "via": "collections"
     },
     "items": {
-      "unique": true,
-      "collection": "item",
       "via": "collections",
+      "collection": "item",
       "dominant": true
     },
     "title": {
