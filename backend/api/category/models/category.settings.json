@@ -27,8 +27,8 @@
       "via": "category"
     },
     "items": {
-      "collection": "item",
-      "via": "categories"
+      "via": "categories",
+      "collection": "item"
     },
     "featured_image": {
       "model": "file",

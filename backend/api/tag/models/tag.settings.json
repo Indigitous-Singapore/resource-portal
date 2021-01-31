@@ -19,8 +19,8 @@
       "type": "string"
     },
     "items": {
-      "collection": "item",
-      "via": "tags"
+      "via": "tags",
+      "collection": "item"
     },
     "display_in_filters": {
       "type": "boolean",

@@ -20,8 +20,8 @@
       "type": "richtext"
     },
     "items": {
-      "collection": "item",
       "via": "series_items",
+      "collection": "item",
       "dominant": true
     }
   }
