@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "description": "Resource Portal Admin",
   "scripts": {
-    "develop": "strapi develop",
+    "develop": "strapi build && strapi develop",
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi"

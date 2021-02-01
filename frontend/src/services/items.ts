@@ -10,7 +10,7 @@ import config from '../config/config'
 
 //  Dummy data
 // import itemsData from '../data/items.data'
-import { InterfaceItem, InterfaceStateItems } from 'src/interfaces'
+import { InterfaceItem, InterfaceItemMediaObject, InterfaceStateItems } from 'src/interfaces'
 import { getAuthenticationToken } from './authentication'
 
 const packageItem = (item: InterfaceItem) => {
@@ -89,6 +89,24 @@ const fetchItem = async (id: string): Promise<InterfaceItem|undefined> => {
   }
 }
 
+const generatePresignedItemUrl = async (hash: string): Promise<InterfaceItemMediaObject|undefined> => {
+  try {
+    if ('apiUrl' in config) {
+      const token: string|null = await getAuthenticationToken()
+      const response: AxiosResponse = await axios.get(`${config.apiUrl}/items/download/${hash}`, {
+        headers: {
+          Authorization:
+            `Bearer ${token}`,
+        },
+      })
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return response.data
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const defaultState: InterfaceStateItems = {
   items: []
 }
@@ -141,6 +159,7 @@ const useItems = () => {
   return {
     getItems,
     getItem,
+    generatePresignedItemUrl,
     state
   }
 }

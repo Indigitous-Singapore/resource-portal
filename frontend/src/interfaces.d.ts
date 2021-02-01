@@ -156,6 +156,9 @@ export interface InterfaceItemMedia {
   created_at: string;
   updated_at: string;
 }
+export interface InterfaceItemMediaObject {
+  url: string;
+}
 
 /**
  * Collections

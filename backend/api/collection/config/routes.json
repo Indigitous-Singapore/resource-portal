@@ -2,6 +2,14 @@
   "routes": [
     {
       "method": "GET",
+      "path": "/collections/:id",
+      "handler": "collection.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/collections",
       "handler": "collection.find",
       "config": {
@@ -12,14 +20,6 @@
       "method": "GET",
       "path": "/collections/count",
       "handler": "collection.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/collections/:id",
-      "handler": "collection.findOne",
       "config": {
         "policies": []
       }

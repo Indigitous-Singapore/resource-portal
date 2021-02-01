@@ -31,9 +31,7 @@
     <div class="column col-xs-5 col-sm-3 justify-center items-end">
       <q-btn
         v-if="isLoggedIn"
-        type="a"
-        target="_blank"
-        :href="resource.url"
+        @click="() => download(resource)"
         padding="none"
         flat
         size="md"
