@@ -48,8 +48,8 @@
       "component": "item-links.link"
     },
     "collections": {
-      "collection": "collection",
-      "via": "items"
+      "via": "items",
+      "collection": "collection"
     },
     "series_items": {
       "collection": "series-item",

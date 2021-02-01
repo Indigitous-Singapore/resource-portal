@@ -18,6 +18,14 @@
     },
     {
       "method": "GET",
+      "path": "/items/download/:media",
+      "handler": "item.downloadMedia",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/items/:id",
       "handler": "item.findOne",
       "config": {

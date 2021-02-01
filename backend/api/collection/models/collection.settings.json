@@ -17,8 +17,8 @@
       "via": "collections"
     },
     "items": {
-      "via": "collections",
       "collection": "item",
+      "via": "collections",
       "dominant": true
     },
     "title": {
@@ -39,6 +39,9 @@
     "is_public": {
       "type": "boolean",
       "default": false
+    },
+    "description": {
+      "type": "text"
     }
   }
 }

@@ -1,18 +1,20 @@
-// import Axios from 'axios'
 import _ from 'lodash'
-import { InterfaceItemMedia } from 'src/interfaces'
+import { InterfaceItemMedia, InterfaceItemMediaObject } from 'src/interfaces'
+import { useItems } from 'src/services/items'
 
-export const download = (
+export const download = async (
   media: InterfaceItemMedia
-): void => {
+): Promise<void> => {
+  const { generatePresignedItemUrl } = useItems()
+
   try {
-    if (_.isString(media.url)) {
-      if (!/^https?:\/\//i.test(media.url)) {
-        media.url = `https://${media.url}`
+    if (media.hash && media.ext) {
+      const mediaObject: InterfaceItemMediaObject|undefined = await generatePresignedItemUrl(String(`${media.hash}${media.ext}`))
+      if (mediaObject && 'url' in mediaObject && _.isString(mediaObject.url)) {
+        window.open(mediaObject.url)
+      } else {
+        throw Error('No Media URL')
       }
-      window.open(media.url)
-    } else {
-      throw Error('No Media URL')
     }
   } catch (error) {
     console.error(error)
