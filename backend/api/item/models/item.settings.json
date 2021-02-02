@@ -8,7 +8,8 @@
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": true
+    "draftAndPublish": true,
+    "previewable": true
   },
   "attributes": {
     "title": {
@@ -48,12 +49,21 @@
       "component": "item-links.link"
     },
     "collections": {
-      "via": "items",
-      "collection": "collection"
+      "collection": "collection",
+      "via": "items"
     },
     "series_items": {
       "collection": "series-item",
       "via": "items"
+    },
+    "featured_image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }
