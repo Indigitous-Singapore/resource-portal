@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@capacitor/core": "^2.4.2",
-    "@quasar/extras": "^1.9.9",
+    "@quasar/extras": "^1.9.16",
     "@types/dompurify": "^2.0.4",
     "@types/hapi__joi": "^17.1.6",
     "@types/joi": "^14.3.4",
@@ -29,7 +29,7 @@
     "marked": "^1.2.2",
     "md5": "^2.3.0",
     "qs": "^6.9.4",
-    "quasar": "^1.14.7",
+    "quasar": "^1.15.2",
     "share-api-polyfill": "^1.0.20",
     "vue-hotjar": "^1.2.0",
     "vue-i18n": "^8.0.0",

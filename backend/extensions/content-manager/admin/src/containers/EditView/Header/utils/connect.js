@@ -1,5 +1,5 @@
 import React from "react";
-import { PreviewProvider } from "strapi-plugin-preview-content";
+import { PreviewProvider } from "strapi-plugin-previewer";
 import useDataManager from "../../../../hooks/useDataManager";
 
 function connect(WrappedComponent, select) {
