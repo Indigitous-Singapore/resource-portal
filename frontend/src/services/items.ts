@@ -69,18 +69,19 @@ const fetchItems = async (
   }
 }
 
-const fetchItem = async (id: string): Promise<InterfaceItem|undefined> => {
+const fetchItem = async (id: string, preview = false): Promise<InterfaceItem|undefined> => {
   try {
     if ('apiUrl' in config) {
       const token: string|null = await getAuthenticationToken()
-      const response: AxiosResponse = await axios.get(`${config.apiUrl}/items/${id}`, {
+      const endpoint = preview ? `${config.apiUrl}/previewer/item/${id}` : `${config.apiUrl}/items/${id}`
+      const response: AxiosResponse = await axios.get(endpoint, {
         headers: {
           Authorization:
             `Bearer ${token}`,
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const item: InterfaceItem = response.data
+      const item: InterfaceItem = preview ? response.data.data : response.data
 
       return packageItem(item)
     }
@@ -134,9 +135,9 @@ const useItems = () => {
     return items
   }
 
-  const getItem = async (id: string) => {
-    const item: InterfaceItem | undefined = await fetchItem(id)
-
+  const getItem = async (id: string, preview = false) => {
+    const item: InterfaceItem | undefined = await fetchItem(id, preview)
+    
     if (item === undefined) {
       console.error(`Item ${id} is undefined`)
     } else {

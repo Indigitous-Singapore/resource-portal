@@ -1,5 +1,7 @@
 'use strict';
 
+const { sanitizeEntity } = require('strapi-utils');
+
 const AWS = require('aws-sdk')
 
 /**

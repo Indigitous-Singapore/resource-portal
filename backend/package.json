@@ -21,7 +21,7 @@
     "strapi-plugin-content-type-builder": "3.4.5",
     "strapi-plugin-documentation": "^3.4.5",
     "strapi-plugin-email": "3.4.5",
-    "strapi-plugin-preview-content": "^0.2.75",
+    "strapi-plugin-previewer": "^0.2.82",
     "strapi-plugin-upload": "3.4.5",
     "strapi-plugin-users-permissions": "3.4.5",
     "strapi-provider-email-sendgrid": "^3.4.5",
