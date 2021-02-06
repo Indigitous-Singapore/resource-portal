@@ -3,6 +3,13 @@
     class="container"
     v-if="item !== undefined"
     >
+    <q-banner
+      v-if="preview"
+      rounded
+      class="bg-orange text-white text-center"
+      >
+      <b>Note: This Is A Preview</b>
+    </q-banner>
     <div
       :class="'row ' + (isMobile ? 'q-pt-md' : 'q-pt-xl')"
       >
@@ -59,9 +66,10 @@ export default defineComponent({
     ItemContent,
     Loading,
   },
-  setup (props, ctx) {
+  setup (_props, ctx) {
     const id = ctx.root.$route.params.itemId
     const loading = ref(true)
+    const preview = ref(false)
     const item: Ref<InterfaceItem | undefined> = ref()
 
     const { state, getItem } = useItems()
@@ -72,8 +80,10 @@ export default defineComponent({
     }
 
     onBeforeMount(async () => {
+      const route = ctx.root.$route
+      preview.value = route.query.preview === 'true'
       await getCollections()
-      await getItem(ctx.root.$route.params.itemId)
+      await getItem(route.params.itemId, preview.value)
       updateItem()
     })
 
@@ -85,6 +95,7 @@ export default defineComponent({
     return {
       item,
       isMobile: Platform.is.mobile as boolean,
+      preview,
       loading
     }
   }
