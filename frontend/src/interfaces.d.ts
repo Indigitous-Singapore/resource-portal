@@ -126,6 +126,7 @@ export interface InterfaceItem {
   description_short: string|null;
   description_long: string|null;
   media: InterfaceItemMedia[];
+  featured_image: InterfaceImage;
   link: string[];
 
   categories: InterfaceCategory[];
