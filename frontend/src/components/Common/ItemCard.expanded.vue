@@ -1,11 +1,13 @@
 <template>
-  <div class="row item-card">
+  <div
+    v-if="item"
+    class="row item-card">
       <div class="category-image">
         <router-link
           class="no-decoration"
           :to="`/items/${item.id}`">
           <q-img
-            :src="typeof item.categories[0].featured_image.url === 'string' ? item.categories[0].featured_image.url : '/assets/musicfile.jpg'"
+            :src="(item && item.featured_image && typeof item.featured_image.url === 'string') ? item.featured_image.url : (item.categories[0].featured_image.url  || '/assets/musicfile.jpg')"
             :ratio="1"
             />
         </router-link>

@@ -21,7 +21,7 @@
           :item="item"
           />
         <q-img
-            :src="typeof item.categories[0].featured_image.url === 'string' ? item.categories[0].featured_image.url : '/assets/musicfile.jpg'"
+            :src="(item && item.featured_image && typeof item.featured_image.url === 'string') ? item.featured_image.url : (item.categories[0].featured_image.url  || '/assets/musicfile.jpg')"
           :style="'max-width: ' + (isMobile ? '260' : '300') + 'px'"
           />
       </div>
