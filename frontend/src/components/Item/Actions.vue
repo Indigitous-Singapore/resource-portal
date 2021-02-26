@@ -82,7 +82,7 @@ export default defineComponent({
       void share(
       `${item.title || ''}`,
       `${item.title || ''}: ${item.description_short || ''}`,
-      `https://${config.app.host || 'portal.msmusic.edu.sg'}/items/${item.id}`
+      `${config.app.host || 'portal.msmusic.edu.sg'}/items/${item.id}`
       )
     }
 

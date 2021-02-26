@@ -168,6 +168,7 @@ export interface InterfaceCollection {
   id: number;
   user: InterfaceUser;
   title: string;
+  description: string;
   published_at: string;
   created_at: string;
   updated_at: string;

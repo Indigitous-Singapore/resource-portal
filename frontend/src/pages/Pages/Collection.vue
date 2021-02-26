@@ -21,10 +21,30 @@
     >
     <div class="container">
       <div
-        class="row q-py-md"
+        class="row q-pt-md"
+        >
+        <div class="col-12 col-md-10">
+          <h1 class="text-h3 text-accent text-semibold q-my-md">{{ collection.title }}</h1>
+        </div>
+        <div class="col-12 col-md-2 flex justify-end items-center">
+          <q-btn
+            v-if="collection.is_public"
+            size="12px"
+            padding="sm md"
+            label="Share"
+            icon-right="share"
+            color="primary"
+            @click="() => shareCollection(collection)"
+            no-caps
+            unelevated
+            />
+        </div>
+      </div>
+      <div
+        class="row q-pb-md"
         >
         <div class="col-12">
-          <h1 class="text-h3 text-accent text-semibold q-my-md">{{ collection.title }}</h1>
+          <p>{{ collection.description }}</p>
         </div>
       </div>
       <div class="row q-py-md">
@@ -70,6 +90,8 @@ import Loading from '../../components/Common/Loading.vue'
 import { useCollections } from '../../services/collections'
 import ItemCard from '../../components/Common/ItemCard.vue'
 import ItemHeaderExpanded from '../../components/Common/ItemHeader.expanded.vue'
+import config from '../../config/config'
+import { share } from '../../utilities/share'
 
 export default defineComponent({
   name: 'PageCollectionsSingle',
@@ -92,6 +114,14 @@ export default defineComponent({
         page: 1,
         rowsPerPage: 99
       },
+    }
+
+    const shareCollection = async (collection: InterfaceCollection) => {
+      await share(
+      `${collection.title || ''}`,
+      `${collection.title || ''}: ${collection.description || ''}`,
+      `${config.app.host || 'portal.msmusic.edu.sg'}/collections/${collection.id}`
+      )
     }
 
     const updateCollection = () => {
@@ -134,6 +164,7 @@ export default defineComponent({
       isMobile: Platform.is.mobile as boolean,
       loading,
       tableOptions,
+      shareCollection,
     }
   }
 });
