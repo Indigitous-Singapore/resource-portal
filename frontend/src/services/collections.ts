@@ -74,6 +74,30 @@ const fetchCollection = async (id: number|string): Promise<InterfaceCollection|u
 }
 
 /**
+ * Edot collection
+ */
+const editCollection = async (id: number|string, attributes: Record<string, any>): Promise<InterfaceCollection|undefined> => {
+  if (id === null || id === undefined) {
+    console.error('Collection ID cannot be null')
+    return undefined
+  }
+
+  const token = await getAuthenticationToken()
+  const options = token ? {
+    headers: {
+      Authorization: `Bearer ${String(token)}`
+    }
+  } : undefined
+  try {
+    const response: AxiosResponse = await axios.put(`${config.apiUrl}/collections/${id}`, attributes, options)
+
+    return response.data as InterfaceCollection
+  } catch (error) {
+    console.error(error as AxiosError)
+  }
+}
+
+/**
  * Destroy collection
  */
 const destroyCollection = async (collectionId: number): Promise<InterfaceCollection|undefined> => {
@@ -174,6 +198,35 @@ const useCollections = () => {
   }
 
   /**
+   *  Update a single collection
+   */
+  const updateCollection = async (id: number|string, attributes: Record<string, any>): Promise<InterfaceCollection | undefined> => {
+    const collection: InterfaceCollection | undefined = await editCollection(id, attributes)
+
+    if (collection === undefined) {
+      console.error('Collections is undefined')
+    } else {
+      //  Search state for collection id
+      const index = state.collections.findIndex(stateCollection => stateCollection.id === collection.id)
+      if (index === -1) {
+        const newCollections = [...state.collections]
+        newCollections.push(collection)
+        state.collections = [
+          ...newCollections
+        ]
+      } else {
+        const newCollections = [...state.collections]
+        newCollections[index] = collection
+        state.collections = [
+          ...newCollections
+        ]
+      }
+    }
+
+    return collection
+  }
+
+  /**
    * 
    */
   const deleteCollection = async (collectionId: number): Promise<InterfaceCollection|undefined> => {
@@ -243,6 +296,7 @@ const useCollections = () => {
     deleteCollection,
     getCollections,
     getCollection,
+    updateCollection,
     removeItem,
     state,
   }
