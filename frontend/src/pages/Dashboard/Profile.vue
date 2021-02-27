@@ -31,7 +31,8 @@
 
         <q-tab-panels v-model="data.tab" animated class="ndgt-inner-tabs">
           <q-tab-panel name="collections" class="q-pa-none">
-            <ComponentDashboardProfileCollections />
+            <ComponentDashboardProfileCollectionsNarrow v-if="isMobile"/>
+            <ComponentDashboardProfileCollectionsExpanded v-else/>
           </q-tab-panel>
 
           <q-tab-panel name="profile" class="q-my-lg q-px-none">
@@ -55,9 +56,11 @@ import { defineComponent, reactive } from '@vue/composition-api'
 import ComponentDashboardProfileHeader from 'components/Dashboard/Profile/Header.vue'
 import ComponentDashboardProfilePersonal from 'components/Dashboard/Profile/Personal.vue'
 import ComponentDashboardProfileResetPassword from 'components/Dashboard/Profile/ResetPassword.vue'
-import ComponentDashboardProfileCollections from 'components/Dashboard/Profile/Collections.vue'
+import ComponentDashboardProfileCollectionsExpanded from 'components/Dashboard/Profile/Collections.expanded.vue'
+import ComponentDashboardProfileCollectionsNarrow from 'components/Dashboard/Profile/Collections.narrow.vue'
 import UnderConstruction from 'components/Dashboard/UnderConstruction.vue'
 import { useUser } from '../../services/user'
+import { Platform } from 'quasar'
 
 export default defineComponent({
   name: 'PageDashboardProfile',
@@ -65,7 +68,8 @@ export default defineComponent({
     ComponentDashboardProfileHeader,
     ComponentDashboardProfilePersonal,
     ComponentDashboardProfileResetPassword,
-    ComponentDashboardProfileCollections,
+    ComponentDashboardProfileCollectionsExpanded,
+    ComponentDashboardProfileCollectionsNarrow,
     UnderConstruction
   },
   setup (_props, ctx) {
@@ -78,6 +82,7 @@ export default defineComponent({
 
     return {
       data,
+      isMobile: Platform.is.mobile as boolean,
       user
     }
   }

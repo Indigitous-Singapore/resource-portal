@@ -26,7 +26,9 @@
         <div class="col-12 col-md-10">
           <h1 class="text-h3 text-accent text-semibold q-my-md">{{ collection.title }}</h1>
         </div>
-        <div class="col-12 col-md-2 flex justify-end items-center">
+        <div
+          :class="`col-12 col-md-2 flex ${isMobile ? 'q-pb-md' : 'justify-end'} items-center`"
+          >
           <q-btn
             v-if="collection.is_public"
             size="12px"

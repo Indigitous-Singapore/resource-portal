@@ -54,7 +54,7 @@ import { useCollections } from '../../../services/collections'
 import Collection from './Collection.vue'
 
 export default defineComponent({
-  name: 'ComponentDashboardProfileCollections',
+  name: 'ComponentDashboardProfileCollectionsExpanded',
   components: {
     Collection,
   },
