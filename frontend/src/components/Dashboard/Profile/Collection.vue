@@ -12,7 +12,7 @@
       <span :class="collection.is_public ? '' : 'text-bold'">Private</span>
       <q-toggle
         :disabled="loading"
-        :value="collection.is_public" 
+        :value="collection.is_public ? true : false" 
         @input="toggle"
         />
       <span :class="collection.is_public ? 'text-bold' : ''">Public</span>
@@ -111,7 +111,7 @@ export default defineComponent({
       if (props?.collection && props.collection.id && props.collection.is_public !== undefined) {
         loading.value = true
         await updateCollection(props.collection.id, {
-          is_public: !props.collection.is_public
+          is_public: !(props.collection.is_public ? true : false)
         })
         loading.value = false
       }

@@ -75,11 +75,6 @@ export default defineComponent({
       }
     })
 
-    watch(
-      () => state.collections,
-      () => tabState.innerTab = state.collections[0].id
-    )
-
     return {
       tabState,
       state,
