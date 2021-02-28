@@ -54,7 +54,7 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
       env: {
-        apiUrl: process.env.apiUrl || 'http://localhost:1337' || 'https://content.msmusic.edu.sg',
+        apiUrl: process.env.apiUrl || 'https://content.msmusic.edu.sg',
         hotjarId: process.env.hotjarId || null
       },
 

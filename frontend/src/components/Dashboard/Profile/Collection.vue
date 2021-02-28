@@ -3,16 +3,28 @@
   v-if="collection"
   >
   <div class="row">
-    <div class="q-pa-sm col-xs-6">
-      <div class="text-h5 text-bold q-mb-md">
+    <div class="q-py-sm col-xs-6">
+      <div class="text-h5 text-bold q-mb-sm">
           {{ collection.title }}
       </div>
     </div>
     <div class="q-pa-sm col-xs-6 text-right">
+      <span :class="collection.is_public ? '' : 'text-bold'">Private</span>
+      <q-toggle
+        :disabled="loading"
+        :value="collection.is_public" 
+        @input="toggle"
+        />
+      <span :class="collection.is_public ? 'text-bold' : ''">Public</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="q-py-sm flex items-center col-xs-12 text-left q-mb-md">
       <q-btn
         v-if="collection.is_public"
         class="q-mr-md"
-        padding="sm md sm md"
+        size="11px"
+        padding="sm 1em sm md"
         icon-right="share"
         label="Share"
         color="grey-8"
@@ -23,7 +35,8 @@
       <q-btn
         v-if="collection.is_public"
         class="q-mr-md"
-        padding="sm md sm md"
+        size="11px"
+        padding="sm 1em sm md"
         icon-right="visibility"
         label="View"
         color="blue-8"
@@ -32,7 +45,8 @@
         unelevated
         />
       <q-btn
-        padding="sm md sm md"
+        padding="sm 1em sm md"
+        size="11px"
         icon-right="delete"
         label="Delete"
         color="accent"
@@ -41,17 +55,6 @@
         unelevated
         />
     </div>
-  </div>
-  <div class="row">
-    <div class="q-pa-sm flex items-center col-xs-9 text-left">
-      <span :class="collection.is_public ? '' : 'text-bold'">Private</span>
-      <q-toggle
-        :disabled="loading"
-        :value="collection.is_public" 
-        @input="toggle"
-        />
-      <span :class="collection.is_public ? 'text-bold' : ''">Public</span>
-    </div>
     <div
       v-if="collection.items.length > 0"
       class="row"
@@ -59,7 +62,7 @@
       <div
         v-for="(item, index) in collection.items"
         :key="index"
-        class="q-px-sm col-xs-12"
+        class="q-py-sm col-xs-12"
         >
         <ItemCard
           :item="item"
@@ -88,6 +91,7 @@ import ItemCard from '../../Common/ItemCard.vue'
 import { share } from '../../../utilities/share'
 import { InterfaceCollection } from '../../../interfaces'
 import config from '../../../config/config'
+import { Platform } from 'quasar'
 
 export default defineComponent({
   name: 'ComponentDashboardProfileCollection',
@@ -132,6 +136,7 @@ export default defineComponent({
     return {
       destroyCollection,
       loading,
+      isMobile: Platform.is.mobile as boolean,
       toggle,
       shareCollection,
     }
