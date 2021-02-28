@@ -4,16 +4,24 @@
   >
   <div class="row">
     <div class="q-py-sm col-xs-6">
-      <div class="text-h5 text-bold q-mb-sm">
-          {{ collection.title }}
+      <div v-if="!isEditingTitle" class="text-h5 text-bold q-mb-sm">
+        {{ collection.title }}
+        <q-btn class="q-ml-sm" size="12px" round flat color="primary" icon="edit" no-caps @click="toggleEditTitle"/>
+      </div>
+      <div v-else class="q-mb-sm">
+        <q-input input-class="text-h5 text-bold" :disable="loading" :loading="loading" v-model="title" @keydown.enter="editTitle" :hide-bottom-space="true" :dense="true" :autofocus="true">
+          <template v-slot:append>
+            <q-btn v-if="!loading" size="13px" round flat color="green-8" icon="check" @click="editTitle" />
+          </template>
+        </q-input>
       </div>
     </div>
     <div class="q-pa-sm col-xs-6 text-right">
       <span :class="collection.is_public ? '' : 'text-bold'">Private</span>
       <q-toggle
         :disabled="loading"
-        :value="collection.is_public" 
-        @input="toggle"
+        :value="collection.is_public ? true : false" 
+        @input="editVisibility"
         />
       <span :class="collection.is_public ? 'text-bold' : ''">Public</span>
     </div>
@@ -106,15 +114,32 @@ export default defineComponent({
   setup(props) {
     const { deleteCollection, updateCollection, } = useCollections()
     const loading: Ref<boolean> = ref(false)
+    const isEditingTitle: Ref<boolean> = ref(false)
+    const title: Ref<string> = ref(String(props.collection?.title || ''))
 
-    const toggle = async () => {
+    const editVisibility = async () => {
       if (props?.collection && props.collection.id && props.collection.is_public !== undefined) {
         loading.value = true
         await updateCollection(props.collection.id, {
-          is_public: !props.collection.is_public
+          is_public: !(props.collection.is_public ? true : false)
         })
         loading.value = false
       }
+    }
+
+    const editTitle = async () => {
+      if (props?.collection && props.collection.id && props.collection.title !== undefined) {
+        loading.value = true
+        await updateCollection(props.collection.id, {
+          title: title.value
+        })
+        loading.value = false
+        toggleEditTitle()
+      }
+    }
+
+    const toggleEditTitle = () => {
+      isEditingTitle.value = !isEditingTitle.value
     }
     
     const destroyCollection = async () => {
@@ -136,8 +161,12 @@ export default defineComponent({
     return {
       destroyCollection,
       loading,
+      isEditingTitle,
       isMobile: Platform.is.mobile as boolean,
-      toggle,
+      editTitle,
+      editVisibility,
+      toggleEditTitle,
+      title,
       shareCollection,
     }
   }

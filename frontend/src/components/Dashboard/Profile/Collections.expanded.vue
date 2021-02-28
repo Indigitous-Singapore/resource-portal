@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, reactive, watch } from '@vue/composition-api'
+import { defineComponent, onBeforeMount, reactive } from '@vue/composition-api'
 import { useCollections } from '../../../services/collections'
 import Collection from './Collection.vue'
 
@@ -74,11 +74,6 @@ export default defineComponent({
         tabState.innerTab = collections[0].id
       }
     })
-
-    watch(
-      () => state.collections,
-      () => tabState.innerTab = state.collections[0].id
-    )
 
     return {
       tabState,
