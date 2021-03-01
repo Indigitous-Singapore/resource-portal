@@ -25,7 +25,7 @@
   </div>
 
   <Collection
-    :collection="selectedCollection"
+    :collection="collections[selectedCollectionIndex]"
     />
 </div>
 <div
@@ -53,7 +53,8 @@ export default defineComponent({
       getCollections,
       state,
     } = useCollections()
-    const selectedCollection: Ref<InterfaceCollection | undefined> = ref()
+    const collections: Ref<InterfaceCollection[] | undefined> = ref([])
+    const selectedCollectionIndex: Ref<number> = ref(0)
     const selectedOption: Ref<{ label: string; value: number; } | undefined> = ref()
     const options: Ref<{ label: string; value: number; }[]> = ref([])
 
@@ -88,15 +89,22 @@ export default defineComponent({
 
     watch(
       () => selectedOption.value,
+      () => selectedCollectionIndex.value = state.collections.findIndex(collection => collection.id === selectedOption.value?.value)
+    )
+
+    watch(
+      () => state.collections,
       () => {
-        selectedCollection.value = state.collections.find(collection => collection.id === selectedOption.value?.value)
+        collections.value = {...state.collections}
+        populateOptions(state.collections)
       }
     )
 
     return {
+      collections,
       filterFn,
       options,
-      selectedCollection,
+      selectedCollectionIndex,
       selectedOption,
       state,
     }
