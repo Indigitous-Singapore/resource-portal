@@ -3,38 +3,38 @@
   v-if="collection"
   >
   <div class="row">
-    <div class="q-py-sm col-xs-6">
+    <div class="q-py-sm col-xs-12">
       <div v-if="!isEditingTitle" class="text-h5 text-bold q-mb-sm">
         {{ collection.title }}
         <q-btn class="q-ml-sm" size="12px" round flat color="primary" icon="edit" no-caps @click="toggleEditTitle"/>
       </div>
       <div v-else class="q-mb-sm">
-        <q-input input-class="text-h5 text-bold" :disable="loading" :loading="loading" v-model="title" @keydown.enter="editTitle" :hide-bottom-space="true" :dense="true" :autofocus="true">
+        <q-input
+          input-class="text-h5 text-bold"
+          :disable="loading"
+          :loading="loading"
+          v-model="title"
+          @keydown.enter="editTitle"
+          :hide-bottom-space="true"
+          :dense="true"
+          :autofocus="true"
+        >
           <template v-slot:append>
             <q-btn v-if="!loading" size="13px" round flat color="green-8" icon="check" @click="editTitle" />
           </template>
         </q-input>
       </div>
     </div>
-    <div class="q-pa-sm col-xs-6 text-right">
-      <span :class="collection.is_public ? '' : 'text-bold'">Private</span>
-      <q-toggle
-        :disabled="loading"
-        :value="collection.is_public ? true : false" 
-        @input="editVisibility"
-        />
-      <span :class="collection.is_public ? 'text-bold' : ''">Public</span>
-    </div>
   </div>
   <div class="row">
-    <div class="q-py-sm flex items-center col-xs-12 text-left q-mb-md">
+    <div class="q-py-sm flex items-center col-xs-7 text-left q-mb-md">
       <q-btn
         v-if="collection.is_public"
-        class="q-mr-md"
+        class="q-mr-xs"
         size="11px"
-        padding="sm 1em sm md"
+        padding="sm 0.7em sm sm"
         icon-right="share"
-        label="Share"
+        :label="isMobile ? '' : 'Share'"
         color="grey-8"
         @click="() => shareCollection(collection)"
         no-caps
@@ -42,40 +42,50 @@
         />
       <q-btn
         v-if="collection.is_public"
-        class="q-mr-md"
+        class="q-mr-xs"
         size="11px"
-        padding="sm 1em sm md"
+        padding="sm 0.7em sm sm"
         icon-right="visibility"
-        label="View"
+        :label="isMobile ? '' : 'View'"
         color="blue-8"
         :to="`/collections/${collection.id}`"
         no-caps
         unelevated
         />
       <q-btn
-        padding="sm 1em sm md"
+        padding="sm 0.7em sm sm"
         size="11px"
         icon-right="delete"
-        label="Delete"
+        :label="isMobile ? '' : 'Delete'"
         color="accent"
         no-caps
         @click="destroyCollection"
         unelevated
         />
     </div>
+
+    <div class="q-pa-sm col-xs-5 text-right">
+      <span :class="`text-body2 ${collection.is_public ? '' : 'text-bold'}`">Private</span>
+      <q-toggle
+        :disabled="loading"
+        :value="collection.is_public ? true : false" 
+        @input="editVisibility"
+        />
+      <span :class="`text-body2 ${collection.is_public ? '' : 'text-bold'}`">Public</span>
+    </div>
+  </div>
+  <div
+    v-if="collection.items.length > 0"
+    class="row"
+    >
     <div
-      v-if="collection.items.length > 0"
-      class="row"
+      v-for="(item, index) in collection.items"
+      :key="index"
+      class="q-py-sm col-xs-12"
       >
-      <div
-        v-for="(item, index) in collection.items"
-        :key="index"
-        class="q-py-sm col-xs-12"
-        >
-        <ItemCard
-          :item="item"
-          />
-      </div>
+      <ItemCard
+        :item="item"
+        />
     </div>
   </div>
 </div>
@@ -94,7 +104,7 @@
 
 <script lang="ts">
 import { defineComponent, Ref, ref } from '@vue/composition-api'
-import { useCollections } from 'src/services/collections'
+import { useCollections } from '../../../services/collections'
 import ItemCard from '../../Common/ItemCard.vue'
 import { share } from '../../../utilities/share'
 import { InterfaceCollection } from '../../../interfaces'
@@ -115,7 +125,7 @@ export default defineComponent({
     const { deleteCollection, updateCollection, } = useCollections()
     const loading: Ref<boolean> = ref(false)
     const isEditingTitle: Ref<boolean> = ref(false)
-    const title: Ref<string> = ref(String(props.collection?.title || ''))
+    const title: Ref<string> = ref('')
 
     const editVisibility = async () => {
       if (props?.collection && props.collection.id && props.collection.is_public !== undefined) {
@@ -139,6 +149,7 @@ export default defineComponent({
     }
 
     const toggleEditTitle = () => {
+      title.value = String(props.collection?.title || '')
       isEditingTitle.value = !isEditingTitle.value
     }
     
@@ -160,14 +171,14 @@ export default defineComponent({
 
     return {
       destroyCollection,
-      loading,
-      isEditingTitle,
-      isMobile: Platform.is.mobile as boolean,
       editTitle,
       editVisibility,
+      isEditingTitle,
+      isMobile: Platform.is.mobile as boolean,
+      loading,
+      shareCollection,
       toggleEditTitle,
       title,
-      shareCollection,
     }
   }
 })
