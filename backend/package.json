@@ -19,7 +19,6 @@
     "strapi-plugin-ckeditor5": "^1.2.2",
     "strapi-plugin-content-manager": "3.4.5",
     "strapi-plugin-content-type-builder": "3.4.5",
-    "strapi-plugin-documentation": "^3.4.5",
     "strapi-plugin-email": "3.4.5",
     "strapi-plugin-previewer": "^0.2.82",
     "strapi-plugin-upload": "3.4.5",

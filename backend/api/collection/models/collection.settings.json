@@ -43,6 +43,10 @@
     },
     "description": {
       "type": "text"
+    },
+    "collection_categories": {
+      "via": "collections",
+      "collection": "collection-category"
     }
   }
 }
