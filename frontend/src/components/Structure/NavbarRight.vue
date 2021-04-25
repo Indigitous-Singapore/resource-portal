@@ -1,7 +1,7 @@
 <template>
 <q-toolbar
   v-if="user && user.email !== null"
-  class="col-auto q-mx-md gt-sm"
+  class="col-auto q-ml-md q-pr-none gt-sm"
   >
   <q-btn-dropdown stretch flat no-caps>
     <template v-slot:label>
@@ -20,7 +20,7 @@
         <q-item-label class="flex items-center">Profile</q-item-label>
       </q-item>
       <q-item to="/profile/collections" clickable v-close-popup>
-        <q-item-label class="flex items-center">Collections</q-item-label>
+        <q-item-label class="flex items-center">My&nbsp;Collections</q-item-label>
       </q-item>
       
       <q-separator/>

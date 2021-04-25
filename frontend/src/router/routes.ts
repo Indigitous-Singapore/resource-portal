@@ -64,8 +64,8 @@ const routes: RouteConfig[] = [
     path: '/collections',
     component: () => import('../layouts/DashboardLayout.vue'),
     children: [
-      { path: '', meta: {private: true}, redirect: { name: 'explore' }},
-      { path: ':collectionId', name: 'collection', meta: {private: false}, component: () => import('../pages/Pages/Collection.vue') }
+      { path: ':collectionId', name: 'collection', meta: {private: false}, component: () => import('../pages/Pages/Collection.vue') },
+      { path: '/', component: () => import('../pages/Pages/Collections.vue')},
     ]
   },
 
