@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosError } from 'axios'
+import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios'
 import { reactive } from '@vue/composition-api'
 import _ from 'lodash'
 
@@ -34,15 +34,20 @@ const createNewCollection = async (title: string): Promise<InterfaceCollection|u
 /**
  * Fetches collections
  */
-const fetchCollections = async (): Promise<InterfaceCollection[]|undefined> => {
-  const token = await getAuthenticationToken()
-  try {
-    const response: AxiosResponse = await axios.get(`${config.apiUrl}/collections`, {
-      headers: {
-        Authorization: `Bearer ${String(token)}`
-      }
-    })
+const fetchCollections = async (
+  userOnly = true
+): Promise<InterfaceCollection[]|undefined> => {
+  const options: AxiosRequestConfig = {}
 
+  if (userOnly) {
+    const token = await getAuthenticationToken()
+    options.headers = {
+      Authorization: `Bearer ${String(token)}`
+    }
+  }
+
+  try {
+    const response: AxiosResponse = await axios.get(`${config.apiUrl}/collections`, options)
     return response.data as InterfaceCollection[]
   } catch (error) {
     console.error(error as AxiosError)

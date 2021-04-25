@@ -6,7 +6,7 @@
     color="accent"
     size="5em"
     />
-  <h3 class="text-accent q-mt-lg">please wait a moment...</h3>
+  <h4 class="text-accent q-mt-lg">please wait a moment...</h4>
 </div>
 </template>
 

@@ -9,25 +9,27 @@
             <img
               :src="config.app.logoUrl"
               :alt="config.app.logoAlt"
-              style="width:150px"
+              style="height: 36px"
               />
           </router-link>
+        </q-toolbar>
+        <q-toolbar class="col-grow justify-end">
           <div class="gt-sm row">
-            <q-btn
-              color="transparent"
-              text-color="black"
-              flat
-              stretch
-              padding="lg lg"
+            <router-link
+              class="no-decoration"
+              exact
+              to="/about"
               >
-              <router-link
-                class="no-decoration"
-                exact
-                to="/about"
+              <q-btn
+                color="transparent"
+                text-color="black"
+                flat
+                stretch
+                padding="lg lg"
                 >
                 ABOUT
-              </router-link>
-            </q-btn>
+              </q-btn>
+            </router-link>
             <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="EXPLORE" to="/explore" />
           </div>
           <q-toolbar-title class="lt-md"></q-toolbar-title>
@@ -41,7 +43,7 @@
             class="lt-md"
           />
         </q-toolbar>
-
+         <q-separator vertical />
         <NavbarRight />
       </div>
     </q-header>

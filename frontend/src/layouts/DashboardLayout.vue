@@ -9,7 +9,7 @@
             <img
               :src="config.app.logoUrl"
               :alt="config.app.logoAlt"
-              style="width:150px"
+              style="height:36px"
               />
           </router-link>
           <div class="gt-sm row">

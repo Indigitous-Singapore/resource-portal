@@ -178,6 +178,19 @@ export interface InterfaceCollection {
 }
 
 /**
+ * Collection Categories
+ */
+ export interface InterfaceCollectionCategory {
+  id: number;
+  name: string;
+  description: string;
+  published_at: string;
+  created_at: string;
+  updated_at: string;
+  collections: InterfaceCollection[];
+}
+
+/**
  * SeriesItems
  */
 export interface InterfaceSeriesItem {
