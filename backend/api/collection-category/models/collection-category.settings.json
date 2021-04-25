@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "collection_categories",
   "info": {
-    "name": "Collection Category"
+    "name": "Collection Category",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -20,7 +21,7 @@
       "dominant": true
     },
     "description": {
-      "type": "richtext"
+      "type": "string"
     }
   }
 }
