@@ -15,6 +15,7 @@
   >
   <div
     v-for="category in categories"
+    :key="category.id"
     class="row flex full-width align-center"
     >
     <div class="col">
@@ -34,6 +35,7 @@
       <div class="row text-left q-col-gutter-xl q-pb-md q-pt-lg">
         <router-link
           v-for="collection in category.collections"
+          :key="collection.id"
           :to="`/collections/${collection.id}`"
           class="collection-category col col-6 col-sm-4 col-md-3"
           >
@@ -52,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { InterfaceCollectionCategory } from 'src/interfaces'
 
 import Loading from '../../components/Common/Loading.vue'
