@@ -7,25 +7,52 @@
     no-swipe-close
     no-swipe-open
   >
-    <q-scroll-area class="fit q-pt-xl q-mt-md">
+    <q-scroll-area class="fit q-pt-xl">
+      <q-list
+        class="q-pt-md"
+        v-if="user && user.email"
+        >
+        <!-- Loggedin User Specific Navigation -->
+        <q-item
+          class="q-pb-md"
+          >
+          <div class="row items-center no-wrap">
+            <q-avatar size="32px">
+              <img :src="user.displayPictureUrl">
+            </q-avatar>
+            <div class="text-center q-ml-sm">
+              {{ user.firstName }} {{ user.lastName }}
+            </div>
+          </div>
+        </q-item>
+        <q-item
+          v-for="link in navigation.user"
+          :key="link.url"
+          :to="link.url"
+          >
+          <q-item-section>{{ link.name }}</q-item-section>
+        </q-item>
+      </q-list>
+
+      <q-separator
+        v-if="user && user.email"
+        spaced="md"
+        />
+    
       <q-list>
-        <q-item to="/explore">
-          <q-item-section>
-            Explore
-          </q-item-section>
-        </q-item>
-        <q-item to="/profile" exact>
-          <q-item-section>
-            My Profile
-          </q-item-section>
-        </q-item>
-        <q-item to="/profile/collections">
-          <q-item-section>
-            My Collections
-          </q-item-section>
+        <!-- Global navigation -->
+        <q-item
+          v-for="link in navigation.global"
+          :key="link.url"
+          :to="link.url"
+          >
+          <q-item-section>{{ link.name }}</q-item-section>
         </q-item>
 
-        <q-separator spaced="md"/>
+        <q-separator
+          v-if="user && user.email"
+          spaced="md"
+          />
 
         <DrawerBottom />
       </q-list>
@@ -54,7 +81,31 @@ export default defineComponent({
   setup() {
     const { user } = useUser()
 
+    const navigation = {
+      user: [
+        {
+          name: 'My Profile',
+          url: '/profile/profile',
+        },
+        {
+          name: 'My Collections',
+          url: '/profile/collections',
+        },
+      ],
+      global: [
+        {
+          name: 'Explore',
+          url: '/explore',
+        },
+        {
+          name: 'Collections',
+          url: '/collections',
+        },
+      ]
+    }
+
     return {
+      navigation,
       screenWidth: window.innerWidth,
       user,
     }
