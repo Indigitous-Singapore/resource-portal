@@ -53,7 +53,7 @@
 <script lang="ts">
 import config from '../config/config'
 import NavbarRight from 'components/Structure/NavbarRight.vue'
-import { defineComponent, Ref } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
  
 export default defineComponent({
   name: 'LayoutHeader',

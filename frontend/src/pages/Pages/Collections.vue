@@ -41,8 +41,8 @@ export default defineComponent({
     ItemCard,
     ItemHeaderExpanded,
   },
-  setup (_props, ctx) {
-    const id = ctx.root.$route.params.collectionId
+  setup () {
+    // const id = ctx.root.$route.params.collectionId
     const loading = ref(false)
     const error: Ref<string|undefined> = ref()
     const collectionCategories: Ref<InterfaceCollectionCategory[]|undefined> = ref()

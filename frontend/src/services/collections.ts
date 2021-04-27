@@ -81,7 +81,7 @@ const fetchCollection = async (id: number|string): Promise<InterfaceCollection|u
 /**
  * Edot collection
  */
-const editCollection = async (id: number|string, attributes: Record<string, any>): Promise<InterfaceCollection|undefined> => {
+const editCollection = async (id: number|string, attributes: Record<string, unknown>): Promise<InterfaceCollection|undefined> => {
   if (id === null || id === undefined) {
     console.error('Collection ID cannot be null')
     return undefined
@@ -205,7 +205,7 @@ const useCollections = () => {
   /**
    *  Update a single collection
    */
-  const updateCollection = async (id: number|string, attributes: Record<string, any>): Promise<InterfaceCollection | undefined> => {
+  const updateCollection = async (id: number|string, attributes: Record<string, unknown>): Promise<InterfaceCollection | undefined> => {
     const collection: InterfaceCollection | undefined = await editCollection(id, attributes)
 
     if (collection === undefined) {

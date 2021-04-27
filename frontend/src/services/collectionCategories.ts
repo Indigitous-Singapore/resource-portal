@@ -1,6 +1,5 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios'
 import { reactive } from '@vue/composition-api'
-import _ from 'lodash'
 
 import config from '../config/config'
 import { InterfaceCollectionCategory } from 'src/interfaces'

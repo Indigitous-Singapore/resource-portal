@@ -19,37 +19,73 @@
     class="container"
     v-else-if="collection !== undefined"
     >
-    <div class="container">
-      <div
-        class="row q-pt-md"
-        >
-        <div class="col-12 col-md-10">
-          <h1 class="text-h3 text-accent text-semibold q-my-md">{{ collection.title }}</h1>
-        </div>
-        <div
-          :class="`col-12 col-md-2 flex ${isMobile ? 'q-pb-md' : 'justify-end'} items-center`"
+    <q-banner
+      v-if="!authenticated"
+      :inline-actions="!isMobile"
+      :class="`bg-white ${isMobile ? 'q-px-md' : 'q-px-lg'} shadow-5 q-py-md`"
+      >
+      <b>Welcome!</b> Register an account to view more resources and create your own collections.
+      <div :class="`${isMobile ? 'q-pt-sm' : ''}`" />
+      <template v-slot:action>
+        <q-btn
+          rounded
+          unelevated
+          no-caps 
+          :class="`q-px-sm q-mr-md`"
+          color="accent"
+          to="/register"
+          label="Register"
+          />
+        <q-btn
+          rounded
+          outline
+          no-caps 
+          :class="`q-px-sm `"
+          to="/login"
+          label="Login"
+          />
+      </template>
+    </q-banner>
+    <div
+      :class="'row ' + (isMobile ? 'q-pt-md' : 'q-pt-xl')"
+      >
+      <div class="col- col-sm-3 col-md-2">
+        <q-img
+            :src="(collection && collection.featured_image && typeof collection.featured_image.url === 'string') ? collection.featured_image.url : '/assets/musicfile.jpg'"
+          :style="'max-width: ' + (isMobile ? '260' : '300') + 'px'"
+          />
+      </div>
+      <div class="col-8 col-sm-9 col-md-10 q-pl-lg">
+        <h1 class="text-h4 text-semibold">{{ collection.title }}</h1>
+        <p
+          v-if="collection.description"
+          class="text-body1 text-grey-8"
           >
-          <q-btn
-            v-if="collection.is_public"
-            size="12px"
-            padding="sm md"
-            label="Share"
-            icon-right="share"
-            color="primary"
-            @click="() => shareCollection(collection)"
-            no-caps
-            unelevated
-            />
-        </div>
+          {{ collection.description }}
+        </p>
+
+        <q-btn
+          v-if="collection && collection.is_public"
+          size="13px"
+          padding="sm lg"
+          label="Share"
+          icon-right="share"
+          rounded
+          outline
+          @click="() => shareCollection(collection)"
+          unelevated
+          />
       </div>
-      <div
-        class="row q-pb-md"
-        >
-        <div class="col-12">
-          <p>{{ collection.description }}</p>
-        </div>
+    </div>
+    <div
+      class="row q-pb-md"
+      >
+      <div class="col-12">
+        <p>{{ collection.description }}</p>
       </div>
-      <div class="row q-py-md">
+    </div>
+    <div class="row q-py-md">
+      <div class="col-12">
         <q-table
           id="collection-content-table"
           v-if="collection.items.length > 0"
@@ -58,7 +94,6 @@
           row-key="id"
           :filter="tableOptions.filter"
           :pagination.sync="tableOptions.pagination"
-          :rows-per-page-options="rowsPerPageOptions"
         >
           <template v-slot:top>
             <div
@@ -89,9 +124,12 @@ import { defineComponent } from '@vue/composition-api'
 import { Platform } from 'quasar'
 
 import Loading from '../../components/Common/Loading.vue'
-import { useCollections } from '../../services/collections'
 import ItemCard from '../../components/Common/ItemCard.vue'
 import ItemHeaderExpanded from '../../components/Common/ItemHeader.expanded.vue'
+
+import { useCollections } from '../../services/collections'
+import { isAuthenticated } from '../../services/authentication'
+
 import config from '../../config/config'
 import { share } from '../../utilities/share'
 
@@ -107,6 +145,7 @@ export default defineComponent({
     const loading = ref(true)
     const error: Ref<string|undefined> = ref()
     const collection: Ref<InterfaceCollection|undefined> = ref()
+    const authenticated: Ref<boolean> = ref(true)
 
     const { state, getCollection } = useCollections()
 
@@ -114,10 +153,13 @@ export default defineComponent({
       filter: '',
       pagination: {
         page: 1,
-        rowsPerPage: 99
+        rowsPerPage: 50
       },
     }
 
+    /**
+     * Shares a collection
+     */
     const shareCollection = async (collection: InterfaceCollection) => {
       await share(
       `${collection.title || ''}`,
@@ -130,8 +172,7 @@ export default defineComponent({
       error.value = undefined
 
       const currentCollection = state.collections.find(stateCollection => String(stateCollection.id) === id)
-      console.log(currentCollection)
-
+      
       if (currentCollection !== undefined) {
         if (currentCollection.is_public === true) {
           collection.value = currentCollection
@@ -153,6 +194,8 @@ export default defineComponent({
 
     onBeforeMount(async () => {
       await fetchCollection()
+      console.log(await isAuthenticated())
+      authenticated.value = await isAuthenticated()
     })
 
     watch(
@@ -161,6 +204,7 @@ export default defineComponent({
     )
 
     return {
+      authenticated,
       collection,
       error,
       isMobile: Platform.is.mobile as boolean,
