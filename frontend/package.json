@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "build": "quasar build",
+    "dev": "quasar dev",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },

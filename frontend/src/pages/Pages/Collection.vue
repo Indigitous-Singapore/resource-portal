@@ -19,37 +19,37 @@
     class="container"
     v-else-if="collection !== undefined"
     >
-    <div class="container">
-      <div
-        class="row q-pt-md"
-        >
-        <div class="col-12 col-md-10">
-          <h1 class="text-h3 text-accent text-semibold q-my-md">{{ collection.title }}</h1>
-        </div>
-        <div
-          :class="`col-12 col-md-2 flex ${isMobile ? 'q-pb-md' : 'justify-end'} items-center`"
-          >
-          <q-btn
-            v-if="collection.is_public"
-            size="12px"
-            padding="sm md"
-            label="Share"
-            icon-right="share"
-            color="primary"
-            @click="() => shareCollection(collection)"
-            no-caps
-            unelevated
-            />
-        </div>
+    <div
+      class="row q-pt-md"
+      >
+      <div class="col-12 col-md-10">
+        <h1 class="text-h3 text-accent text-semibold q-my-md">{{ collection.title }}</h1>
       </div>
       <div
-        class="row q-pb-md"
+        :class="`col-12 col-md-2 flex ${isMobile ? 'q-pb-md' : 'justify-end'} items-center`"
         >
-        <div class="col-12">
-          <p>{{ collection.description }}</p>
-        </div>
+        <q-btn
+          v-if="collection.is_public"
+          size="12px"
+          padding="sm md"
+          label="Share"
+          icon-right="share"
+          color="primary"
+          @click="() => shareCollection(collection)"
+          no-caps
+          unelevated
+          />
       </div>
-      <div class="row q-py-md">
+    </div>
+    <div
+      class="row q-pb-md"
+      >
+      <div class="col-12">
+        <p>{{ collection.description }}</p>
+      </div>
+    </div>
+    <div class="row q-py-md">
+      <div class="col-12">
         <q-table
           id="collection-content-table"
           v-if="collection.items.length > 0"
