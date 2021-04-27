@@ -11,7 +11,7 @@
     <h2 class="q-mb-md text-h4">
       {{ item.title }}
     </h2>
-    <div class="q-mb-md">
+    <div class="q-mb-none">
       <ItemTags
         :item="item"
         />

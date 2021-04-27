@@ -22,21 +22,30 @@
     <div
       class="row q-pt-md"
       >
-      <div class="col-12 col-md-10">
-        <h1 class="text-h3 text-accent text-semibold q-my-md">{{ collection.title }}</h1>
+      <div class="col- col-sm-3 col-md-2">
+        <q-img
+            :src="(collection && collection.featured_image && typeof collection.featured_image.url === 'string') ? collection.featured_image.url : '/assets/musicfile.jpg'"
+          :style="'max-width: ' + (isMobile ? '260' : '300') + 'px'"
+          />
       </div>
-      <div
-        :class="`col-12 col-md-2 flex ${isMobile ? 'q-pb-md' : 'justify-end'} items-center`"
-        >
+      <div class="col-8 col-sm-9 col-md-10 q-pl-lg">
+        <h1 class="text-h4 text-semibold">{{ collection.title }}</h1>
+        <p
+          v-if="collection.description"
+          class="text-body1 text-grey-8"
+          >
+          {{ collection.description }}
+        </p>
+
         <q-btn
-          v-if="collection.is_public"
-          size="12px"
-          padding="sm md"
+          v-if="collection && collection.is_public"
+          size="13px"
+          padding="sm lg"
           label="Share"
           icon-right="share"
-          color="primary"
+          rounded
+          outline
           @click="() => shareCollection(collection)"
-          no-caps
           unelevated
           />
       </div>
@@ -58,7 +67,7 @@
           row-key="id"
           :filter="tableOptions.filter"
           :pagination.sync="tableOptions.pagination"
-          :rows-per-page-options="rowsPerPageOptions"
+          :rows-per-page-options="tableOptions.pagination.rowsPerPage"
         >
           <template v-slot:top>
             <div
@@ -84,7 +93,7 @@
 
 <script lang="ts">
 import { ref, Ref, watch, onBeforeMount } from '@vue/composition-api'
-import { InterfaceCollection } from 'src/interfaces'
+import { InterfaceCollection, InterfaceUser } from 'src/interfaces'
 import { defineComponent } from '@vue/composition-api'
 import { Platform } from 'quasar'
 
@@ -107,6 +116,7 @@ export default defineComponent({
     const loading = ref(true)
     const error: Ref<string|undefined> = ref()
     const collection: Ref<InterfaceCollection|undefined> = ref()
+    const collectionUser: Ref<InterfaceUser|undefined> = ref()
 
     const { state, getCollection } = useCollections()
 
@@ -118,6 +128,9 @@ export default defineComponent({
       },
     }
 
+    /**
+     * Shares a collection
+     */
     const shareCollection = async (collection: InterfaceCollection) => {
       await share(
       `${collection.title || ''}`,
@@ -130,8 +143,7 @@ export default defineComponent({
       error.value = undefined
 
       const currentCollection = state.collections.find(stateCollection => String(stateCollection.id) === id)
-      console.log(currentCollection)
-
+      
       if (currentCollection !== undefined) {
         if (currentCollection.is_public === true) {
           collection.value = currentCollection
@@ -162,6 +174,7 @@ export default defineComponent({
 
     return {
       collection,
+      collectionUser,
       error,
       isMobile: Platform.is.mobile as boolean,
       loading,

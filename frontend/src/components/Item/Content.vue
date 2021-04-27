@@ -1,10 +1,10 @@
 <template>
 <div
-  class="row q-mt-xs q-mb-xl"
+  class="row q-my-xs"
   >
-  <div class="column col-xs-12 col-sm-10 q-mb-xl">
+  <div class="column col-xs-12 col-sm-10 q-mb-md">
     <div
-      :style="`height: ${expanded ? expandedHeight : '110'}px`"
+      :style="`height: ${expanded ? expandedHeight : '80'}px`"
       class="description-container"
     >
       <div

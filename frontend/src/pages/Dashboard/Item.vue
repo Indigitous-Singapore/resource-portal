@@ -26,7 +26,7 @@
           />
       </div>
       <div
-        :class="'column col-xs-12 col-sm-12 col-md-8 col-lg-9 ' + (isMobile ? 'q-mt-md' : '')">
+        :class="'column col-xs-12 col-sm-12 col-md-8 col-lg-9 ' + (isMobile ? 'q-mt-md' : 'q-pl-lg')">
         <ItemHeader :item="item" />
         <ItemContent :item="item" />
       </div>
