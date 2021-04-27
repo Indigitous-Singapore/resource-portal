@@ -19,8 +19,35 @@
     class="container"
     v-else-if="collection !== undefined"
     >
+    <q-banner
+      v-if="!authenticated"
+      :inline-actions="!isMobile"
+      :class="`bg-white ${isMobile ? 'q-px-md' : 'q-px-lg'} shadow-5 q-py-md`"
+      >
+      <b>Welcome!</b> Register an account to view more resources and create your own collections.
+      <div :class="`${isMobile ? 'q-pt-sm' : ''}`" />
+      <template v-slot:action>
+        <q-btn
+          rounded
+          unelevated
+          no-caps 
+          :class="`q-px-sm q-mr-md`"
+          color="accent"
+          to="/register"
+          label="Register"
+          />
+        <q-btn
+          rounded
+          outline
+          no-caps 
+          :class="`q-px-sm `"
+          to="/login"
+          label="Login"
+          />
+      </template>
+    </q-banner>
     <div
-      class="row q-pt-md"
+      :class="'row ' + (isMobile ? 'q-pt-md' : 'q-pt-xl')"
       >
       <div class="col- col-sm-3 col-md-2">
         <q-img
@@ -67,7 +94,6 @@
           row-key="id"
           :filter="tableOptions.filter"
           :pagination.sync="tableOptions.pagination"
-          :rows-per-page-options="tableOptions.pagination.rowsPerPage"
         >
           <template v-slot:top>
             <div
@@ -93,14 +119,17 @@
 
 <script lang="ts">
 import { ref, Ref, watch, onBeforeMount } from '@vue/composition-api'
-import { InterfaceCollection, InterfaceUser } from 'src/interfaces'
+import { InterfaceCollection } from 'src/interfaces'
 import { defineComponent } from '@vue/composition-api'
 import { Platform } from 'quasar'
 
 import Loading from '../../components/Common/Loading.vue'
-import { useCollections } from '../../services/collections'
 import ItemCard from '../../components/Common/ItemCard.vue'
 import ItemHeaderExpanded from '../../components/Common/ItemHeader.expanded.vue'
+
+import { useCollections } from '../../services/collections'
+import { isAuthenticated } from '../../services/authentication'
+
 import config from '../../config/config'
 import { share } from '../../utilities/share'
 
@@ -116,7 +145,7 @@ export default defineComponent({
     const loading = ref(true)
     const error: Ref<string|undefined> = ref()
     const collection: Ref<InterfaceCollection|undefined> = ref()
-    const collectionUser: Ref<InterfaceUser|undefined> = ref()
+    const authenticated: Ref<boolean> = ref(true)
 
     const { state, getCollection } = useCollections()
 
@@ -124,7 +153,7 @@ export default defineComponent({
       filter: '',
       pagination: {
         page: 1,
-        rowsPerPage: 99
+        rowsPerPage: 50
       },
     }
 
@@ -165,6 +194,8 @@ export default defineComponent({
 
     onBeforeMount(async () => {
       await fetchCollection()
+      console.log(await isAuthenticated())
+      authenticated.value = await isAuthenticated()
     })
 
     watch(
@@ -173,8 +204,8 @@ export default defineComponent({
     )
 
     return {
+      authenticated,
       collection,
-      collectionUser,
       error,
       isMobile: Platform.is.mobile as boolean,
       loading,
