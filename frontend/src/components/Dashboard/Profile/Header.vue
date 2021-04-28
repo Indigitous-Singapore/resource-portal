@@ -1,5 +1,8 @@
 <template>
-<div class="row">
+<div
+  v-if="user"
+  class="row"
+  >
   <div class="column col-xs-4 col-sm-4 col-md-3 col-lg-2">
     <q-img
       :src="user.displayPictureUrl"

@@ -8,7 +8,7 @@
   />
 </div>
 <q-form
-    @submit="login"
+    @submit="loginUser"
     v-else
     class="login-form"
   >
@@ -65,15 +65,24 @@ export default defineComponent({
       default: false,
     }
   },
-  setup (props) {
+  setup (props, ctx) {
     const { errors, loading, state, login } = useAuthentication()
 
     state.onboarding = props.onboarding
+    
+    /**
+     * Login the user
+     */
+    const loginUser = () => {
+      //  Gets the redirect url if available
+      const redirectUrl = ctx.root.$route.query.redirectUrl as string
+      login(redirectUrl)
+    }
 
     return {
       errors,
       loading,
-      login,
+      loginUser,
       state
     }
   }

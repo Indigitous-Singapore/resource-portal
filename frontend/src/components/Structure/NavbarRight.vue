@@ -16,7 +16,7 @@
     </template>
 
     <q-list>
-      <q-item to="/profile" clickable v-close-popup>
+      <q-item to="/profile/profile" clickable v-close-popup>
         <q-item-label class="flex items-center">Profile</q-item-label>
       </q-item>
       <q-item to="/profile/collections" clickable v-close-popup>
@@ -36,7 +36,7 @@
   class="col-auto q-mx-md gt-sm"
   >
   <q-btn color="accent" to="/register" bg-color="white" outline rounded padding="xs lg" label="REGISTER" class="accent" />
-  <q-btn color="transparent" to="/login" text-color="black" flat stretch padding="lg lg" label="LOG IN" />
+  <q-btn color="transparent" :to="`/login`" text-color="black" flat stretch padding="lg lg" label="LOG IN" />
 </q-toolbar>
 </template>
 
