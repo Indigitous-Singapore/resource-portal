@@ -95,7 +95,9 @@ const useAuthentication = () => {
   /**
    * Login to the dashboard
    */
-  const login = () => {
+  const login = (
+    encodedRedirectUriComponent: string | undefined
+  ) => {
     resetErrors()
     loading.value = true
 
@@ -106,7 +108,12 @@ const useAuthentication = () => {
       })
       .then((response: AxiosResponse) => {
         saveUserProfile(response.data)
-        redirectToDashboard(state.onboarding || false)
+        if (encodedRedirectUriComponent) {
+          const decodedRedirectUriComponent = decodeURIComponent(encodedRedirectUriComponent)
+          void Router.push(`${decodedRedirectUriComponent}`)
+        } else {
+          redirectToDashboard(state.onboarding || false)
+        }
       })
       .catch((error: AxiosError) => {
         loading.value = false

@@ -36,7 +36,7 @@
   class="col-auto q-mx-md gt-sm"
   >
   <q-btn color="accent" to="/register" bg-color="white" outline rounded padding="xs lg" label="REGISTER" class="accent" />
-  <q-btn color="transparent" to="/login" text-color="black" flat stretch padding="lg lg" label="LOG IN" />
+  <q-btn color="transparent" :to="`/login`" text-color="black" flat stretch padding="lg lg" label="LOG IN" />
 </q-toolbar>
 </template>
 

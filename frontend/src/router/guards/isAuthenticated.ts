@@ -7,7 +7,7 @@ export default async (to: Route, from: Route, next: NavigationGuardNext) => {
     const authenticated = await isAuthenticated()
     if (!authenticated) {
       next({
-        name: 'login'
+        path: `/login?redirectUrl=${encodeURIComponent(to.path)}`
       })
       return
     }
