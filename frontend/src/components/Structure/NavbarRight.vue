@@ -16,7 +16,7 @@
     </template>
 
     <q-list>
-      <q-item to="/profile" clickable v-close-popup>
+      <q-item to="/profile/profile" clickable v-close-popup>
         <q-item-label class="flex items-center">Profile</q-item-label>
       </q-item>
       <q-item to="/profile/collections" clickable v-close-popup>
