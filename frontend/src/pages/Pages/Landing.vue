@@ -85,7 +85,7 @@
               :ratio="1/1"
               src="/assets/lithurgies-color.png"
               />
-            <p>Lithurgies</p>
+            <p>Liturgies</p>
           </div>
         </div>
       </div>
