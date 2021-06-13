@@ -3,14 +3,18 @@
     <div class="row">
       <q-toolbar class="col-grow">
         <router-link
+          class="logo"
           to="/"
           >
           <img
             :src="config.app.logoUrl"
             :alt="config.app.logoAlt"
-            style="height:32px"
+            style="height:28px"
             class="q-ml-xs"
             />
+          <h2 class="logo-text">
+            {{ config.app.name }}
+          </h2>
         </router-link>
       </q-toolbar>
       <q-toolbar class="col-grow justify-end">
@@ -75,3 +79,20 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.logo {
+  text-decoration: none;
+  height: 28px;
+  .logo-text {
+    text-decoration: none;
+    color: #111;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 28px;
+    height: 28px;
+    display: inline;
+    vertical-align: top;
+  }
+}
+</style>
