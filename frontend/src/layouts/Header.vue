@@ -10,7 +10,6 @@
             :src="config.app.logoUrl"
             :alt="config.app.logoAlt"
             style="height:40px"
-            class="q-ml-xl"
             />
         </router-link>
       </q-toolbar>
@@ -81,6 +80,13 @@ export default defineComponent({
 .logo {
   text-decoration: none;
   height: 40px;
+
+  @media (min-width: 1200px) {
+    & {
+      margin-left: 30px;
+    }
+  }
+
   .logo-text {
     text-decoration: none;
     color: #111;
