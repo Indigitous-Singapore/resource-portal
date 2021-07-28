@@ -5,6 +5,7 @@
   "description": "Resource Portal Admin",
   "scripts": {
     "develop": "strapi build && strapi develop",
+    "dev": "npm run develop",
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi"

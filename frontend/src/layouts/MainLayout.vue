@@ -20,9 +20,9 @@
 <script lang="ts">
 import config from '../config/config'
 import Header from './Header.vue'
-import ComponentDrawer from 'components/Structure/MainDrawer/Drawer.vue'
-import NavbarRight from 'components/Structure/NavbarRight.vue'
-import Footer from 'components/Structure/Footer.vue'
+import ComponentDrawer from '../components/Structure/MainDrawer/Drawer.vue'
+import NavbarRight from '../components/Structure/NavbarRight.vue'
+import Footer from '../components/Structure/Footer.vue'
 import { defineComponent, ref } from '@vue/composition-api'
  
 export default defineComponent({

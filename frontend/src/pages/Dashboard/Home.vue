@@ -5,7 +5,7 @@
       />
     <div>
       <q-img
-        src="/assets/explore-banner.jpg"
+        src="assets/explore-banner.jpg"
         :ratio="isMobile ? 1/1 : 5/1"
         >
         <div class="text-center absolute-full text-subtitle2 flex flex-center column">

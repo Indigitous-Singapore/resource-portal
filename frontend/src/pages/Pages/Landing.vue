@@ -51,7 +51,7 @@
             <q-img
               class="q-my-lg"
               :ratio="1/1"
-              src="/assets/songs-color.png"
+              src="assets/songs-color.svg"
               />
             <p>Songs</p>
           </div>
@@ -59,7 +59,7 @@
             <q-img
               class="q-my-lg"
               :ratio="1/1"
-              src="/assets/prayers-color.png"
+              src="assets/prayers-color.svg"
               />
             <p>Prayers</p>
           </div>
@@ -67,7 +67,7 @@
             <q-img
               class="q-my-lg"
               :ratio="1/1"
-              src="/assets/skills-training-color.png"
+              src="assets/skills-training-color.svg"
               />
             <p>Skills Training</p>
           </div>
@@ -75,7 +75,7 @@
             <q-img
               class="q-my-lg"
               :ratio="1/1"
-              src="/assets/training-resources-color.png"
+              src="assets/training-resources-color.svg"
               />
             <p>Teaching Resources</p>
           </div>
@@ -83,9 +83,9 @@
             <q-img
               class="q-my-lg"
               :ratio="1/1"
-              src="/assets/lithurgies-color.png"
+              src="assets/lithurgies-color.svg"
               />
-            <p>Lithurgies</p>
+            <p>Liturgies</p>
           </div>
         </div>
       </div>
