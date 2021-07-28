@@ -40,8 +40,8 @@
           rounded
           outline
           no-caps 
-          :class="`q-px-sm `"
-          to="/login"
+          class="q-px-sm"
+          :to="`/login?redirectUrl=${currentEncodedUrlPath}`"
           label="Login"
           />
       </template>
@@ -112,7 +112,7 @@
 
 <script lang="ts">
 import { ref, Ref, watch, onBeforeMount } from '@vue/composition-api'
-import { InterfaceCollection } from 'src/interfaces'
+import { InterfaceCollection } from '../../interfaces'
 import { defineComponent } from '@vue/composition-api'
 import { Platform } from 'quasar'
 
@@ -139,6 +139,7 @@ export default defineComponent({
     const error: Ref<string|undefined> = ref()
     const collection: Ref<InterfaceCollection|undefined> = ref()
     const authenticated: Ref<boolean> = ref(true)
+    const currentEncodedUrlPath = encodeURI(window.location.pathname)
 
     const { state, getCollection } = useCollections()
 
@@ -199,6 +200,7 @@ export default defineComponent({
     return {
       authenticated,
       collection,
+      currentEncodedUrlPath,
       error,
       isMobile: Platform.is.mobile as boolean,
       loading,

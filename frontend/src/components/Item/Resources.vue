@@ -6,7 +6,10 @@
     class="row items-center resource full-width"
     >
     <div class="column col-xs-6 col-sm-8 q-py-md">
-      <span class="text-body2 text-bold">
+      <span
+        class="text text-bold title"
+        @click="() => downloadResource(resource)"
+        >
         <q-icon
           v-if="resource.ext === '.mp3'"
           name="music_note"
@@ -31,7 +34,7 @@
     <div class="column col-xs-5 col-sm-3 justify-center items-end">
       <q-btn
         v-if="isLoggedIn"
-        @click="() => download(resource)"
+        @click="() => downloadResource(resource)"
         padding="none"
         flat
         size="md"
@@ -43,7 +46,7 @@
       <q-btn
         v-else
         type="a"
-        href="/login"
+        :href="`/login?redirectUrl=${currentEncodedUrlPath}`"
         padding="none"
         flat
         size="md"
@@ -74,13 +77,24 @@ export default defineComponent({
   },
   setup() {
     const isLoggedIn: Ref<boolean> = ref(false)
+    const currentEncodedUrlPath = encodeURI(window.location.pathname)
+
+    const downloadResource = async (resource: any) => {
+      if (isLoggedIn.value) {
+        await download(resource)
+      } else {
+        const redirectToLogin = confirm('You must be logged in to download. Do you want to login and continue?')
+        if (redirectToLogin) window.location.href = `/login?redirectUrl=${currentEncodedUrlPath}`
+      }
+    }
 
     onMounted(async () => {
       isLoggedIn.value = await isAuthenticated()
     })
 
     return {
-      download,
+      currentEncodedUrlPath,
+      downloadResource,
       isLoggedIn,
     }
   }
@@ -89,10 +103,19 @@ export default defineComponent({
 
 <style lang="scss">
 .resource {
-  border-top: 1px solid $grey-4
+  border-top: 1px solid $grey-4;
+
+  .title {
+    cursor: pointer;
+    color: #444;
+
+    &:hover { 
+      color: black;
+    }
+  }
 }
 .resources {
-  align-items: center;;
+  align-items: center;
 
   .cursor-pointer {
     padding-right: 0;
