@@ -92,7 +92,7 @@ export default defineComponent({
   name: 'ComponentDashboardProfilePersonal',
   setup () {
     const submitting: Ref<boolean> = ref(false)
-    const formUser: Record<string, any> = reactive({
+    const formUser: Record<string, string|number[]> = reactive({
       firstName: '',
       lastName:'',
       email: '',
@@ -124,7 +124,7 @@ export default defineComponent({
 
       //  Update user
       try {
-        await updateProfile(formUser)
+        await updateProfile(formUser as Record<string, string>)
       } catch (error) {
         const err: AxiosError = (error as AxiosError)
         alert(`An error occurred: ${err.message}`)

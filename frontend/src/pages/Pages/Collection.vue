@@ -47,9 +47,10 @@
       </template>
     </q-banner>
     <div
-      :class="'row ' + (isMobile ? 'q-pt-md' : 'q-pt-xl')"
+      :class="'row ' + (isMobile ? 'q-py-md' : 'q-py-xl')"
       >
       <div class="col- col-sm-3 col-md-2">
+        {{ Object.keys(collection) }}
         <q-img
             :src="(collection && collection.featured_image && typeof collection.featured_image.url === 'string') ? collection.featured_image.url : '/assets/musicfile.jpg'"
           :style="'max-width: ' + (isMobile ? '260' : '300') + 'px'"
@@ -75,13 +76,6 @@
           @click="() => shareCollection(collection)"
           unelevated
           />
-      </div>
-    </div>
-    <div
-      class="row q-pb-md"
-      >
-      <div class="col-12">
-        <p>{{ collection.description }}</p>
       </div>
     </div>
     <div class="row q-py-md">

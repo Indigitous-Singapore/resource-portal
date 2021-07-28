@@ -9,12 +9,9 @@
           <img
             :src="config.app.logoUrl"
             :alt="config.app.logoAlt"
-            style="height:28px"
-            class="q-ml-xs"
+            style="height:40px"
+            class="q-ml-xl"
             />
-          <h2 class="logo-text">
-            {{ config.app.name }}
-          </h2>
         </router-link>
       </q-toolbar>
       <q-toolbar class="col-grow justify-end">
@@ -83,7 +80,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .logo {
   text-decoration: none;
-  height: 28px;
+  height: 40px;
   .logo-text {
     text-decoration: none;
     color: #111;

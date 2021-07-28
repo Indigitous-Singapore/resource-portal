@@ -4,8 +4,8 @@ export default {
     'name': 'WorshipAvenue',
     'organisation': 'Methodist School of Music',
     'organisationUrl': 'https://msmusic.edu.sg/',
-    'logoUrl': '../assets/logo-icon.png',
-    'logoAlt': 'MSM WorshipAvenue',
+    'logoUrl': '../assets/logo.svg',
+    'logoAlt': 'MSM Worship Avenue',
   },
   'apiUrl': String(process.env.apiUrl)
 }

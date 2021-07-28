@@ -128,8 +128,8 @@ module.exports = configure(function (ctx) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'Resource Portal By Indigitous',
-        short_name: 'Resource Portal',
+        name: 'Worship Avenue by Methodist School of Music',
+        short_name: 'Worship Avenue',
         description: '',
         display: 'standalone',
         orientation: 'portrait',

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import isEqualFastCompare from "react-fast-compare";
 import { Text } from "@buffetjs/core";
 import { templateObject, ModalConfirm } from "strapi-helper-plugin";
-import { usePreview } from "strapi-plugin-previewer";
+import { usePreview } from "strapi-plugin-preview-content";
 import { getTrad } from "../../../utils";
 import { connect, getDraftRelations, select } from "./utils";
 

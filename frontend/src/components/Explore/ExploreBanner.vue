@@ -1,7 +1,7 @@
 <template>
   <div class="full-width">
     <q-parallax
-      src="~assets/landingbanner.jpg"
+      src="assets/landingbanner.jpg"
       :height="250"
     >
       <div class="column text-white text-center fit row justify-center" style="background-color: rgba(0,0,0,.5);background-blend-mode: multiply;}">
