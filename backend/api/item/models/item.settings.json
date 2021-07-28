@@ -34,8 +34,8 @@
       "required": false
     },
     "categories": {
-      "collection": "category",
       "via": "items",
+      "collection": "category",
       "dominant": true
     },
     "tags": {
@@ -49,8 +49,8 @@
       "component": "item-links.link"
     },
     "collections": {
-      "collection": "collection",
-      "via": "items"
+      "via": "items",
+      "collection": "collection"
     },
     "series_items": {
       "collection": "series-item",

@@ -35,7 +35,8 @@
         "images"
       ],
       "plugin": "upload",
-      "required": false
+      "required": false,
+      "pluginOptions": {}
     },
     "is_public": {
       "type": "boolean",

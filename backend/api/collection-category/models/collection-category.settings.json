@@ -16,8 +16,8 @@
       "required": true
     },
     "collections": {
-      "collection": "collection",
       "via": "collection_categories",
+      "collection": "collection",
       "dominant": true
     },
     "description": {
