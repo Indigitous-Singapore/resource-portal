@@ -50,7 +50,6 @@
       :class="'row ' + (isMobile ? 'q-py-md' : 'q-py-xl')"
       >
       <div class="col- col-sm-3 col-md-2">
-        {{ Object.keys(collection) }}
         <q-img
             :src="(collection && collection.featured_image && typeof collection.featured_image.url === 'string') ? collection.featured_image.url : '/assets/musicfile.jpg'"
           :style="'max-width: ' + (isMobile ? '260' : '300') + 'px'"

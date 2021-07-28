@@ -1,0 +1,22 @@
+domains:
+- domain: portal.msmusic.edu.sg
+  type: PRIMARY
+name: worship-avenue-frontend
+region: sgp
+static_sites:
+- build_command: npx quasar build
+  environment_slug: node-js
+  envs:
+  - key: apiUrl
+    scope: BUILD_TIME
+    value: https://content.msmusic.edu.sg
+  github:
+    branch: master
+    deploy_on_push: true
+    repo: Indigitous-Singapore/resource-portal
+  name: worship-avenue-frontend
+  catchall_document: index.html
+  output_dir: dist/spa
+  routes:
+  - path: /
+  source_dir: /frontend
