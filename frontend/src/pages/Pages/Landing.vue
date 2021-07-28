@@ -48,44 +48,59 @@
       <div class="row q-mt-md">
         <div id="row-or-column" class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 justify-between">
           <div class="category column items-center">
-            <q-img
-              class="q-my-lg"
-              :ratio="1/1"
-              src="assets/songs-color.svg"
-              />
-            <p>Songs</p>
+            <router-link
+              to="/explore?category=4">
+              <q-img
+                class="q-my-lg"
+                :ratio="1/1"
+                src="assets/songs-color.svg"
+                />
+              <p>Songs</p>
+            </router-link>
           </div>
           <div class="category column items-center">
-            <q-img
-              class="q-my-lg"
-              :ratio="1/1"
-              src="assets/prayers-color.svg"
-              />
-            <p>Prayers</p>
+            <router-link
+              to="/explore?category=2">
+              <q-img
+                class="q-my-lg"
+                :ratio="1/1"
+                src="assets/prayers-color.svg"
+                />
+              <p>Prayers</p>
+            </router-link>
           </div>
           <div class="category column items-center">
-            <q-img
-              class="q-my-lg"
-              :ratio="1/1"
-              src="assets/skills-training-color.svg"
-              />
-            <p>Skills Training</p>
+            <router-link
+              to="/explore?category=3">
+              <q-img
+                class="q-my-lg"
+                :ratio="1/1"
+                src="assets/skills-training-color.svg"
+                />
+              <p>Skills Training</p>
+            </router-link>
           </div>
           <div class="category column items-center">
-            <q-img
-              class="q-my-lg"
-              :ratio="1/1"
-              src="assets/training-resources-color.svg"
-              />
-            <p>Teaching Resources</p>
+            <router-link
+              to="/explore?category=5">
+              <q-img
+                class="q-my-lg"
+                :ratio="1/1"
+                src="assets/training-resources-color.svg"
+                />
+              <p>Teaching Resources</p>
+            </router-link>
           </div>
           <div class="category column items-center">
-            <q-img
-              class="q-my-lg"
-              :ratio="1/1"
-              src="assets/lithurgies-color.svg"
-              />
-            <p>Liturgies</p>
+            <router-link
+              to="/explore?category=1">
+              <q-img
+                class="q-my-lg"
+                :ratio="1/1"
+                src="assets/lithurgies-color.svg"
+                />
+              <p>Liturgies</p>
+            </router-link>
           </div>
         </div>
       </div>
@@ -154,9 +169,18 @@ h1 {
 .category {
   width: 150px;
 
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   .q-img {
     height: 70px;
     width: 70px;
+  }
+
+  &:hover { 
+    background-color: #f6f6f6;
   }
 }
 </style>
