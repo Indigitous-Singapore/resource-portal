@@ -15,23 +15,16 @@
       </q-toolbar>
       <q-toolbar class="col-grow justify-end">
         <div class="gt-sm row">
+
           <q-btn
-            color="transparent"
-            text-color="black"
+            v-for="item in navigationItems"
+            :key="item.to"
+            :label="item.label"
+            :to="item.to"
+            class="navigation-link"
             flat
-            stretch
             padding="lg lg"
-            >
-            <router-link
-              class="no-decoration"
-              exact
-              to="/about"
-              >
-              ABOUT
-            </router-link>
-          </q-btn>
-          <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="EXPLORE" to="/explore" />
-          <q-btn color="transparent" text-color="black" flat stretch padding="lg lg" label="COLLECTIONS" to="/collections" />
+            />
         </div>
         <q-toolbar-title class="lt-md"></q-toolbar-title>
         <q-btn
@@ -69,8 +62,15 @@ export default defineComponent({
     }
   },
   setup () {
+    const navigationItems = [
+      { label: "About", to: "/about", },
+      { label: "Explore", to: "/explore", },
+      { label: "Collections", to: "/collections", },
+    ]
+
     return {
       config,
+      navigationItems,
     }
   }
 })

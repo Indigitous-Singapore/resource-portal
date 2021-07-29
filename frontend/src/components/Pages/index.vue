@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, Ref, onBeforeMount, watch } from '@vue/composition-api'
-import { InterfacePage } from 'src/interfaces'
+import { InterfacePage } from '../../interfaces'
 
 import { fetchPage } from '../../services/pages'
 import Loading from '../../components/Common/Loading.vue'
@@ -47,7 +47,7 @@ export default defineComponent({
     const content: Ref<string | undefined> = ref()
 
     const render = async () => {
-      const page: InterfacePage | undefined = await fetchPage(ctx.root.$route.path.replace('/', ''))
+      const page: InterfacePage | undefined = await fetchPage(ctx.root.$route.path.replace(/\//g, ''))
       
       if (page !== undefined) {
         is404.value = false
