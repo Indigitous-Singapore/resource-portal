@@ -15,7 +15,7 @@
       v-else-if="title !== undefined && content !== undefined"
       >
       <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2">
-        <h1 class="text-h4 text-bold q-mt-md q-mb-xl">{{ title }}</h1>
+        <h1 class="text-h3 text-bold text-accent q-mt-md q-mb-xl">{{ title }}</h1>
         <section
           v-html="content"
           />

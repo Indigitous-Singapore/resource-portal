@@ -25,6 +25,22 @@
       "type": "string",
       "required": true,
       "unique": true
+    },
+    "banner": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "banner_caption": {
+      "type": "string"
+    },
+    "banner_header": {
+      "type": "string"
     }
   }
 }
