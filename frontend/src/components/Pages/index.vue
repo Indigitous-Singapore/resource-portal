@@ -15,7 +15,7 @@
       v-else-if="title !== undefined && content !== undefined"
       >
       <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2">
-        <h1 class="text-h4 text-bold q-mt-md q-mb-xl">{{ title }}</h1>
+        <h1 class="text-h3 text-bold text-accent q-mt-md q-mb-xl">{{ title }}</h1>
         <section
           v-html="content"
           />
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, Ref, onBeforeMount, watch } from '@vue/composition-api'
-import { InterfacePage } from 'src/interfaces'
+import { InterfacePage } from '../../interfaces'
 
 import { fetchPage } from '../../services/pages'
 import Loading from '../../components/Common/Loading.vue'
@@ -47,7 +47,7 @@ export default defineComponent({
     const content: Ref<string | undefined> = ref()
 
     const render = async () => {
-      const page: InterfacePage | undefined = await fetchPage(ctx.root.$route.path.replace('/', ''))
+      const page: InterfacePage | undefined = await fetchPage(ctx.root.$route.path.replace(/\//g, ''))
       
       if (page !== undefined) {
         is404.value = false
