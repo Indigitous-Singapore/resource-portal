@@ -160,8 +160,8 @@ export default defineComponent({
       getCollections
     } = useCollections()
 
-    const selectedCategory: Ref<string|null> = ref(String(ctx.root.$route.query.category) || null)
-    const selectedSeriesItem: Ref<string|null> = ref(null)
+    const selectedCategory: Ref<string|null> = ref(ctx.root.$route.query.category ? String(ctx.root.$route.query.category) : null)
+    const selectedSeriesItem: Ref<string|null> = ref(ctx.root.$route.query.series ? String(ctx.root.$route.query.series) : null)
     const selectedTags: Ref<number[]> = ref([])
     const search: Ref<string> = ref('')
 

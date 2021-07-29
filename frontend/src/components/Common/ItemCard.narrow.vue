@@ -1,5 +1,6 @@
 <template>
   <div class="row item-card narrow-item-card" v-if="item">
+    <div class="row details">
       <div class="category-image q-py-sm">
         <router-link
           class="no-decoration"
@@ -10,124 +11,122 @@
             />
         </router-link>
       </div>
-      <div class="content">
-        <div class="row details">
-          <div class="column col-xs-8 q-pt-sm q-pl-sm title">
-            <router-link
-              class="no-decoration"
-              :to="`/items/${item.id}`">
-              {{ item.title }}
-            </router-link>
-          </div>
-          <div class="column col-sm-2 col-xs-4 q-pt-sm text-right">
-            <ItemActions
-              :item="item"
-              />
-          </div>
+      <div class="content row">
+        <div class="column col-xs-8 q-pt-sm q-pl-sm">
+          <router-link
+            class="no-decoration title q-pb-sm"
+            :to="`/items/${item.id}`">
+            {{ item.title }}
+          </router-link>
+
+          <span class="text-accent text-small">
+            {{ category }}
+          </span>
         </div>
-        <div class="row">
-          <div class="column col-xs-8 q-pl-xs q-pb-xs">
-            <q-expansion-item
-              switch-toggle-side
-              header-class="resources"
-            >
-              <template v-slot:header>
-                <div class="column fit">
-                  <span class="category flex items-center text-accent q-mb-sm">
-                    {{ category }}
-                  </span>
-                  <div class="row">
-                    <q-badge
-                      v-for="(number, ext) of mediaExtensions"
-                      :key="ext"
-                      class="q-mr-sm media-extension"
-                      outline
-                      align="middle"
-                      text-color="black"
-                      >
-                      {{ ext.toUpperCase() }}
-                    </q-badge>
-                  </div>
-                </div>
-              </template>
-              <div class="column">
-                  <div
-                    v-for="resource in item.media"
-                    :key="resource.id"
-                    class="row items-center resource"
-                    >
-                    <div class="column col-xs-8 q-py-sm">
-                      <span class="text-body2 q-pl-sm">
-                        <q-icon
-                          v-if="resource.ext === '.mp3'"
-                          name="music_note"
-                          />
-                        <q-icon
-                          v-else
-                          name="description"
-                          />
-                        {{ resource.name }}
-                      </span>
-                    </div>
-                    <div class="column col-xs-4 justify-center items-end">
-                      <q-btn
-                        type="a"
-                        target="_blank"
-                        :href="resource.url"
-                        padding="none"
-                        flat
-                        size="sm"
-                        color="grey-5"
-                        icon="cloud_download"
-                        label="Download"
-                        no-caps
-                        />
-                    </div>
-                  </div>
-                  <div
-                    v-for="resource in item.link"
-                    :key="resource.title"
-                    class="row resource"
-                    >
-                    <div class="column justify-center col-xs-6 q-py-sm">
-                      <span class="text-body2 q-pl-sm">
-                        <q-icon name="tv"/>
-                        {{ resource.title }}
-                      </span>
-                    </div>
-                    <div class="column col-xs-1 justify-center items-center">
-                      <q-badge
-                        class="media-extension"
-                        outline
-                        align="middle"
-                        text-color="black"
-                        >
-                        LINK
-                      </q-badge>
-                    </div>
-                    <div class="column col-xs-5 justify-center items-end">
-                      <q-btn
-                        type="a"
-                        target="_blank"
-                        :href="resource.url"
-                        padding="none"
-                        flat
-                        size="sm"
-                        color="grey-5"
-                        icon="live_tv"
-                        label="Watch on YouTube"
-                        no-caps
-                        />
-                    </div>
-                  </div>
-              </div>
-            </q-expansion-item>
-          </div>
-          <div class="column col-xs-4 justify-center text-right">
-            <span class="updated-at text-grey-7">{{ formattedUpdatedAt }}</span>
-          </div>
+        <div class="column col-xs-4 q-pt-sm text-right">
+          <ItemActions
+            :item="item"
+            />
         </div>
       </div>
+    </div>
+    <div class="row" style="width: 100%">
+      <div class="col-12 q-pb-xs q-mx-0">
+        <q-expansion-item
+          switch-toggle-side
+          header-class="resources"
+        >
+          <template v-slot:header>
+            <div class="row items-center justify-between q-mx-0" style="width: 100%">
+              <div class="row items-center text-small">
+                <q-icon name="add_circle" />&nbsp;&nbsp;Expand to view resources
+              </div>
+              <div class="column">
+                <div class="row">
+                  <q-badge
+                    v-for="(number, ext) of mediaExtensions"
+                    :key="ext"
+                    class="q-ml-sm media-extension"
+                    outline
+                    align="middle"
+                    text-color="black"
+                    >
+                    {{ ext.toUpperCase() }}
+                  </q-badge>
+                </div>
+              </div>
+            </div>
+          </template>
+          <div class="column">
+              <div
+                v-for="resource in item.media"
+                :key="resource.id"
+                class="row items-center resource"
+                >
+                <div class="row col-xs-9 q-py-xs items-center"> 
+                  <q-icon
+                    :name="resource.ext === '.mp3' ? 'music_note' : 'description'"
+                    style="width: 16px; margin-right: 8px;"
+                    />
+                  <div class="text-small" style="width: calc(100% - 24px)">
+                    {{ resource.name }}
+                  </div>
+                </div>
+                <div class="column col-xs-3 justify-center items-end">
+                  <q-btn
+                    type="a"
+                    target="_blank"
+                    :href="resource.url"
+                    padding="none"
+                    flat
+                    size="sm"
+                    color="grey-5"
+                    icon="cloud_download"
+                    label="Download"
+                    no-caps
+                    />
+                </div>
+              </div>
+              <div
+                v-for="resource in item.link"
+                :key="resource.title"
+                class="row resource"
+                >
+                <div class="column justify-center col-xs-6 q-py-sm">
+                  <span class="text-body2 q-pl-sm">
+                    <q-icon name="tv"/>
+                    {{ resource.title }}
+                  </span>
+                </div>
+                <div class="column col-xs-1 justify-center items-center">
+                  <q-badge
+                    class="media-extension"
+                    outline
+                    align="middle"
+                    text-color="black"
+                    >
+                    LINK
+                  </q-badge>
+                </div>
+                <div class="column col-xs-5 justify-center items-end">
+                  <q-btn
+                    type="a"
+                    target="_blank"
+                    :href="resource.url"
+                    padding="none"
+                    flat
+                    size="sm"
+                    color="grey-5"
+                    icon="live_tv"
+                    label="Watch on YouTube"
+                    no-caps
+                    />
+                </div>
+              </div>
+          </div>
+        </q-expansion-item>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -153,8 +152,13 @@ export default defineComponent({
 
 <style lang="scss">
 .narrow-item-card {
-  .cursor-pointer.q-item {
-    padding-left: 5px;
+  .resources, .resource {
+    min-height: 25px;
+  }
+  .resources {
+    margin-top: 10px;
+    padding: 0;
+    border-radius: 5px;
   }
   .cursor-pointer.q-item__section--avatar {
     display: none;
@@ -165,12 +169,15 @@ export default defineComponent({
 <style scoped lang="scss">
 .item-card {
   border-top: 1px solid $grey-4;
+  .details {
+    width: 100%;
+  }
   .content {
-    width: calc(100% - 50px)
+    width: calc(100% - 60px);
   }
   .category-image {
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
   }
   .title {
     font-weight: 600;
@@ -178,9 +185,9 @@ export default defineComponent({
     font-size: 0.9em;
   }
   .media-extension {
-    font-size: 0.6em;
-    padding: 0 1em;
-    height: 1.9em;
+    font-size: 0.5em;
+    padding: 0.24em 1em 0 1em;
+    height: 1.7em;
     display: flex;
   }
   
