@@ -160,7 +160,7 @@ export default defineComponent({
       getCollections
     } = useCollections()
 
-    const selectedCategory: Ref<string|null> = ref(null)
+    const selectedCategory: Ref<string|null> = ref(String(ctx.root.$route.query.category) || null)
     const selectedSeriesItem: Ref<string|null> = ref(null)
     const selectedTags: Ref<number[]> = ref([])
     const search: Ref<string> = ref('')

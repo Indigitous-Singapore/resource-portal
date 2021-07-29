@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { InterfaceCollectionCategory } from 'src/interfaces'
+import { InterfaceCollectionCategory } from '../../interfaces'
 
 import Loading from '../../components/Common/Loading.vue'
 

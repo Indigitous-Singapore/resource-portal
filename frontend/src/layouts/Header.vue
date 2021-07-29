@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import config from '../config/config'
-import NavbarRight from 'components/Structure/NavbarRight.vue'
+import NavbarRight from '../components/Structure/NavbarRight.vue'
 import { defineComponent } from '@vue/composition-api'
  
 export default defineComponent({
@@ -63,9 +63,9 @@ export default defineComponent({
   },
   setup () {
     const navigationItems = [
-      { label: "About", to: "/about", },
-      { label: "Explore", to: "/explore", },
-      { label: "Collections", to: "/collections", },
+      { label: 'About', to: '/about', },
+      { label: 'Explore', to: '/explore', },
+      { label: 'Collections', to: '/collections', },
     ]
 
     return {

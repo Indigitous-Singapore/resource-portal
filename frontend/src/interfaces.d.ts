@@ -231,4 +231,7 @@ export interface InterfacePage {
   slug: string;
   title: string;
   content: string;
+  banner: InterfaceItemMedia|null;
+  banner_caption: string|null;
+  banner_header: string|null;
 }

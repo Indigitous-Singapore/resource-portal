@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { ref, Ref, onBeforeMount } from '@vue/composition-api'
-import { InterfaceCollectionCategory } from 'src/interfaces'
+import { InterfaceCollectionCategory } from '../../interfaces'
 import { defineComponent } from '@vue/composition-api'
 import { Platform } from 'quasar'
 
