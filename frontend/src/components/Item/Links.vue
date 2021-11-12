@@ -35,7 +35,7 @@
         size="md"
         color="grey-7"
         icon="live_tv"
-        label="Watch on YouTube"
+        label="Watch/Listen"
         no-caps
         />
       <q-btn
