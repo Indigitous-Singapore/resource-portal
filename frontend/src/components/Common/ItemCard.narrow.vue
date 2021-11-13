@@ -118,7 +118,7 @@
                     size="sm"
                     color="grey-5"
                     icon="live_tv"
-                    label="Watch on YouTube"
+                    label="Watch/Listen"
                     no-caps
                     />
                 </div>
